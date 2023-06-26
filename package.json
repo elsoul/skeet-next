@@ -14,7 +14,6 @@
     "skeet:openai": "yarn --cwd functions/openai dev",
     "skeet:dev": "firebase emulators:start",
     "skeet:webapp": "yarn dev",
-    "skeet:webappBuildForEmulator": "yarn build:development:webapp",
     "functions:build": "yarn --cwd functions/openai build",
     "functions:dev": "firebase emulators:start --only functions",
     "functions:deploy": "firebase deploy --only functions",
