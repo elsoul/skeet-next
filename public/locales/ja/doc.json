@@ -1,0 +1,29 @@
+{
+  "title": "ドキュメントホーム",
+  "body": "シンタックスハイライト対応のドキュメント作成をすぐにスタートできます",
+  "previousPage": "前のページ",
+  "nextPage": "次のページ",
+  "actions": {
+    "motivation": {
+      "title": "モチベーション",
+      "body": "ビジネスの本質に集中できる開発基盤を提供します。メディアサイトもオープンソースでスタートできます！"
+    },
+    "quickstart": {
+      "title": "クイックスタート",
+      "body": "Media SSG Template クイックスタート"
+    }
+  },
+  "menuNav": {
+    "home": "ドキュメントホーム",
+    "general": {
+      "groupTitle": "全般",
+      "motivation": "モチベーション",
+      "quickstart": "クイックスタート",
+      "readme": "README"
+    }
+  },
+  "headerNav": {
+    "home": "ホームページ",
+    "news": "ニュース"
+  }
+}

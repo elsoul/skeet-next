@@ -1,0 +1,31 @@
+{
+  "privacy": "Privacy",
+  "404title": "Page not found",
+  "404body": "Sorry, we couldn't find the page you're looking for.",
+  "backToTop": "Back to top page",
+  "toc": "Table of Contents",
+  "openMenu": "Open menu",
+  "closeMenu": "Close menu",
+  "navs": {
+    "defaultMainNav": {
+      "news": "News",
+      "doc": "Doc"
+    },
+    "commonFooterNav": {
+      "news": "News",
+      "doc": "Doc",
+      "privacy": "Privacy"
+    }
+  },
+  "AgreeToPolicy": {
+    "title": "Your Choices Regarding Cookies",
+    "body": "We and our third party partners use cookies and similar technologies to process certain information, such as your IP address and digital identifiers, to analyze site usage and provide you better experiences. Please read our privacy policy for the detail.",
+    "yes": "Yes, I Accept",
+    "no": "No, I Do Not Accept"
+  },
+  "DiscordRow": {
+    "title": "Community Discord",
+    "body": "If you have any inquiries, please create a support ticket in the community Discord.",
+    "button": "JOIN"
+  }
+}
