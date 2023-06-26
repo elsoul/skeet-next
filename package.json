@@ -1,7 +1,7 @@
 {
-  "name": "skeet-app",
-  "version": "0.6.1",
-  "description": "Skeet Framework Boilerplate",
+  "name": "skeet-next",
+  "version": "0.0.1",
+  "description": "Skeet Framework Boilerplate with Next.js",
   "author": "ELSOUL LABO B.V.",
   "license": "Apache-2.0",
   "private": false,
