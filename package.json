@@ -1,7 +1,7 @@
 {
-  "name": "skeet-app",
-  "version": "0.6.1",
-  "description": "Skeet Framework Boilerplate",
+  "name": "skeet-next",
+  "version": "0.0.1",
+  "description": "Skeet Framework Boilerplate with Next.js",
   "author": "ELSOUL LABO B.V.",
   "license": "Apache-2.0",
   "private": false,
@@ -14,7 +14,6 @@
     "skeet:openai": "yarn --cwd functions/openai dev",
     "skeet:dev": "firebase emulators:start",
     "skeet:webapp": "yarn dev",
-    "skeet:webappBuildForEmulator": "yarn build:development:webapp",
     "functions:build": "yarn --cwd functions/openai build",
     "functions:dev": "firebase emulators:start --only functions",
     "functions:deploy": "firebase deploy --only functions",
