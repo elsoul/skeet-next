@@ -10604,6 +10604,11 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
+recoil-persist@5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/recoil-persist/-/recoil-persist-5.0.1.tgz#b3150cfe755a80135151e2ce740871fc744b11a6"
+  integrity sha512-1u0BTvL0n0EdDgjyKbSu5tGFaQiMVBKtEKau575vNtCmi9esWeZ4lpUuzPrI8teERr/IkJeOA+Wg5/dzAVDtEg==
+
 recoil@0.7.7:
   version "0.7.7"
   resolved "https://registry.yarnpkg.com/recoil/-/recoil-0.7.7.tgz#c5f2c843224384c9c09e4a62c060fb4c1454dc8e"
