@@ -6,13 +6,12 @@ import LanguageChanger from '@/components/utils/LanguageChanger'
 import ColorModeChanger from '@/components/utils/ColorModeChanger'
 import Link from '@/components/routing/Link'
 import LogoHorizontalLink from '@/components/common/atoms/LogoHorizontalLink'
-import { defaultMainNav } from '@/config/navs'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDiscord, faGithub } from '@fortawesome/free-brands-svg-icons'
 import siteConfig from '@/config/site'
 import { Button } from '@/components/common/atoms/Button'
 
-export default function DefaultHeader() {
+export default function AuthHeader() {
   const { t } = useTranslation()
 
   const [scrollY, setScrollY] = useState(0)
@@ -65,17 +64,7 @@ export default function DefaultHeader() {
                     <Bars3Icon className="h-6 w-6" aria-hidden="true" />
                   </Popover.Button>
                 </div>
-                <Popover.Group as="nav" className="hidden space-x-10 md:flex">
-                  {defaultMainNav.map((nav) => (
-                    <Link
-                      key={`${nav.name} DefaultHeader.defaultMainNav`}
-                      href={nav.href ?? ''}
-                      className="text-base font-medium text-gray-700 hover:text-gray-900 dark:text-gray-50 dark:hover:text-gray-200"
-                    >
-                      {t(nav.name)}
-                    </Link>
-                  ))}
-                </Popover.Group>
+
                 <div className="hidden items-center justify-end gap-3 md:flex md:flex-1 lg:w-0">
                   <Button
                     href="/auth/login"
@@ -127,16 +116,6 @@ export default function DefaultHeader() {
                     </div>
                     <div className="px-5 py-8">
                       <div className="grid grid-cols-1 gap-8">
-                        {defaultMainNav.map((nav) => (
-                          <Link
-                            key={`${nav.name} DefaultHeader.defaultMainNav.mobile`}
-                            href={nav.href ?? ''}
-                            className="block w-full text-base font-medium text-gray-700 hover:text-gray-900 active:text-gray-800 dark:text-gray-50 dark:hover:text-gray-200"
-                            onClick={() => close()}
-                          >
-                            {t(nav.name)}
-                          </Link>
-                        ))}
                         <Link
                           href="/auth/login"
                           className="block w-full text-base font-medium text-gray-700 hover:text-gray-900 active:text-gray-800 dark:text-gray-50 dark:hover:text-gray-200"

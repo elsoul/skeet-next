@@ -65,3 +65,33 @@ export const docHeaderNav = [
     href: '/news/',
   },
 ]
+
+export const userMenuNav = [
+  { name: 'user:menuNav.home', href: '/user/', icon: HomeIcon },
+  {
+    name: 'user:menuNav.general.groupTitle',
+    children: [
+      {
+        name: 'user:menuNav.general.motivation',
+        href: '/user/chat/',
+        icon: HeartIcon,
+      },
+      {
+        name: 'user:menuNav.general.quickstart',
+        href: '/user/settings/',
+        icon: RocketLaunchIcon,
+      },
+    ],
+  },
+]
+
+export const userHeaderNav = [
+  {
+    name: 'user:headerNav.home',
+    href: '/',
+  },
+  {
+    name: 'user:headerNav.news',
+    href: '/news/',
+  },
+]

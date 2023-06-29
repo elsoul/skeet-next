@@ -20,9 +20,7 @@ const seo = {
   img: null,
 }
 
-export default function DocIndexPage({}: InferGetStaticPropsType<
-  typeof getStaticProps
->) {
+export default function DocIndexPage() {
   return (
     <>
       <DocIndex />

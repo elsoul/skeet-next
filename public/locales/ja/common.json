@@ -6,6 +6,9 @@
   "toc": "目次",
   "openMenu": "メニューを開く",
   "closeMenu": "メニューを閉じる",
+  "aiChat": "AIチャット",
+  "login": "ログイン",
+  "register": "アカウント登録",
   "navs": {
     "defaultMainNav": {
       "news": "ニュース",

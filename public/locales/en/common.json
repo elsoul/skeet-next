@@ -6,6 +6,9 @@
   "toc": "Table of Contents",
   "openMenu": "Open menu",
   "closeMenu": "Close menu",
+  "aiChat": "AI Chat",
+  "login": "Sign in",
+  "register": "Sign up",
   "navs": {
     "defaultMainNav": {
       "news": "News",

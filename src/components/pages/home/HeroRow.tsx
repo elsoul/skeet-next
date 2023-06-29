@@ -25,8 +25,8 @@ export default function HomeHeroRow() {
           {t('home:HeroRow.body')}
         </p>
         <div className="mt-10 flex justify-center gap-x-6">
-          <Button href="/doc" className="">
-            {t('common:navs.defaultMainNav.doc')}
+          <Button href="/auth/login" className="">
+            {t('common:aiChat')}
           </Button>
           <Button
             href="https://github.com/elsoul/skeet-cli"
