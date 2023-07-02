@@ -1,8 +1,8 @@
 import { ReactElement } from 'react'
 import AuthLayout from '@/layouts/auth/AuthLayout'
-import DiscordRow from '@/components/pages/common/DiscordRow'
 import siteConfig from '@/config/site'
 import { getStaticPaths, makeStaticProps } from '@/lib/getStatic'
+import RegisterScreen from '@/components/pages/auth/RegisterScreen'
 
 const seo = {
   pathname: '/auth/register',
@@ -23,7 +23,7 @@ export { getStaticPaths, getStaticProps }
 export default function Register() {
   return (
     <>
-      <DiscordRow />
+      <RegisterScreen />
     </>
   )
 }

@@ -1,4 +1,4 @@
-import { Toast, toastsState } from '@/stores/toasts'
+import { Toast, toastsState } from '@/store/toasts'
 import { useRecoilState } from 'recoil'
 import { useCallback } from 'react'
 

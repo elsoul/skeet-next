@@ -1,8 +1,8 @@
 import { ReactElement } from 'react'
 import UserLayout from '@/layouts/user/UserLayout'
-import DiscordRow from '@/components/pages/common/DiscordRow'
 import siteConfig from '@/config/site'
 import { getStaticPaths, makeStaticProps } from '@/lib/getStatic'
+import ChatScreen from '@/components/pages/user/chat/ChatScreen'
 
 const seo = {
   pathname: '/user/chat',
@@ -17,13 +17,13 @@ const seo = {
   img: null,
 }
 
-const getStaticProps = makeStaticProps(['common', 'user'], seo)
+const getStaticProps = makeStaticProps(['common', 'user', 'chat'], seo)
 export { getStaticPaths, getStaticProps }
 
 export default function Chat() {
   return (
     <>
-      <DiscordRow />
+      <ChatScreen />
     </>
   )
 }

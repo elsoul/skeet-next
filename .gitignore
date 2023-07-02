@@ -107,6 +107,7 @@ firebase-debug.log
 # next.js
 /.next/
 /out/
+/web-build/
 
 # production
 /build

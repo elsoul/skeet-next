@@ -6,7 +6,7 @@ type Props = {
   children: ReactNode
   href: string
   className?: string
-  skipLocaleHandling?: Boolean
+  skipLocaleHandling?: boolean
   locale?: string
   onClick?: () => void
 }

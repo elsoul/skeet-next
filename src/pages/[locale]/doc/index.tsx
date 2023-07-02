@@ -15,7 +15,7 @@ const seo = {
   },
   description: {
     ja: 'Media SSG Template ドキュメントトップページ',
-    en: 'Media SSGDoc top page',
+    en: 'Media SSG Doc top page',
   },
   img: null,
 }

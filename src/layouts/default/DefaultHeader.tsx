@@ -10,7 +10,7 @@ import { defaultMainNav } from '@/config/navs'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDiscord, faGithub } from '@fortawesome/free-brands-svg-icons'
 import siteConfig from '@/config/site'
-import { Button } from '@/components/common/atoms/Button'
+import Button from '@/components/common/atoms/Button'
 
 export default function DefaultHeader() {
   const { t } = useTranslation()
@@ -61,7 +61,7 @@ export default function DefaultHeader() {
                 </div>
                 <div className="-my-2 -mr-2 md:hidden">
                   <Popover.Button className="inline-flex items-center justify-center  p-2 text-gray-700 hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500  dark:text-gray-50 dark:hover:bg-gray-700 dark:hover:text-gray-200">
-                    <span className="sr-only">{t('common:openMenu')}</span>
+                    <span className="sr-only">{t('openMenu')}</span>
                     <Bars3Icon className="h-6 w-6" aria-hidden="true" />
                   </Popover.Button>
                 </div>
@@ -84,10 +84,10 @@ export default function DefaultHeader() {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    {t('common:login')}
+                    {t('login')}
                   </Button>
                   <Button href="/auth/register" className="">
-                    {t('common:register')}
+                    {t('register')}
                   </Button>
                   <LanguageChanger />
                   <ColorModeChanger />
@@ -117,9 +117,7 @@ export default function DefaultHeader() {
                         </div>
                         <div className="-mr-2">
                           <Popover.Button className="inline-flex items-center justify-center  p-2 text-gray-700 hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500  dark:text-gray-50 dark:hover:bg-gray-700 dark:hover:text-gray-200">
-                            <span className="sr-only">
-                              {t('common:closeMenu')}
-                            </span>
+                            <span className="sr-only">{t('closeMenu')}</span>
                             <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                           </Popover.Button>
                         </div>
@@ -142,14 +140,14 @@ export default function DefaultHeader() {
                           className="block w-full text-base font-medium text-gray-700 hover:text-gray-900 active:text-gray-800 dark:text-gray-50 dark:hover:text-gray-200"
                           onClick={() => close()}
                         >
-                          {t('common:login')}
+                          {t('login')}
                         </Link>
                         <Link
                           href="/auth/register"
                           className="block w-full text-base font-medium text-gray-700 hover:text-gray-900 active:text-gray-800 dark:text-gray-50 dark:hover:text-gray-200"
                           onClick={() => close()}
                         >
-                          {t('common:register')}
+                          {t('register')}
                         </Link>
                         <div className="flex flex-1 items-center justify-end gap-3">
                           <LanguageChanger />

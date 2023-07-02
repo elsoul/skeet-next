@@ -9,7 +9,7 @@ import prettierLogo from '@/assets/img/logo/projects/prettier.png'
 import reactLogo from '@/assets/img/logo/projects/react.svg'
 import tailwindcssLogo from '@/assets/img/logo/projects/tailwindcss.svg'
 import typescriptLogo from '@/assets/img/logo/projects/TypeScriptHorizontal.svg'
-import { Button } from '@/components/common/atoms/Button'
+import Button from '@/components/common/atoms/Button'
 import clsx from 'clsx'
 
 export default function HomeHeroRow() {
@@ -26,7 +26,7 @@ export default function HomeHeroRow() {
         </p>
         <div className="mt-10 flex justify-center gap-x-6">
           <Button href="/auth/login" className="">
-            {t('common:aiChat')}
+            {t('aiChat')}
           </Button>
           <Button
             href="https://github.com/elsoul/skeet-cli"

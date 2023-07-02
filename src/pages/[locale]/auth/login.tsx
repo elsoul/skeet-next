@@ -1,8 +1,8 @@
 import { ReactElement } from 'react'
 import AuthLayout from '@/layouts/auth/AuthLayout'
-import DiscordRow from '@/components/pages/common/DiscordRow'
 import siteConfig from '@/config/site'
 import { getStaticPaths, makeStaticProps } from '@/lib/getStatic'
+import LoginScreen from '@/components/pages/auth/LoginScreen'
 
 const seo = {
   pathname: '/auth/login',
@@ -23,7 +23,7 @@ export { getStaticPaths, getStaticProps }
 export default function Login() {
   return (
     <>
-      <DiscordRow />
+      <LoginScreen />
     </>
   )
 }

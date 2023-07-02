@@ -4,14 +4,14 @@ import clsx from 'clsx'
 
 const baseStyles = {
   solid:
-    'group inline-flex items-center justify-center py-2 px-4 font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2',
+    'group inline-flex items-center justify-center py-2 px-4 font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:cursor-pointer',
   outline:
-    'group inline-flex ring-1 items-center justify-center py-2 px-4 focus:outline-none',
+    'group inline-flex ring-1 items-center justify-center py-2 px-4 focus:outline-none hover:cursor-pointer',
 }
 
 const variantStyles = {
   solid: {
-    gray: 'bg-gray-900 text-white dark:bg-gray-600 dark:hover:bg-gray-400 hover:bg-gray-700 hover:text-gray-50 active:bg-gray-800 active:text-gray-50 focus-visible:outline-gray-900',
+    gray: 'bg-gray-900 text-white dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-300 hover:bg-gray-700 hover:text-gray-50 active:bg-gray-800 active:text-gray-50 focus-visible:outline-gray-900',
     blue: 'bg-blue-600 text-white hover:text-blue-50 hover:bg-blue-500 active:bg-blue-800 active:text-blue-100 focus-visible:outline-blue-600',
     red: 'bg-red-600 text-white hover:text-red-50 hover:bg-red-500 active:bg-red-800 active:text-red-100 focus-visible:outline-red-600',
     green:
@@ -78,9 +78,11 @@ type Props = {
   target?: string
   rel?: string
   onClick?: () => void
+  type?: 'submit' | 'reset' | 'button'
+  disabled?: boolean
 }
 
-export function Button({
+export default function Button({
   variant = 'solid',
   color = 'gray',
   className,
