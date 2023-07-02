@@ -8,9 +8,7 @@ import {
   ArrowSmallRightIcon,
 } from '@heroicons/react/24/outline'
 
-type Props = {}
-
-export default function DocPagination({}: Props) {
+export default function DocPagination() {
   const { t } = useTranslation()
   const router = useRouter()
   const asPathWithoutLang = useMemo(() => {

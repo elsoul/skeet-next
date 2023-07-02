@@ -1,9 +1,13 @@
 import { Fragment, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
-import { CheckCircleIcon } from '@heroicons/react/24/outline'
+import {
+  CheckCircleIcon,
+  ExclamationCircleIcon,
+  InformationCircleIcon,
+} from '@heroicons/react/24/outline'
 import { XMarkIcon } from '@heroicons/react/20/solid'
 import { useRecoilState } from 'recoil'
-import { toastsState } from '@/stores/toasts'
+import { toastsState } from '@/store/toasts'
 
 export default function ToastMessage() {
   const [toasts, setToasts] = useRecoilState(toastsState)
@@ -50,19 +54,19 @@ export default function ToastMessage() {
                         />
                       )}
                       {toast.type === 'error' && (
-                        <CheckCircleIcon
+                        <ExclamationCircleIcon
                           className="h-6 w-6 text-red-400"
                           aria-hidden="true"
                         />
                       )}
                       {toast.type === 'warning' && (
-                        <CheckCircleIcon
+                        <ExclamationCircleIcon
                           className="h-6 w-6 text-yellow-400"
                           aria-hidden="true"
                         />
                       )}
                       {toast.type === 'info' && (
-                        <CheckCircleIcon
+                        <InformationCircleIcon
                           className="h-6 w-6 text-blue-400"
                           aria-hidden="true"
                         />

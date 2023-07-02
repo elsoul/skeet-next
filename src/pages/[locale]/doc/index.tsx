@@ -15,14 +15,12 @@ const seo = {
   },
   description: {
     ja: 'Media SSG Template ドキュメントトップページ',
-    en: 'Media SSGDoc top page',
+    en: 'Media SSG Doc top page',
   },
   img: null,
 }
 
-export default function DocIndexPage({}: InferGetStaticPropsType<
-  typeof getStaticProps
->) {
+export default function DocIndexPage() {
   return (
     <>
       <DocIndex />

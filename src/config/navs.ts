@@ -1,5 +1,7 @@
 import {
   BookOpenIcon,
+  ChatBubbleLeftRightIcon,
+  Cog8ToothIcon,
   HeartIcon,
   HomeIcon,
   RocketLaunchIcon,
@@ -7,26 +9,26 @@ import {
 
 export const defaultMainNav = [
   {
-    name: 'common:navs.defaultMainNav.news',
+    name: 'navs.defaultMainNav.news',
     href: '/news/',
   },
   {
-    name: 'common:navs.defaultMainNav.doc',
+    name: 'navs.defaultMainNav.doc',
     href: '/doc/',
   },
 ]
 
 export const commonFooterNav = [
   {
-    name: 'common:navs.commonFooterNav.news',
+    name: 'navs.commonFooterNav.news',
     href: '/news/',
   },
   {
-    name: 'common:navs.commonFooterNav.doc',
+    name: 'navs.commonFooterNav.doc',
     href: '/doc/',
   },
   {
-    name: 'common:navs.commonFooterNav.privacy',
+    name: 'navs.commonFooterNav.privacy',
     href: '/legal/privacy-policy/',
   },
 ]
@@ -63,5 +65,25 @@ export const docHeaderNav = [
   {
     name: 'doc:headerNav.news',
     href: '/news/',
+  },
+]
+
+export const userMenuNav = [
+  {
+    name: 'user:menuNav.chat',
+    href: '/user/chat/',
+    icon: ChatBubbleLeftRightIcon,
+  },
+  {
+    name: 'user:menuNav.settings',
+    href: '/user/settings/',
+    icon: Cog8ToothIcon,
+  },
+]
+
+export const userHeaderNav = [
+  {
+    name: 'user:headerNav.settings',
+    href: '/user/settings/',
   },
 ]

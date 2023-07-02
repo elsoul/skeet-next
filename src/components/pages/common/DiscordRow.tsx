@@ -1,4 +1,4 @@
-import { Button } from '@/components/common/atoms/Button'
+import Button from '@/components/common/atoms/Button'
 import Container from '@/components/common/atoms/Container'
 import siteConfig from '@/config/site'
 import { useTranslation } from 'next-i18next'
@@ -11,7 +11,7 @@ export default function DiscordRow() {
   return (
     <>
       <Container className="py-48">
-        <div className="bg-discord mx-auto max-w-lg shadow">
+        <div className="mx-auto max-w-lg bg-discord shadow">
           <div className="px-4 py-5 sm:p-6">
             <FontAwesomeIcon
               icon={faDiscord}
@@ -26,7 +26,7 @@ export default function DiscordRow() {
               <div className="max-w-xl text-sm text-gray-50">
                 <p>{t('DiscordRow.body')}</p>
               </div>
-              <div className="mt-5 sm:mt-0 sm:ml-6 sm:flex sm:flex-shrink-0 sm:items-center">
+              <div className="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center">
                 <Button
                   color="white"
                   href={siteConfig.discordInvitationLink}

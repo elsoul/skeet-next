@@ -16,7 +16,7 @@ export default function Toc({ toc, activeItemIds }: Props) {
       {toc.length > 0 && (
         <>
           <div className="p-4">
-            <p className="text-base font-semibold">{t('common:toc')}</p>
+            <p className="text-base font-semibold">{t('toc')}</p>
           </div>
           <div className="max-w-80 border-l p-4">
             <nav className="space-y-1" aria-label="Sidebar">

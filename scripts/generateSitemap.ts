@@ -3,7 +3,7 @@ import globby from 'globby'
 import siteConfig from '../src/config/site'
 
 const { domain } = siteConfig
-const distDir = 'out'
+const distDir = 'web-build'
 
 async function generateSiteMap() {
   const pages = await globby([
@@ -35,7 +35,7 @@ async function generateSiteMap() {
 </urlset>
   `
 
-  fs.writeFileSync('out/sitemap.xml', sitemap)
+  fs.writeFileSync('web-build/sitemap.xml', sitemap)
 }
 
 generateSiteMap()
