@@ -1,6 +1,10 @@
 import clsx from 'clsx'
 import Image from 'next/image'
-import { PencilSquareIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import {
+  PencilSquareIcon,
+  PhotoIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline'
 import { useTranslation } from 'react-i18next'
 import { Fragment, useCallback, useMemo, useState } from 'react'
 
@@ -170,15 +174,16 @@ export default function EditUserIconUrl() {
                       <div className="gap-6 px-4 sm:px-10">
                         <div
                           {...getRootProps()}
-                          className="flex h-64 w-full cursor-pointer items-center justify-center rounded-md border-4 border-dashed border-gray-200 p-10 hover:bg-gray-50 dark:hover:bg-gray-800"
+                          className="flex h-64 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-md border-4 border-dashed border-gray-200 p-10 hover:bg-gray-50 dark:hover:bg-gray-800"
                         >
                           <input {...getInputProps()} />
+                          <PhotoIcon className="h-16 w-16 text-gray-400 dark:text-gray-300" />
                           {isDragActive ? (
-                            <p className="text-lg text-gray-500 dark:text-gray-300">
+                            <p className="text-sm text-gray-500 dark:text-gray-300">
                               {t('settings:dropFiles')}
                             </p>
                           ) : (
-                            <p className="text-lg text-gray-500 dark:text-gray-300">
+                            <p className="text-sm text-gray-500 dark:text-gray-300">
                               {t('settings:dragDropFiles')}
                             </p>
                           )}
