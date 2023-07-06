@@ -1,6 +1,10 @@
 import clsx from 'clsx'
 import Image from 'next/image'
-import { PencilSquareIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import {
+  PencilSquareIcon,
+  PhotoIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline'
 import { useTranslation } from 'react-i18next'
 import { Fragment, useCallback, useMemo, useState } from 'react'
 
@@ -111,16 +115,14 @@ export default function EditUserIconUrl() {
       <div className="flex w-full flex-col items-center justify-center">
         <button
           className={clsx(
-            'flex flex-row items-center px-2 py-2 text-sm font-medium text-gray-900 dark:text-gray-50'
+            'flex flex-row items-center px-2 py-2 text-sm font-medium text-gray-900 hover:text-gray-700 dark:text-gray-50 dark:hover:text-gray-300'
           )}
           onClick={() => {
             setModalOpen(true)
           }}
         >
           <PencilSquareIcon className="mr-3 h-6 w-6 flex-shrink-0" />
-          <span className="font-loaded-medium py-2 text-gray-900 dark:text-gray-50">
-            {t('settings:editIconUrl')}
-          </span>
+          <span>{t('settings:editIconUrl')}</span>
         </button>
       </div>
       <Transition appear show={isModalOpen} as={Fragment}>
@@ -148,7 +150,7 @@ export default function EditUserIconUrl() {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="my-8 inline-block w-full max-w-xl -translate-y-20 transform overflow-hidden bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-gray-900">
+              <div className="my-8 inline-block w-full max-w-xl -translate-y-10 transform overflow-hidden bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-gray-900">
                 <div className="flex w-full flex-col bg-white pb-12 dark:bg-gray-900">
                   <div className="flex flex-row items-center justify-center p-4">
                     <LogoHorizontal className="w-24" />
@@ -162,7 +164,7 @@ export default function EditUserIconUrl() {
                       <XMarkIcon className="h-5 w-5 text-gray-900 hover:text-gray-800 dark:text-gray-50 dark:hover:text-gray-100" />
                     </button>
                   </div>
-                  <div className="flex flex-grow flex-col gap-8 pt-10">
+                  <div className="flex flex-grow flex-col gap-2 pt-10">
                     <p className="text-center text-lg font-bold">
                       {t('settings:editIconUrl')}
                     </p>
@@ -170,15 +172,16 @@ export default function EditUserIconUrl() {
                       <div className="gap-6 px-4 sm:px-10">
                         <div
                           {...getRootProps()}
-                          className="flex h-64 w-full cursor-pointer items-center justify-center rounded-md border-4 border-dashed border-gray-200 p-10 hover:bg-gray-50 dark:hover:bg-gray-800"
+                          className="flex h-64 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-md border-4 border-dashed border-gray-200 p-10 hover:bg-gray-50 dark:hover:bg-gray-800"
                         >
                           <input {...getInputProps()} />
+                          <PhotoIcon className="h-16 w-16 text-gray-400 dark:text-gray-300" />
                           {isDragActive ? (
-                            <p className="text-lg text-gray-500 dark:text-gray-300">
+                            <p className="text-sm text-gray-500 dark:text-gray-300">
                               {t('settings:dropFiles')}
                             </p>
                           ) : (
-                            <p className="text-lg text-gray-500 dark:text-gray-300">
+                            <p className="text-sm text-gray-500 dark:text-gray-300">
                               {t('settings:dragDropFiles')}
                             </p>
                           )}

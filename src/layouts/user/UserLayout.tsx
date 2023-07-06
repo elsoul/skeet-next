@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react'
 import { useMemo, useCallback, useEffect, useState, Fragment } from 'react'
-import CommonFooter from '@/layouts/common/CommonFooter'
 import { Transition, Dialog, Menu } from '@headlessui/react'
 import { XMarkIcon, Bars3BottomLeftIcon } from '@heroicons/react/24/outline'
 import { useRouter } from 'next/router'
@@ -304,7 +303,6 @@ export default function UserLayout({ children }: Props) {
               {children}
             </div>
           </div>
-          <CommonFooter />
         </div>
       </div>
     </>
