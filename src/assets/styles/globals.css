@@ -60,24 +60,24 @@ code {
 
 @layer utilities {
   .content-height {
-    height: calc(100vh - 112px);
+    height: calc(var(--vh, 1vh) * 100 - 112px);
   }
   .content-height-mobile {
-    height: calc(100vh - 112px - 32px);
+    height: calc(var(--vh, 1vh) * 100 - 112px - 32px);
   }
   .chat-height-1 {
-    height: calc(100vh - 112px - 40px - 16px);
+    height: calc(var(--vh, 1vh) * 100 - 112px - 40px - 16px);
   }
   .chat-height-2 {
-    height: calc(100vh - 112px - 80px - 16px);
+    height: calc(var(--vh, 1vh) * 100 - 112px - 80px - 16px);
   }
   .chat-height-3 {
-    height: calc(100vh - 112px - 112px - 16px);
+    height: calc(var(--vh, 1vh) * 100 - 112px - 112px - 16px);
   }
   .chat-height-4 {
-    height: calc(100vh - 112px - 144px - 16px);
+    height: calc(var(--vh, 1vh) * 100 - 112px - 144px - 16px);
   }
   .chat-height-5 {
-    height: calc(100vh - 112px - 192px - 16px);
+    height: calc(var(--vh, 1vh) * 100 - 112px - 192px - 16px);
   }
 }
