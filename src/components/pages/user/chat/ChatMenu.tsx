@@ -187,7 +187,7 @@ export default function ChatMenu({
         const q = query(
           collection(db, `User/${user.uid}/UserChatRoom`),
           orderBy('createdAt', 'desc'),
-          limit(20)
+          limit(15)
         )
 
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -371,7 +371,9 @@ export default function ChatMenu({
                   <div className="flex flex-col gap-2">
                     {chat.title !== '' ? (
                       <p className="font-medium text-gray-900 dark:text-white">
-                        {chat.title}
+                        {chat.title.length > 20
+                          ? `${chat.title.slice(0, 20)} ...`
+                          : chat.title}
                       </p>
                     ) : (
                       <p className="font-light italic text-gray-600 dark:text-gray-300">
@@ -611,7 +613,7 @@ export default function ChatMenu({
                       {t('chat:chatList')}
                     </p>
                     <div className="w-full sm:mx-auto sm:max-w-xl">
-                      <div className="flex flex-col gap-3  pb-20 sm:px-10">
+                      <div className="flex flex-col gap-3 pb-20 sm:px-10">
                         {chatList.map((chat) => (
                           <div
                             onClick={() => {

@@ -59,6 +59,7 @@ export default function ChatBox({
     handleSubmit,
     formState: { errors },
     control,
+    reset,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -136,25 +137,29 @@ export default function ChatBox({
 
   const onSubmit = useCallback(
     async (data: Inputs) => {
+      console.log(isSending)
+      if (isSending) return
       try {
+        setSending(true)
         if (!isDisabled && user.uid && currentChatRoomId) {
-          setSending(true)
           setChatMessages((prev) => {
-            prev.push({
-              id: `UserSendingMessage${new Date().toISOString()}`,
-              role: 'user',
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-              content: data.chatContent,
-            })
-            prev.push({
-              id: `AssistantAnsweringMessage${new Date().toISOString()}`,
-              role: 'assistant',
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-              content: '',
-            })
-            return [...prev]
+            return [
+              ...prev,
+              {
+                id: `UserSendingMessage${new Date().toISOString()}`,
+                role: 'user',
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+                content: data.chatContent,
+              },
+              {
+                id: `AssistantAnsweringMessage${new Date().toISOString()}`,
+                role: 'assistant',
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+                content: '',
+              },
+            ]
           })
           const res =
             await fetchSkeetFunctions<AddStreamUserChatRoomMessageParams>(
@@ -177,8 +182,20 @@ export default function ChatBox({
                   if (dataString != 'Stream done') {
                     const data = JSON.parse(dataString)
                     setChatMessages((prev) => {
-                      prev[prev.length - 1].content =
-                        prev[prev.length - 1].content + data.text
+                      const chunkSize = data.text.length
+                      if (prev[prev.length - 1].content.length === 0) {
+                        prev[prev.length - 1].content =
+                          prev[prev.length - 1].content + data.text
+                      }
+                      if (
+                        !prev[prev.length - 1].content
+                          .slice(chunkSize * -1)
+                          .includes(data.text)
+                      ) {
+                        prev[prev.length - 1].content =
+                          prev[prev.length - 1].content + data.text
+                      }
+
                       return [...prev]
                     })
                   }
@@ -199,6 +216,7 @@ export default function ChatBox({
             await getChatRoom()
           }
           await getUserChatRoomMessage()
+          reset()
           setFirstMessage(false)
         } else {
           throw new Error('validateError')
@@ -244,7 +262,7 @@ export default function ChatBox({
 
   return (
     <>
-      <div className="w-full p-4 sm:flex-1">
+      <div className="w-full pt-4 sm:flex-1 sm:px-4">
         {!currentChatRoomId && (
           <div className="flex w-full flex-col items-center justify-center bg-gray-50 dark:bg-gray-800">
             <div className="flex w-full flex-col items-center justify-center gap-2 p-4">
@@ -256,7 +274,7 @@ export default function ChatBox({
                   setNewChatModalOpen(true)
                 }}
                 className={clsx(
-                  'flex w-full flex-row items-center justify-center gap-4 bg-gray-900 px-3 py-2 dark:bg-gray-600'
+                  'flex w-full flex-row items-center justify-center gap-4 bg-gray-900 px-3 py-2 hover:cursor-pointer dark:bg-gray-600'
                 )}
               >
                 <PlusCircleIcon className="h-6 w-6 text-white" />
@@ -270,7 +288,7 @@ export default function ChatBox({
         {currentChatRoomId && (
           <div className="flex w-full flex-col justify-between gap-4">
             <div className="flex w-full flex-1">
-              <div className="pb-24">
+              <div className="w-full pb-24">
                 {chatMessages.map((chatMessage) => (
                   <div
                     key={chatMessage.id}
@@ -283,50 +301,44 @@ export default function ChatBox({
                     )}
                   >
                     {chatMessage.role === 'user' && (
-                      <div className="flex">
+                      <Image
+                        src={user.iconUrl}
+                        alt="User icon"
+                        className="aspect-square h-6 w-6 rounded-full sm:h-10 sm:w-10"
+                        unoptimized
+                        width={40}
+                        height={40}
+                      />
+                    )}
+                    {(chatMessage.role === 'assistant' ||
+                      chatMessage.role === 'system') &&
+                      chatRoom?.model === 'gpt-3.5-turbo' && (
                         <Image
-                          src={user.iconUrl}
-                          alt="User icon"
+                          src={
+                            'https://storage.googleapis.com/epics-bucket/BuidlersCollective/Jake.png'
+                          }
+                          alt="Jake icon"
                           className="aspect-square h-6 w-6 rounded-full sm:h-10 sm:w-10"
                           unoptimized
                           width={40}
                           height={40}
                         />
-                      </div>
-                    )}
-                    {(chatMessage.role === 'assistant' ||
-                      chatMessage.role === 'system') &&
-                      chatRoom?.model === 'gpt-3.5-turbo' && (
-                        <div className="flex">
-                          <Image
-                            src={
-                              'https://storage.googleapis.com/epics-bucket/BuidlersCollective/Jake.png'
-                            }
-                            alt="Jake icon"
-                            className="aspect-square h-6 w-6 rounded-full sm:h-10 sm:w-10"
-                            unoptimized
-                            width={40}
-                            height={40}
-                          />
-                        </div>
                       )}
                     {(chatMessage.role === 'assistant' ||
                       chatMessage.role === 'system') &&
                       chatRoom?.model === 'gpt-4' && (
-                        <div className="flex">
-                          <Image
-                            src={
-                              'https://storage.googleapis.com/epics-bucket/BuidlersCollective/Legend.png'
-                            }
-                            alt="Legend icon"
-                            className="aspect-square h-6 w-6 rounded-full sm:h-10 sm:w-10"
-                            unoptimized
-                            width={40}
-                            height={40}
-                          />
-                        </div>
+                        <Image
+                          src={
+                            'https://storage.googleapis.com/epics-bucket/BuidlersCollective/Legend.png'
+                          }
+                          alt="Legend icon"
+                          className="aspect-square h-6 w-6 rounded-full sm:h-10 sm:w-10"
+                          unoptimized
+                          width={40}
+                          height={40}
+                        />
                       )}
-                    <div className="flex-auto">
+                    <div className="flex flex-col">
                       {chatMessage.role === 'system' && (
                         <div className="pb-2">
                           <p className="text-base font-bold text-gray-900 dark:text-white">
@@ -347,32 +359,34 @@ export default function ChatBox({
               </div>
             </div>
 
-            <div className="flex flex-row items-end gap-4">
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <Controller
-                  name="chatContent"
-                  control={control}
-                  render={({ field }) => (
-                    <textarea
-                      {...field}
-                      className="flex-1 border-2 border-gray-900 p-1 text-sm font-normal text-gray-900 dark:border-gray-50 dark:text-white sm:text-lg"
-                      rows={5}
-                    />
-                  )}
-                />
+            <div className="flex w-full flex-row items-end gap-4">
+              <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+                <div className="flex w-full flex-row items-end justify-between gap-4">
+                  <Controller
+                    name="chatContent"
+                    control={control}
+                    render={({ field }) => (
+                      <textarea
+                        {...field}
+                        className="flex-1 border-2 border-gray-900 p-1 text-sm font-normal text-gray-900 dark:border-gray-50 dark:text-white sm:text-lg"
+                        rows={5}
+                      />
+                    )}
+                  />
 
-                <button
-                  type="submit"
-                  disabled={isDisabled}
-                  className={clsx(
-                    'flex h-10 w-10 flex-row items-center justify-center bg-gray-900 px-3 py-2',
-                    isDisabled
-                      ? 'bg-gray-300 dark:bg-gray-800 dark:text-gray-400'
-                      : 'dark:bg-gray-600'
-                  )}
-                >
-                  <PaperAirplaneIcon className="mx-3 h-6 w-6 flex-shrink-0 text-white" />
-                </button>
+                  <button
+                    type="submit"
+                    disabled={isDisabled}
+                    className={clsx(
+                      'flex h-10 w-10 flex-row items-center justify-center  px-3 py-2',
+                      isDisabled
+                        ? 'bg-gray-300 hover:cursor-wait dark:bg-gray-800 dark:text-gray-400'
+                        : 'bg-gray-900 hover:cursor-pointer dark:bg-gray-600'
+                    )}
+                  >
+                    <PaperAirplaneIcon className="mx-3 h-6 w-6 flex-shrink-0 text-white" />
+                  </button>
+                </div>
               </form>
             </div>
           </div>
