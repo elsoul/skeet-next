@@ -83,7 +83,8 @@ export default function ChatMenu({
   currentChatRoomId,
   setCurrentChatRoomId,
 }: Props) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const isJapanese = useMemo(() => i18n.language === 'ja', [i18n])
   const user = useRecoilValue(userState)
   const [isCreateLoading, setCreateLoading] = useState(false)
   const [isChatListModalOpen, setChatListModalOpen] = useState(false)
@@ -100,7 +101,9 @@ export default function ChatMenu({
       model: 'gpt-3.5-turbo',
       maxTokens: 100,
       temperature: 1,
-      systemContent: '',
+      systemContent: isJapanese
+        ? 'あなたは、親切で、創造的で、賢く、とてもフレンドリーなアシスタントです。'
+        : 'You are the assistant who is helpful, creative, clever, and very friendly.',
     },
   })
 
@@ -393,7 +396,7 @@ export default function ChatMenu({
           className="fixed inset-0 z-10 overflow-y-auto"
           onClose={() => setNewChatModalOpen(false)}
         >
-          <div className="min-h-screen px-4 text-center">
+          <div className="px-4 text-center">
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
             {/* This element is to trick the browser into centering the modal contents. */}
@@ -412,28 +415,57 @@ export default function ChatMenu({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="my-8 inline-block w-full max-w-md transform overflow-hidden bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-gray-900">
+              <div className="my-8 inline-block w-full max-w-xl -translate-y-20 transform overflow-hidden bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-gray-900">
                 <div className="flex w-full flex-col pb-8">
                   <div className="flex flex-row items-center justify-center p-4">
                     <LogoHorizontal className="w-24" />
                     <div className="flex-grow" />
-                    <div
+                    <button
                       onClick={() => {
                         setNewChatModalOpen(false)
                       }}
-                      className="h-5 w-5"
+                      className="h-5 w-5 text-gray-900 hover:cursor-pointer hover:text-gray-700 dark:text-gray-50 dark:hover:text-gray-200"
                     >
-                      <XMarkIcon className="h-5 w-5 text-gray-900 hover:text-gray-800 dark:text-gray-50 dark:hover:text-gray-100" />
-                    </div>
+                      <XMarkIcon className="h-5 w-5" />
+                    </button>
                   </div>
                   <div className="flex flex-grow flex-col gap-8">
                     <p className="text-center text-lg font-bold">
                       {t('chat:newChat')}
                     </p>
-                    <div className="w-full sm:mx-auto sm:max-w-md">
+                    <div className="w-full sm:mx-auto sm:max-w-xl">
                       <div className="gap-6 px-4 sm:px-10">
                         <form onSubmit={handleSubmit(onSubmit)}>
                           <div className="flex flex-col gap-6 px-4 py-6 sm:px-10">
+                            <div>
+                              <p className="text-sm font-medium leading-6 text-gray-900 dark:text-gray-50">
+                                {t('chat:model')}
+                                {errors.model && (
+                                  <span className="text-xs text-red-500 dark:text-red-300">
+                                    {' : '}
+                                    {t('chat:modelErrorText')}
+                                  </span>
+                                )}
+                              </p>
+                              <div className="mt-2">
+                                <Controller
+                                  name="model"
+                                  control={control}
+                                  render={({ field }) => (
+                                    <select
+                                      {...field}
+                                      className="w-full border-2 border-gray-900 p-3 text-lg font-bold text-gray-900 dark:border-gray-50 dark:text-white sm:leading-6"
+                                    >
+                                      {allowedGPTModel.map((model) => (
+                                        <option key={model} value={model}>
+                                          {model}
+                                        </option>
+                                      ))}
+                                    </select>
+                                  )}
+                                />
+                              </div>
+                            </div>
                             <div>
                               <p className="text-sm font-medium leading-6 text-gray-900 dark:text-gray-50">
                                 {t('chat:maxTokens')}
@@ -452,6 +484,7 @@ export default function ChatMenu({
                                     <input
                                       {...field}
                                       className="w-full border-2 border-gray-900 p-3 text-lg font-bold text-gray-900 dark:border-gray-50 dark:text-white sm:leading-6"
+                                      type="number"
                                       inputMode="numeric"
                                     />
                                   )}
@@ -475,7 +508,32 @@ export default function ChatMenu({
                                   render={({ field }) => (
                                     <input
                                       {...field}
-                                      type="numeric"
+                                      type="number"
+                                      inputMode="decimal"
+                                      className="w-full border-2 border-gray-900 p-3 text-lg font-bold text-gray-900 dark:border-gray-50 dark:text-white sm:leading-6"
+                                    />
+                                  )}
+                                />
+                              </div>
+                            </div>
+
+                            <div>
+                              <p className="text-sm font-medium leading-6 text-gray-900 dark:text-gray-50">
+                                {t('chat:systemContent')}
+                                {errors.systemContent && (
+                                  <span className="text-xs text-red-500 dark:text-red-300">
+                                    {' : '}
+                                    {t('chat:systemContentErrorText')}
+                                  </span>
+                                )}
+                              </p>
+                              <div className="mt-2">
+                                <Controller
+                                  name="systemContent"
+                                  control={control}
+                                  render={({ field }) => (
+                                    <textarea
+                                      {...field}
                                       className="w-full border-2 border-gray-900 p-3 text-lg font-bold text-gray-900 dark:border-gray-50 dark:text-white sm:leading-6"
                                     />
                                   )}
@@ -515,7 +573,7 @@ export default function ChatMenu({
           className="fixed inset-0 z-10 overflow-y-auto"
           onClose={() => setChatListModalOpen(false)}
         >
-          <div className="min-h-screen px-4 text-center">
+          <div className="px-4 text-center">
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
             {/* This element is to trick the browser into centering the modal contents. */}
@@ -534,25 +592,25 @@ export default function ChatMenu({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="my-8 inline-block w-full max-w-md transform overflow-hidden bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-gray-900">
+              <div className="my-8 inline-block w-full max-w-xl -translate-y-20 transform overflow-hidden bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-gray-900">
                 <div className="flex w-full flex-col bg-white pb-12 dark:bg-gray-900">
                   <div className="flex flex-row items-center justify-center p-4">
                     <LogoHorizontal className="w-24" />
                     <div className="flex-grow" />
-                    <div
+                    <button
                       onClick={() => {
                         setChatListModalOpen(false)
                       }}
-                      className="h-5 w-5"
+                      className="h-5 w-5 hover:cursor-pointer"
                     >
                       <XMarkIcon className="h-5 w-5 text-gray-900 hover:text-gray-800 dark:text-gray-50 dark:hover:text-gray-100" />
-                    </div>
+                    </button>
                   </div>
                   <div className="flex flex-grow flex-col gap-8">
                     <p className="text-center text-lg font-bold">
                       {t('chat:chatList')}
                     </p>
-                    <div className="w-full sm:mx-auto sm:max-w-md">
+                    <div className="w-full sm:mx-auto sm:max-w-xl">
                       <div className="gap-6 px-4 pb-20 sm:px-10">
                         {chatList.map((chat) => (
                           <div

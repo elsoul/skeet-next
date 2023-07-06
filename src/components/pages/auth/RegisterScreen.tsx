@@ -26,6 +26,7 @@ type Inputs = z.infer<typeof schema>
 
 export default function RegisterScreen() {
   const { t, i18n } = useTranslation()
+  const isJapanese = useMemo(() => i18n.language === 'ja', [i18n])
   const [isLoading, setLoading] = useState(false)
   const addToast = useToastMessage()
   const router = useRouter()
@@ -48,7 +49,7 @@ export default function RegisterScreen() {
       if (auth && data.privacy) {
         try {
           setLoading(true)
-          auth.languageCode = i18n.language === 'ja-JP' ? 'ja' : 'en'
+          auth.languageCode = isJapanese ? 'ja' : 'en'
           const userCredential = await createUserWithEmailAndPassword(
             auth,
             data.email,

@@ -289,6 +289,8 @@ export default function ChatBox({
                           alt="User icon"
                           className="aspect-square h-6 w-6 rounded-full sm:h-10 sm:w-10"
                           unoptimized
+                          width={40}
+                          height={40}
                         />
                       </div>
                     )}
@@ -303,6 +305,8 @@ export default function ChatBox({
                             alt="Jake icon"
                             className="aspect-square h-6 w-6 rounded-full sm:h-10 sm:w-10"
                             unoptimized
+                            width={40}
+                            height={40}
                           />
                         </div>
                       )}
@@ -317,6 +321,8 @@ export default function ChatBox({
                             alt="Legend icon"
                             className="aspect-square h-6 w-6 rounded-full sm:h-10 sm:w-10"
                             unoptimized
+                            width={40}
+                            height={40}
                           />
                         </div>
                       )}

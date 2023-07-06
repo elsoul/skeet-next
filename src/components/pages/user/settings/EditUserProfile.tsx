@@ -149,7 +149,7 @@ export default function EditUserProfile() {
                       onClick={() => {
                         setModalOpen(false)
                       }}
-                      className="h-5 w-5"
+                      className="h-5 w-5 hover:cursor-pointer"
                     >
                       <XMarkIcon className="h-5 w-5 text-gray-900 hover:text-gray-800 dark:text-gray-50 dark:hover:text-gray-100" />
                     </button>
