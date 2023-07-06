@@ -140,7 +140,7 @@ export default function EditUserProfile() {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="my-8 inline-block w-full max-w-xl -translate-y-20 transform overflow-hidden bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-gray-900">
+              <div className="my-8 inline-block w-full max-w-xl -translate-y-10 transform overflow-hidden bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-gray-900">
                 <div className="flex w-full flex-col bg-white pb-8 dark:bg-gray-900">
                   <div className="flex flex-row items-center justify-center p-4">
                     <LogoHorizontal className="w-24" />

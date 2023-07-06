@@ -246,8 +246,8 @@ export default function ChatBox({
     <>
       <div className="w-full p-4 sm:flex-1">
         {!currentChatRoomId && (
-          <div className="h-screen-bar-xs sm:h-screen-bar flex w-full flex-col items-center justify-center bg-gray-50 dark:bg-gray-800">
-            <div className="flex flex-col items-center justify-center gap-8 p-4">
+          <div className="flex w-full flex-col items-center justify-center bg-gray-50 dark:bg-gray-800">
+            <div className="flex w-full flex-col items-center justify-center gap-2 p-4">
               <h2 className="text-2xl font-bold text-gray-700 dark:text-gray-200">
                 {t('chat:chatGPTCustom')}
               </h2>
@@ -268,8 +268,8 @@ export default function ChatBox({
           </div>
         )}
         {currentChatRoomId && (
-          <div className="h-screen-bar-xs sm:h-screen-bar flex w-full flex-col justify-between gap-4">
-            <div className="flex flex-1">
+          <div className="flex w-full flex-col justify-between gap-4">
+            <div className="flex w-full flex-1">
               <div className="pb-24">
                 {chatMessages.map((chatMessage) => (
                   <div
@@ -279,7 +279,7 @@ export default function ChatBox({
                         'bg-gray-100 dark:bg-gray-700',
                       chatMessage.role === 'assistant' &&
                         'bg-blue-50 dark:bg-gray-800',
-                      'flex flex-row items-start justify-start gap-4 p-4 md:gap-8'
+                      'flex flex-row items-start justify-start gap-4 p-4 md:gap-6'
                     )}
                   >
                     {chatMessage.role === 'user' && (

@@ -303,9 +303,9 @@ export default function ChatMenu({
 
   return (
     <>
-      <div className="sm:h-screen-bar flex w-full flex-col items-center justify-start sm:w-64">
-        <div className="w-full px-4 sm:hidden">
-          <div className="flex flex-row items-center justify-center">
+      <div className="flex w-full flex-col items-center justify-start sm:w-64">
+        <div className="w-full sm:hidden">
+          <div className="flex w-full flex-row items-center justify-center">
             <button
               onClick={() => {
                 setChatListModalOpen(true)
@@ -335,8 +335,8 @@ export default function ChatMenu({
             </button>
           </div>
         </div>
-        <div className="h-screen-bar-xs sm:h-screen-bar hidden w-full p-2 sm:flex">
-          <div className="flex flex-col gap-6">
+        <div className="hidden w-full p-2 sm:flex">
+          <div className="flex w-full flex-col gap-6">
             <button
               onClick={() => {
                 setNewChatModalOpen(true)
@@ -360,7 +360,7 @@ export default function ChatMenu({
                   className={clsx(
                     currentChatRoomId === chat.id &&
                       'border-2 border-gray-900 dark:border-gray-50',
-                    'flex flex-row items-start justify-start gap-2 bg-gray-50 p-2 dark:bg-gray-800'
+                    'flex flex-row items-start justify-start gap-2 bg-gray-50 p-2 hover:cursor-pointer dark:bg-gray-800'
                   )}
                 >
                   <ChatBubbleLeftIcon
@@ -396,7 +396,7 @@ export default function ChatMenu({
           className="fixed inset-0 z-10 overflow-y-auto"
           onClose={() => setNewChatModalOpen(false)}
         >
-          <div className="px-4 text-center">
+          <div className="text-center">
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
             {/* This element is to trick the browser into centering the modal contents. */}
@@ -415,7 +415,7 @@ export default function ChatMenu({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="my-8 inline-block w-full max-w-xl -translate-y-20 transform overflow-hidden bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-gray-900">
+              <div className="my-8 inline-block w-full max-w-xl -translate-y-10 transform overflow-hidden bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-gray-900">
                 <div className="flex w-full flex-col pb-8">
                   <div className="flex flex-row items-center justify-center p-4">
                     <LogoHorizontal className="w-24" />
@@ -429,14 +429,14 @@ export default function ChatMenu({
                       <XMarkIcon className="h-5 w-5" />
                     </button>
                   </div>
-                  <div className="flex flex-grow flex-col gap-8">
+                  <div className="flex flex-grow flex-col gap-2">
                     <p className="text-center text-lg font-bold">
                       {t('chat:newChat')}
                     </p>
                     <div className="w-full sm:mx-auto sm:max-w-xl">
-                      <div className="gap-6 px-4 sm:px-10">
+                      <div className="gap-6  sm:px-10">
                         <form onSubmit={handleSubmit(onSubmit)}>
-                          <div className="flex flex-col gap-6 px-4 py-6 sm:px-10">
+                          <div className="flex flex-col gap-6  py-6 sm:px-10">
                             <div>
                               <p className="text-sm font-medium leading-6 text-gray-900 dark:text-gray-50">
                                 {t('chat:model')}
@@ -573,7 +573,7 @@ export default function ChatMenu({
           className="fixed inset-0 z-10 overflow-y-auto"
           onClose={() => setChatListModalOpen(false)}
         >
-          <div className="px-4 text-center">
+          <div className=" text-center">
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
             {/* This element is to trick the browser into centering the modal contents. */}
@@ -592,7 +592,7 @@ export default function ChatMenu({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="my-8 inline-block w-full max-w-xl -translate-y-20 transform overflow-hidden bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-gray-900">
+              <div className="my-8 inline-block w-full max-w-xl -translate-y-10 transform overflow-hidden bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-gray-900">
                 <div className="flex w-full flex-col bg-white pb-12 dark:bg-gray-900">
                   <div className="flex flex-row items-center justify-center p-4">
                     <LogoHorizontal className="w-24" />
@@ -606,12 +606,12 @@ export default function ChatMenu({
                       <XMarkIcon className="h-5 w-5 text-gray-900 hover:text-gray-800 dark:text-gray-50 dark:hover:text-gray-100" />
                     </button>
                   </div>
-                  <div className="flex flex-grow flex-col gap-8">
+                  <div className="flex w-full flex-grow flex-col gap-2">
                     <p className="text-center text-lg font-bold">
                       {t('chat:chatList')}
                     </p>
                     <div className="w-full sm:mx-auto sm:max-w-xl">
-                      <div className="gap-6 px-4 pb-20 sm:px-10">
+                      <div className="flex flex-col gap-3  pb-20 sm:px-10">
                         {chatList.map((chat) => (
                           <div
                             onClick={() => {
@@ -622,7 +622,7 @@ export default function ChatMenu({
                             className={clsx(
                               currentChatRoomId === chat.id &&
                                 'border-2 border-gray-900 dark:border-gray-50',
-                              'flex flex-row items-start justify-start gap-2 bg-gray-50 p-2 dark:bg-gray-800'
+                              'flex flex-row items-start justify-start gap-2 bg-gray-50 p-2 hover:cursor-pointer dark:bg-gray-800'
                             )}
                           >
                             <ChatBubbleLeftIcon
