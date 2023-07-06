@@ -137,7 +137,6 @@ export default function ChatBox({
 
   const onSubmit = useCallback(
     async (data: Inputs) => {
-      console.log(isSending)
       if (isSending) return
       try {
         setSending(true)
@@ -174,43 +173,33 @@ export default function ChatBox({
           const reader = await res?.body?.getReader()
           const decoder = new TextDecoder('utf-8')
 
-          const readChunk = async () => {
-            return reader?.read().then(({ value, done }): any => {
-              try {
-                if (!done) {
-                  const dataString = decoder.decode(value)
-                  if (dataString != 'Stream done') {
-                    const data = JSON.parse(dataString)
-                    setChatMessages((prev) => {
-                      const chunkSize = data.text.length
-                      if (prev[prev.length - 1].content.length === 0) {
-                        prev[prev.length - 1].content =
-                          prev[prev.length - 1].content + data.text
-                      }
-                      if (
-                        !prev[prev.length - 1].content
-                          .slice(chunkSize * -1)
-                          .includes(data.text)
-                      ) {
-                        prev[prev.length - 1].content =
-                          prev[prev.length - 1].content + data.text
-                      }
-
-                      return [...prev]
-                    })
+          while (true && reader) {
+            const { value, done } = await reader.read()
+            if (done) break
+            try {
+              const dataString = decoder.decode(value)
+              if (dataString != 'Stream done') {
+                const data = JSON.parse(dataString)
+                setChatMessages((prev) => {
+                  const chunkSize = data.text.length
+                  if (prev[prev.length - 1].content.length === 0) {
+                    prev[prev.length - 1].content =
+                      prev[prev.length - 1].content + data.text
                   }
-                } else {
-                  // done
-                }
-              } catch (error) {
-                console.log(error)
+                  if (
+                    !prev[prev.length - 1].content
+                      .slice(chunkSize * -1)
+                      .includes(data.text)
+                  ) {
+                    prev[prev.length - 1].content =
+                      prev[prev.length - 1].content + data.text
+                  }
+
+                  return [...prev]
+                })
               }
-              if (!done) {
-                return readChunk()
-              }
-            })
+            } catch {}
           }
-          await readChunk()
 
           if (chatRoom && chatRoom.title == '') {
             await getChatRoom()

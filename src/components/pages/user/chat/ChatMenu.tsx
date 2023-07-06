@@ -99,7 +99,7 @@ export default function ChatMenu({
     resolver: zodResolver(schema),
     defaultValues: {
       model: 'gpt-3.5-turbo',
-      maxTokens: 100,
+      maxTokens: 1000,
       temperature: 1,
       systemContent: isJapanese
         ? 'あなたは、親切で、創造的で、賢く、とてもフレンドリーなアシスタントです。'
@@ -488,6 +488,13 @@ export default function ChatMenu({
                                       className="w-full border-2 border-gray-900 p-3 text-lg font-bold text-gray-900 dark:border-gray-50 dark:text-white sm:leading-6"
                                       type="number"
                                       inputMode="numeric"
+                                      onChange={(e) =>
+                                        field.onChange(
+                                          e.target.value
+                                            ? parseFloat(e.target.value)
+                                            : 0
+                                        )
+                                      }
                                     />
                                   )}
                                 />
@@ -513,6 +520,13 @@ export default function ChatMenu({
                                       type="number"
                                       inputMode="decimal"
                                       className="w-full border-2 border-gray-900 p-3 text-lg font-bold text-gray-900 dark:border-gray-50 dark:text-white sm:leading-6"
+                                      onChange={(e) =>
+                                        field.onChange(
+                                          e.target.value
+                                            ? parseFloat(e.target.value)
+                                            : 0
+                                        )
+                                      }
                                     />
                                   )}
                                 />
