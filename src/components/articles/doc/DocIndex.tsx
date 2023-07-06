@@ -27,9 +27,7 @@ const actions = [
   },
 ]
 
-type Props = {}
-
-export default function DocIndex({}: Props) {
+export default function DocIndex() {
   const { t } = useTranslation()
 
   return (

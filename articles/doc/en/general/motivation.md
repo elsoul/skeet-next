@@ -1,7 +1,7 @@
 ---
 id: motivation
 title: Motivation
-description: Media SSG Template Motivation
+description: Next.js Template Motivation
 ---
 
 ## Aiming to
@@ -13,5 +13,3 @@ description: Media SSG Template Motivation
 - Strong SEO
 
 We provide a development platform that allows you to focus on the essence of your business.
-
-You can start the media as even open-source!

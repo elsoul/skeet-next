@@ -161,7 +161,7 @@ export default function ChatMenu({
         }
       }
     }
-  }, [chatList, lastChat, t, user.uid, setDataLoading])
+  }, [chatList, lastChat, t, user.uid, setDataLoading, addToast, logout])
 
   const chatMenuRef = useRef<HTMLDivElement>(null)
   const chatMenuRefMobile = useRef<HTMLDivElement>(null)
@@ -188,7 +188,7 @@ export default function ChatMenu({
         queryMore()
       }
     }
-  }, [queryMore, chatMenuRef])
+  }, [queryMore, chatMenuRefMobile])
 
   useEffect(() => {
     if (db && user.uid) {
@@ -233,7 +233,7 @@ export default function ChatMenu({
         }
       }
     }
-  }, [user.uid, t])
+  }, [user.uid, t, addToast, logout])
 
   const isDisabled = useMemo(() => {
     return (
@@ -307,7 +307,15 @@ export default function ChatMenu({
         setCreateLoading(false)
       }
     },
-    [setNewChatModalOpen, t, setCreateLoading, isDisabled, setCurrentChatRoomId]
+    [
+      setNewChatModalOpen,
+      t,
+      setCreateLoading,
+      isDisabled,
+      setCurrentChatRoomId,
+      addToast,
+      logout,
+    ]
   )
 
   const onKeyDown = useCallback(

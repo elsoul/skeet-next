@@ -61,7 +61,7 @@ export default function AuthLayout({ children }: Props) {
         await logout()
       }
     },
-    [setUser, initializing, setInitializing]
+    [setUser, initializing, setInitializing, logout, router]
   )
 
   useEffect(() => {

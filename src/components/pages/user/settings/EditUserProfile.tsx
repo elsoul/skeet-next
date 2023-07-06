@@ -84,7 +84,7 @@ export default function EditUserProfile() {
         }
       }
     },
-    [t, user, setUser]
+    [t, user, setUser, addToast, logout, setModalOpen, setLoading]
   )
 
   const isDisabled = useMemo(

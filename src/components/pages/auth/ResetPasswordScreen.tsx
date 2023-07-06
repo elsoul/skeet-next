@@ -76,7 +76,7 @@ export default function ResetPasswordScreen() {
         }
       }
     },
-    [t]
+    [t, addToast, router]
   )
 
   const isDisabled = useMemo(

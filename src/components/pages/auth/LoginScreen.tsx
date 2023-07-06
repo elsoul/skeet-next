@@ -87,7 +87,7 @@ export default function LoginScreen() {
         }
       }
     },
-    [t]
+    [t, addToast]
   )
 
   const isDisabled = useMemo(
