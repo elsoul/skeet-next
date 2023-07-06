@@ -20,11 +20,11 @@
     "update:packages": "ncu -u -x 'node-fetch,glob' && yarn",
     "dev": "next dev -p 4200",
     "build": "next build && next export -o web-build",
-    "postbuild": "npx ts-node ./scripts/generateSitemap.ts",
+    "postbuild": "npx ts-node -r tsconfig-paths/register --transpile-only ./scripts/generateSitemap.ts",
     "deploy": "yarn build && npx firebase deploy",
     "deploy:rules": "npx firebase deploy --only firestore:rules,storage",
     "check:webapp": "npx serve web-build",
-    "send:sitemap": "npx ts-node ./scripts/sendSitemap.ts"
+    "send:sitemap": "npx ts-node -r tsconfig-paths/register --transpile-only ./scripts/sendSitemap.ts"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "6.4.0",
