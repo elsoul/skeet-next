@@ -296,10 +296,7 @@ export default function UserLayout({ children }: Props) {
           </div>
 
           <div className="py-6">
-            <div
-              id={mainContentId}
-              className="mx-auto min-h-screen px-4 sm:px-6 lg:max-w-7xl lg:px-8"
-            >
+            <div id={mainContentId} className="mx-auto px-4 sm:px-6 lg:px-8">
               {children}
             </div>
           </div>
