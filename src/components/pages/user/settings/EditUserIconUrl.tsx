@@ -194,8 +194,8 @@ export default function EditUserIconUrl() {
                           <Image
                             src={imageUrl}
                             alt="User icon"
-                            width="12"
-                            height="12"
+                            width={12}
+                            height={12}
                             className="mx-auto h-16 w-16"
                           />
                         </>

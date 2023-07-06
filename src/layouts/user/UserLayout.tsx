@@ -235,14 +235,16 @@ export default function UserLayout({ children }: Props) {
               <Menu as="div" className="lg:mt-2">
                 <Menu.Button className="flex max-w-xs items-center text-sm text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:text-gray-50 dark:hover:text-gray-200">
                   <span className="sr-only">Open other menu</span>
-                  <Image
-                    src={user.iconUrl}
-                    className="h-8 w-8 rounded-full  lg:h-10 lg:w-10"
-                    unoptimized
-                    alt="User icon"
-                    width="32"
-                    height="32"
-                  />
+                  {user.iconUrl && (
+                    <Image
+                      src={user.iconUrl}
+                      className="h-8 w-8 rounded-full lg:h-10 lg:w-10"
+                      unoptimized
+                      alt="User icon"
+                      width={32}
+                      height={32}
+                    />
+                  )}
                 </Menu.Button>
 
                 <Transition
