@@ -87,17 +87,6 @@ export default function ChatBox({
     return (chatContent.match(/\n/g) || []).length + 1
   }, [chatContent])
 
-  // const scrollViewRef = useRef<ScrollView>(null)
-  // const scrollToEnd = useCallback(() => {
-  //   if (currentChatRoomId) {
-  //     scrollViewRef.current?.scrollToEnd({ animated: false })
-  //   }
-  // }, [scrollViewRef, currentChatRoomId])
-  // useEffect(() => {
-  //   if (chatMessages.length > 0) {
-  //     scrollToEnd()
-  //   }
-  // }, [chatMessages, scrollToEnd])
   const [isFirstMessage, setFirstMessage] = useState(true)
 
   const getChatRoom = useCallback(async () => {
