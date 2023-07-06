@@ -54,6 +54,8 @@ code {
   width: 100%;
   max-width: calc(100vw - 64px);
   border-radius: 0;
+  margin-top: 32px;
+  margin-bottom: 32px;
 }
 
 @layer utilities {

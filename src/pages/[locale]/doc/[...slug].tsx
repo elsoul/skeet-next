@@ -58,6 +58,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     articleDirPrefix,
     (params.locale as string) ?? 'en'
   )
+  console.log(article.content)
 
   const articleHtml = await unified()
     .use(remarkParse)

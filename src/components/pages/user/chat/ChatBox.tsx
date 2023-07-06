@@ -31,6 +31,16 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { TextDecoder } from 'text-encoding'
 import useToastMessage from '@/hooks/useToastMessage'
 import useLogout from '@/hooks/useLogout'
+import { unified } from 'unified'
+import remarkParse from 'remark-parse'
+import remark2Rehype from 'remark-rehype'
+import rehypeHighlight from 'rehype-highlight'
+import rehypeStringify from 'rehype-stringify'
+import rehypeCodeTitles from 'rehype-code-titles'
+import remarkSlug from 'remark-slug'
+import remarkGfm from 'remark-gfm'
+import remarkDirective from 'remark-directive'
+import remarkExternalLinks from 'remark-external-links'
 
 type ChatMessage = {
   id: string
@@ -125,13 +135,30 @@ export default function ChatBox({
       )
       const querySnapshot = await getDocs(q)
       const messages: ChatMessage[] = []
-      querySnapshot.forEach((doc) => {
-        const data = doc.data()
+      for await (const qs of querySnapshot.docs) {
+        const data = qs.data()
+        const html = await unified()
+          .use(remarkParse)
+          .use(remarkDirective)
+          .use(remarkGfm)
+          .use(remarkSlug)
+          .use(remarkExternalLinks, {
+            target: '_blank',
+            rel: ['noopener noreferrer'],
+          })
+          .use(remark2Rehype)
+          .use(rehypeCodeTitles)
+          .use(rehypeHighlight)
+          .use(rehypeStringify)
+          .process(data.content as string)
+
         messages.push({
-          id: doc.id,
+          id: qs.id,
           ...data,
+          content: html.value,
         } as ChatMessage)
-      })
+      }
+
       setChatMessages(messages)
     }
   }, [currentChatRoomId, user.uid])
@@ -377,9 +404,13 @@ export default function ChatBox({
                           </p>
                         </div>
                       )}
-                      <p className="my-3 font-normal text-gray-900 dark:text-white">
-                        {chatMessage.content}
-                      </p>
+
+                      <div
+                        className="my-3 font-normal text-gray-900 dark:text-white"
+                        dangerouslySetInnerHTML={{
+                          __html: chatMessage.content,
+                        }}
+                      />
                     </div>
                   </div>
                 </div>
