@@ -20,23 +20,24 @@ export default function VerifyEmailAction({ oobCode }: Props) {
   const addToast = useToastMessage()
 
   const verifyUser = useCallback(async () => {
-    try {
-      if (!auth) throw new Error('auth not initialized')
-      await applyActionCode(auth, oobCode)
-      addToast({
-        type: 'success',
-        title: t('auth:verifySuccessTitle'),
-        description: t('auth:verifySuccessBody'),
-      })
-      setLoading(false)
-    } catch (err) {
-      console.error(err)
-      addToast({
-        type: 'error',
-        title: t('auth:verifyErrorTitle'),
-        description: t('auth:verifyErrorBody'),
-      })
-      router.push('/auth/login')
+    if (auth) {
+      try {
+        await applyActionCode(auth, oobCode)
+        addToast({
+          type: 'success',
+          title: t('auth:verifySuccessTitle'),
+          description: t('auth:verifySuccessBody'),
+        })
+        setLoading(false)
+      } catch (err) {
+        console.error(err)
+        addToast({
+          type: 'error',
+          title: t('auth:verifyErrorTitle'),
+          description: t('auth:verifyErrorBody'),
+        })
+        router.push('/auth/login')
+      }
     }
   }, [router, t, oobCode, addToast])
 

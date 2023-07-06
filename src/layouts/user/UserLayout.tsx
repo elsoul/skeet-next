@@ -47,17 +47,16 @@ export default function UserLayout({ children }: Props) {
     })()
   }, [router.asPath, resetWindowScrollPosition])
 
-  const [initializing, setInitializing] = useState(true)
   const [user, setUser] = useRecoilState(userState)
   const logout = useLogout()
 
   const onAuthStateChanged = useCallback(
     async (fbUser: User | null) => {
-      if (initializing) setInitializing(false)
       if (auth && db && fbUser && fbUser.emailVerified) {
         const docRef = doc(db, 'User', fbUser.uid)
         const docSnap = await getDoc(docRef)
         if (docSnap.exists()) {
+          console.log('set')
           setUser({
             uid: fbUser.uid,
             email: fbUser.email ?? '',
@@ -66,23 +65,26 @@ export default function UserLayout({ children }: Props) {
             emailVerified: fbUser.emailVerified,
           })
         } else {
-          await logout()
+          logout()
           router.push('/auth/login')
         }
       } else {
-        await logout()
+        logout()
         router.push('/auth/login')
       }
     },
-    [setUser, initializing, setInitializing, logout, router]
+    [setUser, logout, router]
   )
 
   useEffect(() => {
+    let subscriber = () => {}
+
     if (auth) {
-      const subscriber = auth.onAuthStateChanged(onAuthStateChanged)
-      return subscriber
+      subscriber = auth.onAuthStateChanged(onAuthStateChanged)
     }
-  }, [onAuthStateChanged])
+    return () => subscriber()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
@@ -277,8 +279,8 @@ export default function UserLayout({ children }: Props) {
                     <Menu.Item>
                       {({ active }) => (
                         <p
-                          onClick={async () => {
-                            await logout()
+                          onClick={() => {
+                            logout()
                           }}
                           className={clsx(
                             active

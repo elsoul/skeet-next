@@ -4,10 +4,10 @@ import { auth } from '@/lib/firebase'
 import { signOut } from 'firebase/auth'
 
 export default function useLogout() {
-  const logout = useRecoilCallback(({ reset }) => async () => {
+  const logout = useRecoilCallback(({ reset }) => () => {
     if (auth) {
       reset(userState)
-      await signOut(auth)
+      signOut(auth)
     }
   })
   return logout

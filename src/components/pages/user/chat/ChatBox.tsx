@@ -266,9 +266,8 @@ export default function ChatBox({
             title: t('errorTokenExpiredTitle'),
             description: t('errorTokenExpiredBody'),
           })
-          if (auth) {
-            await logout()
-          }
+
+          logout()
         } else {
           addToast({
             type: 'error',

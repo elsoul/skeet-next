@@ -114,6 +114,7 @@ export default function ChatMenu({
   const [isDataLoading, setDataLoading] = useState(false)
 
   const queryMore = useCallback(async () => {
+    let unsubscribe = () => {}
     if (db && user.uid && lastChat) {
       try {
         const q = query(
@@ -123,7 +124,7 @@ export default function ChatMenu({
           startAfter(lastChat)
         )
 
-        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        unsubscribe = onSnapshot(q, (querySnapshot) => {
           setDataLoading(true)
           const list: ChatRoom[] = []
           querySnapshot.forEach((doc) => {
@@ -139,8 +140,6 @@ export default function ChatMenu({
           }
           setDataLoading(false)
         })
-
-        return () => unsubscribe()
       } catch (err) {
         console.log(err)
         if (err instanceof Error && err.message.includes('permission-denied')) {
@@ -161,6 +160,7 @@ export default function ChatMenu({
         }
       }
     }
+    return () => unsubscribe()
   }, [chatList, lastChat, t, user.uid, setDataLoading, addToast, logout])
 
   const chatMenuRef = useRef<HTMLDivElement>(null)
@@ -191,6 +191,8 @@ export default function ChatMenu({
   }, [queryMore, chatMenuRefMobile])
 
   useEffect(() => {
+    let unsubscribe = () => {}
+
     if (db && user.uid) {
       try {
         const q = query(
@@ -199,7 +201,7 @@ export default function ChatMenu({
           limit(15)
         )
 
-        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        unsubscribe = onSnapshot(q, (querySnapshot) => {
           setDataLoading(true)
           const list: ChatRoom[] = []
           querySnapshot.forEach((doc) => {
@@ -210,8 +212,6 @@ export default function ChatMenu({
           setLastChat(querySnapshot.docs[querySnapshot.docs.length - 1])
           setDataLoading(false)
         })
-
-        return () => unsubscribe()
       } catch (err) {
         console.log(err)
         if (err instanceof Error && err.message.includes('permission-denied')) {
@@ -233,6 +233,7 @@ export default function ChatMenu({
         }
       }
     }
+    return () => unsubscribe()
   }, [user.uid, t, addToast, logout])
 
   const isDisabled = useMemo(() => {
@@ -292,9 +293,8 @@ export default function ChatMenu({
             title: t('errorTokenExpiredTitle'),
             description: t('errorTokenExpiredBody'),
           })
-          if (auth) {
-            logout()
-          }
+
+          logout()
         } else {
           addToast({
             type: 'error',
