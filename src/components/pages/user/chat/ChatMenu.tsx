@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next'
 import clsx from 'clsx'
 import {
   ChatBubbleLeftIcon,
-  ChevronDownIcon,
   PlusCircleIcon,
   QueueListIcon,
   XMarkIcon,
@@ -120,7 +119,7 @@ export default function ChatMenu({
         const q = query(
           collection(db, `User/${user.uid}/UserChatRoom`),
           orderBy('createdAt', 'desc'),
-          limit(20),
+          limit(15),
           startAfter(lastChat)
         )
 
@@ -164,23 +163,32 @@ export default function ChatMenu({
     }
   }, [chatList, lastChat, t, user.uid, setDataLoading])
 
-  // const scrollViewRef = useRef<ScrollView>(null)
-  // const scrollViewRefModal = useRef<ScrollView>(null)
+  const chatMenuRef = useRef<HTMLDivElement>(null)
+  const chatMenuRefMobile = useRef<HTMLDivElement>(null)
 
-  // const handleScroll = useCallback(
-  //   (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-  //     const { layoutMeasurement, contentOffset, contentSize } =
-  //       event.nativeEvent
+  const handleScroll = useCallback(() => {
+    const current = chatMenuRef.current
+    if (current) {
+      const isBottom =
+        current.scrollHeight - current.scrollTop === current.clientHeight
+      if (isBottom) {
+        queryMore()
+      }
+    }
+  }, [queryMore, chatMenuRef])
 
-  //     const isScrolledToBottom =
-  //       layoutMeasurement.height + contentOffset.y >= contentSize.height
+  const handleScrollMobile = useCallback(() => {
+    const current = chatMenuRefMobile.current
 
-  //     if (isScrolledToBottom && !reachLast) {
-  //       queryMore()
-  //     }
-  //   },
-  //   [queryMore, reachLast]
-  // )
+    if (current) {
+      const isBottom =
+        Math.floor(current.scrollHeight - current.scrollTop) ===
+        current.clientHeight
+      if (isBottom) {
+        queryMore()
+      }
+    }
+  }, [queryMore, chatMenuRef])
 
   useEffect(() => {
     if (db && user.uid) {
@@ -345,7 +353,11 @@ export default function ChatMenu({
             </button>
           </div>
         </div>
-        <div className="content-height hidden w-full overflow-auto p-2 sm:flex">
+        <div
+          ref={chatMenuRef}
+          onScroll={handleScroll}
+          className="content-height hidden w-full overflow-auto p-2 sm:flex"
+        >
           <div className="flex w-full flex-col gap-6">
             <button
               onClick={() => {
@@ -390,7 +402,6 @@ export default function ChatMenu({
                         {t('noTitle')}
                       </p>
                     )}
-
                     <p className="text-sm font-light text-gray-700 dark:text-gray-200">
                       {format(chat.createdAt.toDate(), 'yyyy-MM-dd HH:mm')}
                     </p>
@@ -597,12 +608,13 @@ export default function ChatMenu({
       <Transition appear show={isChatListModalOpen} as={Fragment}>
         <Dialog
           as="div"
+          ref={chatMenuRefMobile}
+          onScroll={handleScrollMobile}
           className="fixed inset-0 z-10 overflow-y-auto"
           onClose={() => setChatListModalOpen(false)}
         >
           <div className=" text-center">
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
-
             {/* This element is to trick the browser into centering the modal contents. */}
             <span
               className="inline-block h-screen align-middle"
