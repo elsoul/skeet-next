@@ -105,7 +105,7 @@ export default function EditUserProfile() {
       <div className="flex flex-row justify-center p-2 sm:justify-start">
         <button
           className={clsx(
-            'flex flex-row items-center px-2 py-2 text-sm font-medium text-gray-900 dark:text-gray-50 '
+            'flex flex-row items-center px-2 py-2 text-sm font-medium text-gray-900 hover:text-gray-700 dark:text-gray-50 dark:hover:text-gray-300'
           )}
           onClick={() => {
             setModalOpen(true)

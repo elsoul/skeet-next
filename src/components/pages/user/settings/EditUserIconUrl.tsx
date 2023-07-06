@@ -115,16 +115,14 @@ export default function EditUserIconUrl() {
       <div className="flex w-full flex-col items-center justify-center">
         <button
           className={clsx(
-            'flex flex-row items-center px-2 py-2 text-sm font-medium text-gray-900 dark:text-gray-50'
+            'flex flex-row items-center px-2 py-2 text-sm font-medium text-gray-900 hover:text-gray-700 dark:text-gray-50 dark:hover:text-gray-300'
           )}
           onClick={() => {
             setModalOpen(true)
           }}
         >
           <PencilSquareIcon className="mr-3 h-6 w-6 flex-shrink-0" />
-          <span className="font-loaded-medium py-2 text-gray-900 dark:text-gray-50">
-            {t('settings:editIconUrl')}
-          </span>
+          <span>{t('settings:editIconUrl')}</span>
         </button>
       </div>
       <Transition appear show={isModalOpen} as={Fragment}>
