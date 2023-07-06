@@ -62,6 +62,13 @@ export default function ChatBox({
   const addToast = useToastMessage()
   const logout = useLogout()
 
+  const chatContentRef = useRef<HTMLDivElement>(null)
+  const scrollToEnd = useCallback(() => {
+    if (currentChatRoomId && chatContentRef.current) {
+      chatContentRef.current.scrollTop = chatContentRef.current.scrollHeight
+    }
+  }, [chatContentRef, currentChatRoomId])
+
   const {
     handleSubmit,
     formState: { errors },
@@ -143,6 +150,12 @@ export default function ChatBox({
   useEffect(() => {
     getUserChatRoomMessage()
   }, [getUserChatRoomMessage])
+
+  useEffect(() => {
+    if (chatMessages.length > 0) {
+      scrollToEnd()
+    }
+  }, [chatMessages, scrollToEnd])
 
   const isDisabled = useMemo(() => {
     return isSending || errors.chatContent != null
@@ -299,6 +312,7 @@ export default function ChatBox({
         {currentChatRoomId && (
           <div className="flex h-full w-full flex-col justify-between gap-4">
             <div
+              ref={chatContentRef}
               className={clsx(
                 chatContentLines > 4
                   ? 'chat-height-5'
