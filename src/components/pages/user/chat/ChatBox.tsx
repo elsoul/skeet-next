@@ -1,7 +1,14 @@
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import { PaperAirplaneIcon, PlusCircleIcon } from '@heroicons/react/24/outline'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  KeyboardEvent,
+} from 'react'
 import { useRecoilValue } from 'recoil'
 import { userState } from '@/store/user'
 import { auth, db } from '@/lib/firebase'
@@ -60,12 +67,18 @@ export default function ChatBox({
     formState: { errors },
     control,
     reset,
+    watch,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
       chatContent: '',
     },
   })
+
+  const chatContent = watch('chatContent')
+  const chatContentLines = useMemo(() => {
+    return (chatContent.match(/\n/g) || []).length + 1
+  }, [chatContent])
 
   // const scrollViewRef = useRef<ScrollView>(null)
   // const scrollToEnd = useCallback(() => {
@@ -249,12 +262,21 @@ export default function ChatBox({
     ]
   )
 
+  const onKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
+        handleSubmit(onSubmit)()
+      }
+    },
+    [handleSubmit, onSubmit]
+  )
+
   return (
     <>
-      <div className="w-full pt-4 sm:flex-1 sm:px-4">
+      <div className="content-height-mobile sm:content-height w-full overflow-auto pt-4 sm:flex-1 sm:px-4 sm:pt-0">
         {!currentChatRoomId && (
-          <div className="flex w-full flex-col items-center justify-center bg-gray-50 dark:bg-gray-800">
-            <div className="flex w-full flex-col items-center justify-center gap-2 p-4">
+          <div className="flex h-full w-full flex-col items-center justify-center bg-gray-50 dark:bg-gray-800">
+            <div className="flex w-full max-w-md flex-col items-center justify-center gap-6 p-4">
               <h2 className="text-2xl font-bold text-gray-700 dark:text-gray-200">
                 {t('chat:chatGPTCustom')}
               </h2>
@@ -263,7 +285,7 @@ export default function ChatBox({
                   setNewChatModalOpen(true)
                 }}
                 className={clsx(
-                  'flex w-full flex-row items-center justify-center gap-4 bg-gray-900 px-3 py-2 hover:cursor-pointer dark:bg-gray-600'
+                  'flex w-full flex-row items-center justify-center gap-4 bg-gray-900 px-3 py-2 hover:cursor-pointer hover:bg-gray-700 dark:bg-gray-600 dark:hover:bg-gray-400'
                 )}
               >
                 <PlusCircleIcon className="h-6 w-6 text-white" />
@@ -275,25 +297,38 @@ export default function ChatBox({
           </div>
         )}
         {currentChatRoomId && (
-          <div className="flex w-full flex-col justify-between gap-4">
-            <div className="flex w-full flex-1">
-              <div className="w-full pb-24">
-                {chatMessages.map((chatMessage) => (
-                  <div
-                    key={chatMessage.id}
-                    className={clsx(
-                      chatMessage.role === 'system' &&
-                        'bg-gray-100 dark:bg-gray-700',
-                      chatMessage.role === 'assistant' &&
-                        'bg-blue-50 dark:bg-gray-800',
-                      'flex flex-row items-start justify-start gap-4 p-4 md:gap-6'
-                    )}
-                  >
+          <div className="flex h-full w-full flex-col justify-between gap-4">
+            <div
+              className={clsx(
+                chatContentLines > 4
+                  ? 'chat-height-5'
+                  : chatContentLines == 4
+                  ? 'chat-height-4'
+                  : chatContentLines == 3
+                  ? 'chat-height-3'
+                  : chatContentLines == 2
+                  ? 'chat-height-2'
+                  : 'chat-height-1',
+                'w-full overflow-auto pb-24'
+              )}
+            >
+              {chatMessages.map((chatMessage) => (
+                <div
+                  key={chatMessage.id}
+                  className={clsx(
+                    chatMessage.role === 'system' &&
+                      'bg-gray-50 dark:bg-gray-800',
+                    chatMessage.role === 'assistant' &&
+                      'bg-gray-50 dark:bg-gray-800',
+                    'p-4'
+                  )}
+                >
+                  <div className="mx-auto flex max-w-3xl flex-row items-start justify-start gap-4 md:gap-6">
                     {chatMessage.role === 'user' && (
                       <Image
                         src={user.iconUrl}
                         alt="User icon"
-                        className="aspect-square h-6 w-6 rounded-full sm:h-10 sm:w-10"
+                        className="my-3 aspect-square h-6 w-6 rounded-full sm:h-10 sm:w-10"
                         unoptimized
                         width={40}
                         height={40}
@@ -307,7 +342,7 @@ export default function ChatBox({
                             'https://storage.googleapis.com/epics-bucket/BuidlersCollective/Jake.png'
                           }
                           alt="Jake icon"
-                          className="aspect-square h-6 w-6 rounded-full sm:h-10 sm:w-10"
+                          className="my-3 aspect-square h-6 w-6 rounded-full sm:h-10 sm:w-10"
                           unoptimized
                           width={40}
                           height={40}
@@ -321,7 +356,7 @@ export default function ChatBox({
                             'https://storage.googleapis.com/epics-bucket/BuidlersCollective/Legend.png'
                           }
                           alt="Legend icon"
-                          className="aspect-square h-6 w-6 rounded-full sm:h-10 sm:w-10"
+                          className="my-3 aspect-square h-6 w-6 rounded-full sm:h-10 sm:w-10"
                           unoptimized
                           width={40}
                           height={40}
@@ -339,26 +374,37 @@ export default function ChatBox({
                           </p>
                         </div>
                       )}
-                      <p className="font-normal text-gray-900 dark:text-white">
+                      <p className="my-3 font-normal text-gray-900 dark:text-white">
                         {chatMessage.content}
                       </p>
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
 
             <div className="flex w-full flex-row items-end gap-4">
               <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-                <div className="flex w-full flex-row items-end justify-between gap-4">
+                <div className="mx-auto flex w-full max-w-3xl flex-row items-end justify-between gap-4">
                   <Controller
                     name="chatContent"
                     control={control}
                     render={({ field }) => (
                       <textarea
                         {...field}
-                        className="flex-1 border-2 border-gray-900 p-1 text-sm font-normal text-gray-900 dark:border-gray-50 dark:text-white sm:text-lg"
-                        rows={5}
+                        onKeyDown={onKeyDown}
+                        className={clsx(
+                          chatContentLines > 4
+                            ? 'h-48'
+                            : chatContentLines == 4
+                            ? 'h-36'
+                            : chatContentLines == 3
+                            ? 'h-28'
+                            : chatContentLines == 2
+                            ? 'h-20'
+                            : `h-10`,
+                          'flex-1 border-2 border-gray-900 p-1 font-normal text-gray-900 dark:border-gray-50 dark:text-white sm:text-lg'
+                        )}
                       />
                     )}
                   />
@@ -367,7 +413,7 @@ export default function ChatBox({
                     type="submit"
                     disabled={isDisabled}
                     className={clsx(
-                      'flex h-10 w-10 flex-row items-center justify-center  px-3 py-2',
+                      'flex h-10 w-10 flex-row items-center justify-center',
                       isDisabled
                         ? 'bg-gray-300 hover:cursor-wait dark:bg-gray-800 dark:text-gray-400'
                         : 'bg-gray-900 hover:cursor-pointer dark:bg-gray-600'

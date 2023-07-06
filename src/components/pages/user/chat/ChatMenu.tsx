@@ -15,6 +15,7 @@ import {
   useMemo,
   useRef,
   useState,
+  KeyboardEvent,
 } from 'react'
 import { fetchSkeetFunctions } from '@/lib/skeet'
 import { CreateUserChatRoomParams } from '@/types/http/openai/createUserChatRoomParams'
@@ -301,9 +302,18 @@ export default function ChatMenu({
     [setNewChatModalOpen, t, setCreateLoading, isDisabled, setCurrentChatRoomId]
   )
 
+  const onKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
+        handleSubmit(onSubmit)()
+      }
+    },
+    [handleSubmit, onSubmit]
+  )
+
   return (
     <>
-      <div className="flex w-full flex-col items-center justify-start sm:w-64">
+      <div className="flex w-full flex-col items-center justify-start pb-4 sm:w-64 sm:pb-0">
         <div className="w-full sm:hidden">
           <div className="flex w-full flex-row items-center justify-center">
             <button
@@ -335,7 +345,7 @@ export default function ChatMenu({
             </button>
           </div>
         </div>
-        <div className="hidden w-full p-2 sm:flex">
+        <div className="content-height hidden w-full overflow-auto p-2 sm:flex">
           <div className="flex w-full flex-col gap-6">
             <button
               onClick={() => {
@@ -381,7 +391,7 @@ export default function ChatMenu({
                       </p>
                     )}
 
-                    <p className="font-light text-gray-700 dark:text-gray-200">
+                    <p className="text-sm font-light text-gray-700 dark:text-gray-200">
                       {format(chat.createdAt.toDate(), 'yyyy-MM-dd HH:mm')}
                     </p>
                   </div>
@@ -550,6 +560,7 @@ export default function ChatMenu({
                                   render={({ field }) => (
                                     <textarea
                                       {...field}
+                                      onKeyDown={onKeyDown}
                                       className="w-full border-2 border-gray-900 p-3 text-lg font-bold text-gray-900 dark:border-gray-50 dark:text-white sm:leading-6"
                                     />
                                   )}
@@ -647,16 +658,23 @@ export default function ChatMenu({
                               )}
                             />
                             <div className="flex flex-col gap-2">
-                              <p className="font-medium text-gray-900 dark:text-white">
+                              {chat.title !== '' ? (
+                                <p className="font-medium text-gray-900 dark:text-white">
+                                  {chat.title.length > 20
+                                    ? `${chat.title.slice(0, 20)} ...`
+                                    : chat.title}
+                                </p>
+                              ) : (
+                                <p className="font-light italic text-gray-600 dark:text-gray-300">
+                                  {t('noTitle')}
+                                </p>
+                              )}
+
+                              <p className="text-sm font-light text-gray-700 dark:text-gray-200">
                                 {format(
                                   chat.createdAt.toDate(),
                                   'yyyy-MM-dd HH:mm'
                                 )}
-                              </p>
-
-                              <p className="font-normal text-gray-900 dark:text-white">
-                                {chat.model} ({chat.maxTokens},{' '}
-                                {chat.temperature})
                               </p>
                             </div>
                           </div>

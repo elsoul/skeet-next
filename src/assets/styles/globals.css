@@ -55,3 +55,27 @@ code {
   max-width: calc(100vw - 64px);
   border-radius: 0;
 }
+
+@layer utilities {
+  .content-height {
+    height: calc(100vh - 112px);
+  }
+  .content-height-mobile {
+    height: calc(100vh - 112px - 32px);
+  }
+  .chat-height-1 {
+    height: calc(100vh - 112px - 40px - 16px);
+  }
+  .chat-height-2 {
+    height: calc(100vh - 112px - 80px - 16px);
+  }
+  .chat-height-3 {
+    height: calc(100vh - 112px - 112px - 16px);
+  }
+  .chat-height-4 {
+    height: calc(100vh - 112px - 144px - 16px);
+  }
+  .chat-height-5 {
+    height: calc(100vh - 112px - 192px - 16px);
+  }
+}

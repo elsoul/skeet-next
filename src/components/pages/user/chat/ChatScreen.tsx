@@ -9,7 +9,7 @@ export default function ChatScreen() {
   )
   return (
     <>
-      <div className="flex flex-col items-start justify-start sm:flex-row">
+      <div className="content-height flex w-full flex-col items-start justify-start overflow-auto sm:flex-row">
         <ChatMenu
           isNewChatModalOpen={isNewChatModalOpen}
           setNewChatModalOpen={setNewChatModalOpen}
