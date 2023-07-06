@@ -46,7 +46,7 @@ export default function AgreeToPolicy() {
     } else {
       setOpen(true)
     }
-  }, [setOpen, policyAgreed, router.asPath, firebaseApp, analytics])
+  }, [setOpen, policyAgreed, router.asPath, analytics])
 
   return (
     <>

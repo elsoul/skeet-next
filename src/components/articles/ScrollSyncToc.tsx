@@ -109,7 +109,6 @@ function _attachParents(headings: string[]) {
           h.parents = [targetH]
         }
         currentDepth = targetH.depth
-      } else {
       }
     }
 

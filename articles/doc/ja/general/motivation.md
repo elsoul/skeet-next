@@ -1,7 +1,7 @@
 ---
 id: motivation
 title: モチベーション
-description: Media SSG Template モチベーション
+description: Next.js Template モチベーション
 ---
 
 ## Aiming to
@@ -13,5 +13,3 @@ description: Media SSG Template モチベーション
 - Strong SEO
 
 ビジネスの本質に集中できる開発基盤を提供します。
-
-メディアサイトもオープンソースでスタートできます！

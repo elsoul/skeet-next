@@ -38,7 +38,7 @@ export default function VerifyEmailAction({ oobCode }: Props) {
       })
       router.push('/auth/login')
     }
-  }, [router, t, oobCode])
+  }, [router, t, oobCode, addToast])
 
   useEffect(() => {
     verifyUser()

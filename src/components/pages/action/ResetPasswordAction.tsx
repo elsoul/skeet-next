@@ -45,7 +45,7 @@ export default function ResetPasswordAction({ oobCode }: Props) {
       })
       router.push('/auth/login')
     }
-  }, [router, t, oobCode])
+  }, [router, t, oobCode, addToast])
 
   useEffect(() => {
     verifyEmail()
@@ -85,7 +85,7 @@ export default function ResetPasswordAction({ oobCode }: Props) {
         setRegisterLoading(false)
       }
     },
-    [oobCode, t, router]
+    [oobCode, t, router, addToast]
   )
 
   const isDisabled = useMemo(

@@ -240,7 +240,9 @@ export default function ChatBox({
                   return [...prev]
                 })
               }
-            } catch {}
+            } catch (e) {
+              console.log(e)
+            }
           }
 
           if (chatRoom && chatRoom.title == '') {
@@ -288,6 +290,10 @@ export default function ChatBox({
       chatRoom,
       getChatRoom,
       getUserChatRoomMessage,
+      addToast,
+      isSending,
+      logout,
+      reset,
     ]
   )
 

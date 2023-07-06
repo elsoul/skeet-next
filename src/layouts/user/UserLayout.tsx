@@ -74,7 +74,7 @@ export default function UserLayout({ children }: Props) {
         router.push('/auth/login')
       }
     },
-    [setUser, initializing, setInitializing]
+    [setUser, initializing, setInitializing, logout, router]
   )
 
   useEffect(() => {

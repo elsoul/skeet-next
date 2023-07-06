@@ -89,7 +89,7 @@ export default function RegisterScreen() {
         }
       }
     },
-    [t, i18n.language]
+    [t, isJapanese, addToast, router]
   )
 
   const isDisabled = useMemo(
