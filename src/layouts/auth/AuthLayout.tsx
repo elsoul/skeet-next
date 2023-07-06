@@ -35,13 +35,11 @@ export default function AuthLayout({ children }: Props) {
     })()
   }, [router.asPath, resetWindowScrollPosition])
 
-  const [initializing, setInitializing] = useState(true)
   const [_user, setUser] = useRecoilState(userState)
   const logout = useLogout()
 
   const onAuthStateChanged = useCallback(
     async (fbUser: User | null) => {
-      if (initializing) setInitializing(false)
       if (auth && db && fbUser && fbUser.emailVerified) {
         const docRef = doc(db, 'User', fbUser.uid)
         const docSnap = await getDoc(docRef)
@@ -55,21 +53,24 @@ export default function AuthLayout({ children }: Props) {
           })
           router.push('/user/chat')
         } else {
-          await logout()
+          logout()
         }
       } else {
-        await logout()
+        logout()
       }
     },
-    [setUser, initializing, setInitializing, logout, router]
+    [setUser, logout, router]
   )
 
   useEffect(() => {
+    let subscriber = () => {}
+
     if (auth) {
-      const subscriber = auth.onAuthStateChanged(onAuthStateChanged)
-      return subscriber
+      subscriber = auth.onAuthStateChanged(onAuthStateChanged)
     }
-  }, [onAuthStateChanged])
+    return () => subscriber()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
