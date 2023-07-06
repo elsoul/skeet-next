@@ -269,17 +269,12 @@ export default function ChatMenu({
             }
           )
           const resData = await res?.json()
-          if (resData.status == 'error') {
-            throw new Error(resData.message)
-          }
           addToast({
             type: 'success',
             title: t('chat:chatRoomCreatedSuccessTitle'),
             description: t('chat:chatRoomCreatedSuccessBody'),
           })
           setCurrentChatRoomId(resData.userChatRoomRef.id)
-        } else {
-          throw new Error('validateError')
         }
       } catch (err) {
         console.error(err)

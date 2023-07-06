@@ -56,7 +56,6 @@ export default function UserLayout({ children }: Props) {
         const docRef = doc(db, 'User', fbUser.uid)
         const docSnap = await getDoc(docRef)
         if (docSnap.exists()) {
-          console.log('set')
           setUser({
             uid: fbUser.uid,
             email: fbUser.email ?? '',

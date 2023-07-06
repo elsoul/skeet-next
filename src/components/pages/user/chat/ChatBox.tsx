@@ -11,7 +11,7 @@ import {
 } from 'react'
 import { useRecoilValue } from 'recoil'
 import { userState } from '@/store/user'
-import { auth, db } from '@/lib/firebase'
+import { db } from '@/lib/firebase'
 import {
   collection,
   doc,
@@ -179,7 +179,6 @@ export default function ChatBox({
 
   const onSubmit = useCallback(
     async (data: Inputs) => {
-      if (isSending) return
       try {
         setSending(true)
         if (!isDisabled && user.uid && currentChatRoomId) {
@@ -251,8 +250,6 @@ export default function ChatBox({
           await getUserChatRoomMessage()
           reset()
           setFirstMessage(false)
-        } else {
-          throw new Error('validateError')
         }
       } catch (err) {
         console.error(err)
@@ -290,7 +287,6 @@ export default function ChatBox({
       getChatRoom,
       getUserChatRoomMessage,
       addToast,
-      isSending,
       logout,
       reset,
     ]
