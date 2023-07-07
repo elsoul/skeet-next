@@ -303,7 +303,7 @@ export default function ChatBox({
 
   return (
     <>
-      <div className="content-height-mobile sm:content-height w-full overflow-auto pt-4 sm:flex-1 sm:px-4 sm:pt-0">
+      <div className="content-height-mobile sm:content-height w-full overflow-y-auto pt-4 sm:flex-1 sm:px-4 sm:pt-0">
         {!currentChatRoomId && (
           <div className="flex h-full w-full flex-col items-center justify-center bg-gray-50 dark:bg-gray-800">
             <div className="flex w-full max-w-md flex-col items-center justify-center gap-6 p-4">
@@ -340,7 +340,7 @@ export default function ChatBox({
                   : chatContentLines == 2
                   ? 'chat-height-2'
                   : 'chat-height-1',
-                'w-full overflow-auto pb-24'
+                'w-full overflow-y-auto pb-24'
               )}
             >
               {chatMessages.map((chatMessage) => (
@@ -351,10 +351,10 @@ export default function ChatBox({
                       'bg-gray-50 dark:bg-gray-800',
                     chatMessage.role === 'assistant' &&
                       'bg-gray-50 dark:bg-gray-800',
-                    'p-4'
+                    'w-full p-4'
                   )}
                 >
-                  <div className="mx-auto flex max-w-3xl flex-row items-start justify-start gap-4 md:gap-6">
+                  <div className="flex w-full flex-row items-start justify-center gap-4 p-4 sm:p-6 md:gap-6">
                     {chatMessage.role === 'user' && (
                       <Image
                         src={user.iconUrl}
@@ -393,7 +393,7 @@ export default function ChatBox({
                           height={40}
                         />
                       )}
-                    <div className="flex flex-col">
+                    <div className="flex w-full flex-col">
                       {chatMessage.role === 'system' && (
                         <div className="pb-2">
                           <p className="text-base font-bold text-gray-900 dark:text-white">
@@ -405,13 +405,14 @@ export default function ChatBox({
                           </p>
                         </div>
                       )}
-
-                      <div
-                        className="prose my-3 dark:prose-invert lg:prose-lg"
-                        dangerouslySetInnerHTML={{
-                          __html: chatMessage.content,
-                        }}
-                      />
+                      <div className="prose w-full max-w-none dark:prose-invert lg:prose-lg">
+                        <div
+                          className="w-full max-w-none"
+                          dangerouslySetInnerHTML={{
+                            __html: chatMessage.content,
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
