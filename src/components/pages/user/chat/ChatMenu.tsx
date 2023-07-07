@@ -99,6 +99,7 @@ export default function ChatMenu({
   const [isCreateLoading, setCreateLoading] = useState(false)
   const [isChatListModalOpen, setChatListModalOpen] = useState(false)
   const addToast = useToastMessage()
+  const [reachLast, setReachLast] = useState(false)
 
   const {
     handleSubmit,
@@ -135,8 +136,12 @@ export default function ChatMenu({
           list.push({ id: doc.id, ...data } as ChatRoom)
         })
 
-        setLastChat(querySnapshot.docs[querySnapshot.docs.length - 1])
-        setChatList([...chatList, ...list])
+        if (querySnapshot.docs[querySnapshot.docs.length - 1] === lastChat) {
+          setReachLast(true)
+        } else {
+          setLastChat(querySnapshot.docs[querySnapshot.docs.length - 1])
+          setChatList([...chatList, ...list])
+        }
       } catch (err) {
         console.log(err)
         if (err instanceof Error && err.message.includes('permission-denied')) {
@@ -175,11 +180,11 @@ export default function ChatMenu({
     if (current) {
       const isBottom =
         current.scrollHeight - current.scrollTop === current.clientHeight
-      if (isBottom) {
+      if (isBottom && !reachLast) {
         queryMore()
       }
     }
-  }, [queryMore, chatMenuRef])
+  }, [queryMore, chatMenuRef, reachLast])
 
   const handleScrollMobile = useCallback(() => {
     const current = chatMenuRefMobile.current
@@ -188,11 +193,11 @@ export default function ChatMenu({
       const isBottom =
         Math.floor(current.scrollHeight - current.scrollTop) ===
         current.clientHeight
-      if (isBottom) {
+      if (isBottom && !reachLast) {
         queryMore()
       }
     }
-  }, [queryMore, chatMenuRefMobile])
+  }, [queryMore, chatMenuRefMobile, reachLast])
 
   const isDisabled = useMemo(() => {
     return (
