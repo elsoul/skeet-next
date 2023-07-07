@@ -648,7 +648,7 @@ export default function ChatMenu({
                       <XMarkIcon className="h-5 w-5 text-gray-900 hover:text-gray-800 dark:text-gray-50 dark:hover:text-gray-100" />
                     </button>
                   </div>
-                  <div className="flex w-full flex-grow flex-col gap-2">
+                  <div className="flex w-full flex-grow flex-col gap-6">
                     <p className="text-center text-lg font-bold">
                       {t('chat:chatList')}
                     </p>

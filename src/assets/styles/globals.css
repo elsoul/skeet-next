@@ -12,50 +12,8 @@
       'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
       'Segoe UI Symbol', 'Noto Color Emoji';
     scroll-padding-top: 104px;
+    box-sizing: border-box;
   }
-}
-
-.rehype-code-title {
-  font-family: 'Noto Sans Mono CJK JP', 'Source Han Code JP', 'Ricty',
-    'Ricty Diminished', 'Ricty Diminished Discord', 'Myrica M', 'MyricaM M',
-    'Rounded M+ 1m regular', 'Rounded M+ 2m regular', 'Rounded Mgen+ 1m regular',
-    'Rounded Mgen+ 2m regular', 'Migu 1M', 'Migu 2M', 'VL ゴシック', 'M+ 1m',
-    'M+ 2m', 'Yutapon coding Regular', SFMono-Regular, Consolas, Menlo, Monaco,
-    'Roboto Mono', 'Liberation Mono', 'Courier New', Courier, 'Osaka-mono',
-    'Osaka-等幅', Meiryo, monospace;
-  max-width: 96%;
-  display: inline-block;
-  position: relative;
-  margin-top: 16px;
-  margin-bottom: -2px;
-  padding: 4px 16px;
-  background-color: #0d1117;
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 400;
-  border-radius: 0;
-  overflow-x: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.rehype-code-title::-webkit-scrollbar {
-  display: none;
-}
-
-.rehype-code-title + pre {
-  margin-top: -8px;
-  background-color: #0d1117;
-  border-radius: 0;
-}
-
-pre,
-code {
-  width: 100%;
-  max-width: calc(100vw - 64px);
-  border-radius: 0;
-  margin-top: 32px;
-  margin-bottom: 32px;
 }
 
 @layer utilities {
