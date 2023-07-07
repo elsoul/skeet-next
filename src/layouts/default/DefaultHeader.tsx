@@ -77,13 +77,7 @@ export default function DefaultHeader() {
                   ))}
                 </Popover.Group>
                 <div className="hidden items-center justify-end gap-3 md:flex md:flex-1 lg:w-0">
-                  <Button
-                    href="/auth/login"
-                    variant="outline"
-                    className=""
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <Button href="/auth/login" variant="outline" className="">
                     {t('login')}
                   </Button>
                   <Button href="/auth/register" className="">
