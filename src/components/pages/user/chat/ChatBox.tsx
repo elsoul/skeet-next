@@ -407,7 +407,7 @@ export default function ChatBox({
                       )}
 
                       <div
-                        className="my-3 font-normal text-gray-900 dark:text-white"
+                        className="prose my-3 dark:prose-invert lg:prose-lg"
                         dangerouslySetInnerHTML={{
                           __html: chatMessage.content,
                         }}
