@@ -87,7 +87,7 @@ export default function UserLayout({ children }: Props) {
 
   return (
     <>
-      <div className="relative h-full w-full bg-white dark:bg-gray-900">
+      <div className="relative h-full min-h-screen w-full bg-white dark:bg-gray-900">
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
             as="div"
