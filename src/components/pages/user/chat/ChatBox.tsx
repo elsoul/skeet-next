@@ -30,7 +30,6 @@ import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { TextDecoder } from 'text-encoding'
 import useToastMessage from '@/hooks/useToastMessage'
-import useLogout from '@/hooks/useLogout'
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remark2Rehype from 'remark-rehype'
@@ -59,18 +58,19 @@ type Inputs = z.infer<typeof schema>
 type Props = {
   setNewChatModalOpen: (_value: boolean) => void
   currentChatRoomId: string | null
+  getChatRooms: () => void
 }
 
 export default function ChatBox({
   setNewChatModalOpen,
   currentChatRoomId,
+  getChatRooms,
 }: Props) {
   const { t } = useTranslation()
   const user = useRecoilValue(userState)
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([])
   const [chatRoom, setChatRoom] = useState<ChatRoom | null>(null)
   const addToast = useToastMessage()
-  const logout = useLogout()
 
   const chatContentRef = useRef<HTMLDivElement>(null)
   const scrollToEnd = useCallback(() => {
@@ -246,6 +246,7 @@ export default function ChatBox({
 
           if (chatRoom && chatRoom.title == '') {
             await getChatRoom()
+            await getChatRooms()
           }
           await getUserChatRoomMessage()
           reset()
@@ -263,8 +264,6 @@ export default function ChatBox({
             title: t('errorTokenExpiredTitle'),
             description: t('errorTokenExpiredBody'),
           })
-
-          logout()
         } else {
           addToast({
             type: 'error',
@@ -287,8 +286,8 @@ export default function ChatBox({
       getChatRoom,
       getUserChatRoomMessage,
       addToast,
-      logout,
       reset,
+      getChatRooms,
     ]
   )
 
@@ -354,7 +353,7 @@ export default function ChatBox({
                     'w-full p-4'
                   )}
                 >
-                  <div className="flex w-full flex-row items-start justify-center gap-4 p-4 sm:p-6 md:gap-6">
+                  <div className="mx-auto flex w-full max-w-3xl flex-row items-start justify-center gap-4 p-4 sm:p-6 md:gap-6">
                     {chatMessage.role === 'user' && (
                       <Image
                         src={user.iconUrl}

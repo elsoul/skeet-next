@@ -11,13 +11,12 @@ import { Fragment, useCallback, useMemo, useState } from 'react'
 import { doc, updateDoc } from 'firebase/firestore'
 import { useRecoilState } from 'recoil'
 import { userState } from '@/store/user'
-import { auth, db, storage } from '@/lib/firebase'
+import { db, storage } from '@/lib/firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import useToastMessage from '@/hooks/useToastMessage'
 import { Dialog, Transition } from '@headlessui/react'
 import { useDropzone } from 'react-dropzone'
 import LogoHorizontal from '@/components/common/atoms/LogoHorizontal'
-import useLogout from '@/hooks/useLogout'
 
 export default function EditUserIconUrl() {
   const { t } = useTranslation()
@@ -26,7 +25,6 @@ export default function EditUserIconUrl() {
   const [isLoading, setLoading] = useState(false)
   const [image, setImage] = useState<File | null>(null)
   const [imageUrl, setImageUrl] = useState<null | string>(null)
-  const logout = useLogout()
 
   const [isModalOpen, setModalOpen] = useState(false)
 
@@ -81,9 +79,6 @@ export default function EditUserIconUrl() {
           title: t('errorTokenExpiredTitle'),
           description: t('errorTokenExpiredBody'),
         })
-        if (auth?.currentUser) {
-          logout()
-        }
       } else {
         addToast({
           type: 'error',
@@ -94,7 +89,7 @@ export default function EditUserIconUrl() {
     } finally {
       setLoading(false)
     }
-  }, [user, setUser, t, image, logout, addToast])
+  }, [user, setUser, t, image, addToast])
 
   const isDisabled = useMemo(() => {
     return image == null || isLoading

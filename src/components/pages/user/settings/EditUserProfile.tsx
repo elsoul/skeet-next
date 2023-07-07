@@ -6,9 +6,8 @@ import LogoHorizontal from '@/components/common/atoms/LogoHorizontal'
 import { useRecoilState } from 'recoil'
 import { userState } from '@/store/user'
 import { usernameSchema } from '@/utils/form'
-import { auth, db } from '@/lib/firebase'
+import { db } from '@/lib/firebase'
 import { doc, updateDoc } from 'firebase/firestore'
-import useLogout from '@/hooks/useLogout'
 import useToastMessage from '@/hooks/useToastMessage'
 import { Dialog, Transition } from '@headlessui/react'
 import { z } from 'zod'
@@ -26,7 +25,6 @@ export default function EditUserProfile() {
   const [isModalOpen, setModalOpen] = useState(false)
   const [isLoading, setLoading] = useState(false)
   const [user, setUser] = useRecoilState(userState)
-  const logout = useLogout()
   const addToast = useToastMessage()
 
   const {
@@ -68,9 +66,6 @@ export default function EditUserProfile() {
               title: t('errorTokenExpiredTitle'),
               description: t('errorTokenExpiredBody'),
             })
-            if (auth?.currentUser) {
-              logout()
-            }
           } else {
             addToast({
               type: 'error',
@@ -84,7 +79,7 @@ export default function EditUserProfile() {
         }
       }
     },
-    [t, user, setUser, addToast, logout, setModalOpen, setLoading]
+    [t, user, setUser, addToast, setModalOpen, setLoading]
   )
 
   const isDisabled = useMemo(
