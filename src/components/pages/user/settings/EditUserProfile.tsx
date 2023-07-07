@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { PencilSquareIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useState, useCallback, useMemo, Fragment } from 'react'
 import LogoHorizontal from '@/components/common/atoms/LogoHorizontal'
 import { useRecoilState } from 'recoil'

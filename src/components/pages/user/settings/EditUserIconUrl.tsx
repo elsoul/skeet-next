@@ -5,7 +5,7 @@ import {
   PhotoIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Fragment, useCallback, useMemo, useState } from 'react'
 
 import { doc, updateDoc } from 'firebase/firestore'

@@ -1,6 +1,6 @@
 import LanguageChanger from '@/components/utils/LanguageChanger'
 import ColorModeChanger from '@/components/utils/ColorModeChanger'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 import EditUserIconUrl from '@/components/pages/user/settings/EditUserIconUrl'
 import EditUserProfile from '@/components/pages/user/settings/EditUserProfile'

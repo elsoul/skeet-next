@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { PaperAirplaneIcon, PlusCircleIcon } from '@heroicons/react/24/outline'
 import {
   useCallback,
