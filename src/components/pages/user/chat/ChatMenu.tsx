@@ -10,7 +10,6 @@ import LogoHorizontal from '@/components/common/atoms/LogoHorizontal'
 import {
   Fragment,
   useCallback,
-  useEffect,
   useMemo,
   useRef,
   useState,
@@ -34,22 +33,19 @@ import {
   QueryDocumentSnapshot,
   Timestamp,
   collection,
+  getDocs,
   limit,
-  onSnapshot,
   orderBy,
   query,
   startAfter,
 } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { format } from 'date-fns'
-import ChatMenuLoading from '@/components/loading/ChatMenuLoading'
-import { auth } from '@/lib/firebase'
 import useToastMessage from '@/hooks/useToastMessage'
 import { Dialog, Transition } from '@headlessui/react'
 import { z } from 'zod'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import useLogout from '@/hooks/useLogout'
 
 export type ChatRoom = {
   id: string
@@ -75,6 +71,13 @@ type Props = {
   setNewChatModalOpen: (_value: boolean) => void
   currentChatRoomId: string | null
   setCurrentChatRoomId: (_value: string | null) => void
+  chatList: ChatRoom[]
+  setChatList: (_value: ChatRoom[]) => void
+  lastChat: QueryDocumentSnapshot<DocumentData> | null
+  setLastChat: (_value: QueryDocumentSnapshot<DocumentData> | null) => void
+  isDataLoading: boolean
+  setDataLoading: (_value: boolean) => void
+  getChatRooms: () => void
 }
 
 export default function ChatMenu({
@@ -82,6 +85,13 @@ export default function ChatMenu({
   setNewChatModalOpen,
   currentChatRoomId,
   setCurrentChatRoomId,
+  chatList,
+  setChatList,
+  lastChat,
+  setLastChat,
+  isDataLoading,
+  setDataLoading,
+  getChatRooms,
 }: Props) {
   const { t, i18n } = useTranslation()
   const isJapanese = useMemo(() => i18n.language === 'ja', [i18n])
@@ -89,7 +99,6 @@ export default function ChatMenu({
   const [isCreateLoading, setCreateLoading] = useState(false)
   const [isChatListModalOpen, setChatListModalOpen] = useState(false)
   const addToast = useToastMessage()
-  const logout = useLogout()
 
   const {
     handleSubmit,
@@ -107,39 +116,27 @@ export default function ChatMenu({
     },
   })
 
-  const [chatList, setChatList] = useState<ChatRoom[]>([])
-  const [lastChat, setLastChat] =
-    useState<QueryDocumentSnapshot<DocumentData> | null>(null)
-  const [reachLast, setReachLast] = useState(false)
-  const [isDataLoading, setDataLoading] = useState(false)
-
   const queryMore = useCallback(async () => {
-    let unsubscribe = () => {}
     if (db && user.uid && lastChat) {
+      console.log('lastChat')
       try {
+        setDataLoading(true)
         const q = query(
           collection(db, `User/${user.uid}/UserChatRoom`),
           orderBy('createdAt', 'desc'),
           limit(15),
           startAfter(lastChat)
         )
+        const querySnapshot = await getDocs(q)
 
-        unsubscribe = onSnapshot(q, (querySnapshot) => {
-          setDataLoading(true)
-          const list: ChatRoom[] = []
-          querySnapshot.forEach((doc) => {
-            const data = doc.data()
-            list.push({ id: doc.id, ...data } as ChatRoom)
-          })
-
-          if (querySnapshot.docs[querySnapshot.docs.length - 1] === lastChat) {
-            setReachLast(true)
-          } else {
-            setLastChat(querySnapshot.docs[querySnapshot.docs.length - 1])
-            setChatList([...chatList, ...list])
-          }
-          setDataLoading(false)
+        const list: ChatRoom[] = []
+        querySnapshot.forEach((doc) => {
+          const data = doc.data()
+          list.push({ id: doc.id, ...data } as ChatRoom)
         })
+
+        setLastChat(querySnapshot.docs[querySnapshot.docs.length - 1])
+        setChatList([...chatList, ...list])
       } catch (err) {
         console.log(err)
         if (err instanceof Error && err.message.includes('permission-denied')) {
@@ -148,9 +145,6 @@ export default function ChatMenu({
             title: t('errorTokenExpiredTitle'),
             description: t('errorTokenExpiredBody'),
           })
-          if (auth) {
-            logout()
-          }
         } else {
           addToast({
             type: 'error',
@@ -158,10 +152,20 @@ export default function ChatMenu({
             description: t('errorBody'),
           })
         }
+      } finally {
+        setDataLoading(false)
       }
     }
-    return () => unsubscribe()
-  }, [chatList, lastChat, t, user.uid, setDataLoading, addToast, logout])
+  }, [
+    chatList,
+    lastChat,
+    t,
+    user.uid,
+    setDataLoading,
+    addToast,
+    setChatList,
+    setLastChat,
+  ])
 
   const chatMenuRef = useRef<HTMLDivElement>(null)
   const chatMenuRefMobile = useRef<HTMLDivElement>(null)
@@ -189,52 +193,6 @@ export default function ChatMenu({
       }
     }
   }, [queryMore, chatMenuRefMobile])
-
-  useEffect(() => {
-    let unsubscribe = () => {}
-
-    if (db && user.uid) {
-      try {
-        const q = query(
-          collection(db, `User/${user.uid}/UserChatRoom`),
-          orderBy('createdAt', 'desc'),
-          limit(15)
-        )
-
-        unsubscribe = onSnapshot(q, (querySnapshot) => {
-          setDataLoading(true)
-          const list: ChatRoom[] = []
-          querySnapshot.forEach((doc) => {
-            const data = doc.data()
-            list.push({ id: doc.id, ...data } as ChatRoom)
-          })
-          setChatList(list)
-          setLastChat(querySnapshot.docs[querySnapshot.docs.length - 1])
-          setDataLoading(false)
-        })
-      } catch (err) {
-        console.log(err)
-        if (err instanceof Error && err.message.includes('permission-denied')) {
-          addToast({
-            type: 'error',
-            title: t('errorTokenExpiredTitle') ?? 'Token Expired.',
-            description: t('errorTokenExpiredBody') ?? 'Please sign in again.',
-          })
-          if (auth) {
-            logout()
-          }
-        } else {
-          addToast({
-            type: 'error',
-            title: t('errorTitle') ?? 'Error',
-            description:
-              t('errorBody') ?? 'Something went wrong... Please try it again.',
-          })
-        }
-      }
-    }
-    return () => unsubscribe()
-  }, [user.uid, t, addToast, logout])
 
   const isDisabled = useMemo(() => {
     return (
@@ -288,8 +246,6 @@ export default function ChatMenu({
             title: t('errorTokenExpiredTitle'),
             description: t('errorTokenExpiredBody'),
           })
-
-          logout()
         } else {
           addToast({
             type: 'error',
@@ -300,6 +256,7 @@ export default function ChatMenu({
       } finally {
         setNewChatModalOpen(false)
         setCreateLoading(false)
+        await getChatRooms()
       }
     },
     [
@@ -309,7 +266,7 @@ export default function ChatMenu({
       isDisabled,
       setCurrentChatRoomId,
       addToast,
-      logout,
+      getChatRooms,
     ]
   )
 
@@ -412,7 +369,6 @@ export default function ChatMenu({
                 </div>
               ))}
             </div>
-            {isDataLoading && <ChatMenuLoading />}
           </div>
         </div>
       </div>
@@ -697,7 +653,6 @@ export default function ChatMenu({
                       </div>
                     </div>
                   </div>
-                  {isDataLoading && <ChatMenuLoading />}
                 </div>
               </div>
             </Transition.Child>

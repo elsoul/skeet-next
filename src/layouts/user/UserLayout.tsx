@@ -7,11 +7,10 @@ import clsx from 'clsx'
 import { userHeaderNav, userMenuNav } from '@/config/navs'
 import { useTranslation } from 'next-i18next'
 import Link from '@/components/routing/Link'
-import { User } from 'firebase/auth'
+import { User, signOut } from 'firebase/auth'
 import { useRecoilState } from 'recoil'
-import { userState } from '@/store/user'
+import { defaultUser, userState } from '@/store/user'
 import { auth, db } from '@/lib/firebase'
-import useLogout from '@/hooks/useLogout'
 import { doc, getDoc } from 'firebase/firestore'
 import LogoHorizontal from '@/components/common/atoms/LogoHorizontal'
 import Image from 'next/image'
@@ -48,7 +47,6 @@ export default function UserLayout({ children }: Props) {
   }, [router.asPath, resetWindowScrollPosition])
 
   const [user, setUser] = useRecoilState(userState)
-  const logout = useLogout()
 
   const onAuthStateChanged = useCallback(
     async (fbUser: User | null) => {
@@ -64,15 +62,16 @@ export default function UserLayout({ children }: Props) {
             emailVerified: fbUser.emailVerified,
           })
         } else {
-          logout()
+          setUser(defaultUser)
+          signOut(auth)
           router.push('/auth/login')
         }
       } else {
-        logout()
+        setUser(defaultUser)
         router.push('/auth/login')
       }
     },
-    [setUser, logout, router]
+    [setUser, router]
   )
 
   useEffect(() => {
@@ -279,7 +278,10 @@ export default function UserLayout({ children }: Props) {
                       {({ active }) => (
                         <p
                           onClick={() => {
-                            logout()
+                            if (auth) {
+                              setUser(defaultUser)
+                              signOut(auth)
+                            }
                           }}
                           className={clsx(
                             active

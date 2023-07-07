@@ -1,14 +1,13 @@
 import type { ReactNode } from 'react'
 import { useEffect, useCallback, useState } from 'react'
 import CommonFooter from '@/layouts/common/CommonFooter'
-import { User } from 'firebase/auth'
+import { User, signOut } from 'firebase/auth'
 
 import { useRouter } from 'next/router'
 import AuthHeader from './AuthHeader'
 import { useRecoilState } from 'recoil'
-import { userState } from '@/store/user'
+import { defaultUser, userState } from '@/store/user'
 import { auth, db } from '@/lib/firebase'
-import useLogout from '@/hooks/useLogout'
 import { doc, getDoc } from 'firebase/firestore'
 
 type Props = {
@@ -36,7 +35,6 @@ export default function AuthLayout({ children }: Props) {
   }, [router.asPath, resetWindowScrollPosition])
 
   const [_user, setUser] = useRecoilState(userState)
-  const logout = useLogout()
 
   const onAuthStateChanged = useCallback(
     async (fbUser: User | null) => {
@@ -53,13 +51,14 @@ export default function AuthLayout({ children }: Props) {
           })
           router.push('/user/chat')
         } else {
-          logout()
+          setUser(defaultUser)
+          signOut(auth)
         }
       } else {
-        logout()
+        setUser(defaultUser)
       }
     },
-    [setUser, logout, router]
+    [setUser, router]
   )
 
   useEffect(() => {
