@@ -6,7 +6,7 @@ import InvalidParamsError from '@/components/error/InvalidParamsError'
 import { useRouter } from 'next/router'
 import siteConfig from '@/config/site'
 import { getStaticPaths, makeStaticProps } from '@/lib/getStatic'
-import AuthLayout from '@/layouts/auth/AuthLayout'
+import ActionLayout from '@/layouts/action/ActionLayout'
 
 const seo = {
   pathname: '/action',
@@ -52,5 +52,5 @@ const getStaticProps = makeStaticProps(['common', 'auth'], seo)
 export { getStaticPaths, getStaticProps }
 
 Action.getLayout = function getLayout(page: ReactElement) {
-  return <AuthLayout>{page}</AuthLayout>
+  return <ActionLayout>{page}</ActionLayout>
 }
