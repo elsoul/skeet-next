@@ -32,7 +32,10 @@ export default function NewsContents({ article, articleHtml }: Props) {
               <div className="py-8 lg:hidden">
                 <ScrollSyncToc rawMarkdownBody={article.content} />
               </div>
-              <div dangerouslySetInnerHTML={{ __html: articleHtml }} />
+              <div
+                className="prose break-normal dark:prose-invert lg:prose-lg"
+                dangerouslySetInnerHTML={{ __html: articleHtml }}
+              />
             </div>
           </div>
           <div className="relative hidden pt-24 lg:col-span-3 lg:block">
