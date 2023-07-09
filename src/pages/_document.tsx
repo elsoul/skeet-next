@@ -52,6 +52,10 @@ export default class MyDocument extends Document {
             property="og:locale"
             content={locale === 'ja' ? 'ja_JP' : 'en_US'}
           />
+          <meta
+            http-equiv="content-language"
+            content={locale === 'ja' ? 'ja-jp' : 'en-us'}
+          />
           <meta name="twitter:card" content="summary_large_image" />
 
           <meta name="twitter:creator" content={siteConfig.twitterAccount} />
