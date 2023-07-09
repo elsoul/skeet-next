@@ -1,4 +1,4 @@
-![Skeet App Template](https://storage.googleapis.com/skeet-assets/imgs/samples/skeet-app-template.png)
+![Skeet Next.js Template](https://storage.googleapis.com/skeet-assets/imgs/samples/WebAppBoilerplate.png)
 
 <p align="center">
   <a href="https://twitter.com/intent/follow?screen_name=ELSOUL_LABO2">
@@ -62,20 +62,6 @@ Test your app:
 $ skeet test
 ```
 
-Open http://localhost:4000
+Open Firebase Emulator: http://localhost:4000
 
-## EAS Build
-
-[EAS Build](https://docs.expo.dev/build/introduction/)
-
-You need to run this command to setup EAS Build project.
-(Edit app.json for example changing names and deleting "extra" to build new project.)
-
-```
-yarn build:configure
-```
-
-## Firebase Emulator for iOS and Android
-
-We can't use Firebase Emulator for iOS and Android.
-So now we can only test the UI of iOS and Android on local using production Firebase environment.
+Open Front-end App: http://localhost:4200
