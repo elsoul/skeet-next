@@ -1,12 +1,16 @@
 ---
 id: readme
 title: Readme
-description: Next.js Template README
+description: Skeet Next.js (React) Template README
 ---
 
-![Skeet Framework Logo](https://storage.googleapis.com/skeet-assets/imgs/logo/ogp.png)
+![Skeet Next.js Template](https://storage.googleapis.com/skeet-assets/imgs/samples/WebAppBoilerplate.png)
 
-# Next.js Template
+## Skeet App Next.js Template
+
+Next.js (React) App Environment for Skeet Framework
+
+[GitHub - Skeet App Next.js Template](https://github.com/elsoul/skeet-next)
 
 ## Aiming to
 
@@ -28,16 +32,44 @@ description: Next.js Template README
 - [x] [Firebase](https://firebase.google.com/)
 - [x] [Tailwind - CSS Framework](https://tailwindcss.com/)
 
-## Quick start
+## Usage
 
 ```bash
-# Node version (using nodenv)
-$ node -v
-v18.16.0
+$ npm i -g firebase-tools
+$ npm i -g @skeet-framework/cli
+```
 
-# Install dependencies
-$ yarn install --frozen-lockfile
+```bash
+$ skeet create <project-name>
+```
 
-# Run dev server (localhost:4200)
+```bash
+$ cd <project-name>
 $ skeet s
 ```
+
+Open a new terminal and run:
+
+```bash
+$ skeet login
+$ export ACCESS_TOKEN=<your-token>
+```
+
+**※ You need OpenAI API key to get success for default test.**
+
+_./functions/openai/.env_
+
+```bash
+CHAT_GPT_KEY=your-key
+CHAT_GPT_ORG=your-org
+```
+
+Test your app:
+
+```bash
+$ skeet test
+```
+
+Open Firebase Emulator: http://localhost:4000
+
+Open Front-end App: http://localhost:4200
