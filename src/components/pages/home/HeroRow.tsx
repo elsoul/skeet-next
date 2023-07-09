@@ -6,7 +6,7 @@ import i18nextLogo from '@/assets/img/logo/projects/i18next.webp'
 import recoilLogo from '@/assets/img/logo/projects/recoil.svg'
 import eslintLogo from '@/assets/img/logo/projects/eslint.svg'
 import prettierLogo from '@/assets/img/logo/projects/prettier.png'
-import reactLogo from '@/assets/img/logo/projects/react.svg'
+import firebaseLogo from '@/assets/img/logo/projects/Firebase.svg'
 import tailwindcssLogo from '@/assets/img/logo/projects/tailwindcss.svg'
 import typescriptLogo from '@/assets/img/logo/projects/TypeScriptHorizontal.svg'
 import Button from '@/components/common/atoms/Button'
@@ -51,9 +51,9 @@ export default function HomeHeroRow() {
                   link: 'https://nextjs.org/',
                 },
                 {
-                  name: 'React',
-                  logo: reactLogo,
-                  link: 'https://reactjs.org/',
+                  name: 'Firebase',
+                  logo: firebaseLogo,
+                  link: 'https://firebase.google.com/',
                 },
                 {
                   name: 'TypeScript',

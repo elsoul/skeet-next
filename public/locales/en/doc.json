@@ -6,11 +6,11 @@
   "actions": {
     "motivation": {
       "title": "Motivation",
-      "body": "We provide a development platform that allows you to focus on the essence of your business. You can start the media as even open-source!"
+      "body": "Skeet allows you to get your app up and running quickly and maintain it for the long term at a low cost."
     },
     "quickstart": {
       "title": "Quickstart",
-      "body": "Next.js Template Quickstart"
+      "body": "Describes the setup for getting started with the Skeet framework."
     }
   },
   "menuNav": {
