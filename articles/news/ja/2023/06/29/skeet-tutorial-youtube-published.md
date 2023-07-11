@@ -2,7 +2,7 @@
 id: skeet-tutorial-youtube-published
 title: Skeetを利用してChatGPT APIを使ったAI チャットアプリを構築するチュートリアル動画を公開
 category: プレスリリース
-thumbnail: /news/2023/06/29/SkeetTutorialYouTubeThumbnail.png
+thumbnail: /news/2023/06/29/SkeetTutorialYouTubeThumbnail2.png
 ---
 
 ELSOUL LABO B.V. (エルソウルラボ, 本社: オランダ・アムステルダム)は、フルスタックサーバーレスフレームワークの Skeet を利用して ChatGPT API を使った AI チャットアプリを構築するチュートリアル動画を YouTube 上にて公開しました。

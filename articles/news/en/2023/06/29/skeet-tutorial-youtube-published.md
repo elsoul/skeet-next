@@ -2,7 +2,7 @@
 id: skeet-tutorial-youtube-published
 title: Released a tutorial video to build an AI chat application using ChatGPT API using Skeet
 category: Press release
-thumbnail: /news/2023/06/29/SkeetTutorialYouTubeThumbnail.png
+thumbnail: /news/2023/06/29/SkeetTutorialYouTubeThumbnail2.png
 ---
 
 ELSOUL LABO B.V. (head office: Amsterdam, Netherlands) has released a tutorial video on YouTube on building an AI chat app using the ChatGPT API with the full-stack serverless framework Skeet.
