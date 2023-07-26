@@ -53,7 +53,7 @@ export default class MyDocument extends Document {
             content={locale === 'ja' ? 'ja_JP' : 'en_US'}
           />
           <meta
-            http-equiv="content-language"
+            httpEquiv="content-language"
             content={locale === 'ja' ? 'ja-jp' : 'en-us'}
           />
           <meta name="twitter:card" content="summary_large_image" />
