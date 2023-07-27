@@ -81,8 +81,7 @@ export default function UserLayout({ children }: Props) {
       subscriber = auth.onAuthStateChanged(onAuthStateChanged)
     }
     return () => subscriber()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [onAuthStateChanged])
 
   return (
     <>
