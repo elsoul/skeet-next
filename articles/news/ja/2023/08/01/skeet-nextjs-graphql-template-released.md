@@ -15,7 +15,7 @@ Skeet は GCP (Google Cloud) と Firebase 上にゼロメンテナンスアプ�
 
 API から Web・iOS・Android アプリまでを TypeScript で超速開発することができます。
 
-今回のアップデートにより、GraphQL や SQL(リレーショナルデータベース)を活用したアプリケーションの開発にも対応しました。
+今回のアップデートにより、GraphQL や SQL(リレーショナルデータベース) を活用したアプリケーションの開発にも対応しました。
 
 ![Skeet Next.js (React) + GraphQL Starter](/news/2023/08/01/skeet-next-graphql.png)
 
