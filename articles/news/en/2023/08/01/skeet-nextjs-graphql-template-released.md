@@ -42,7 +42,7 @@ In the new UI, you can generate your own GraphQL used on the front end by clicki
 
 By leveraging these tools, Skeet provides a platform for developers to develop applications more intuitively and efficiently. With this update, developers can realize even more productivity gains.
 
-Skeet is developed to reduce development and maintenance costs and improve the developer experience for all application development.
+Skeet is developed as open-source to reduce development and maintenance costs and improve the developer experience for all application development sites around the world.
 
 Experience state-of-the-art application development using Skeet.
 
