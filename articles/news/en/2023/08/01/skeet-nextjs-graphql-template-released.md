@@ -5,7 +5,7 @@ category: Press release
 thumbnail: /news/2023/08/01/skeet-graphql.png
 ---
 
-ELSOUL LABO B.V. (head office: Amsterdam, Netherlands) announced the major release of Skeet v1, an open-source serverless framework, on August 1, 2023. This release enables Skeet to develop using GraphQL and SQL (relational databases).
+On August 1, 2023, ELSOUL LABO B.V. (Headquarters: Amsterdam, Netherlands) announced the major release of Skeet v1, an open-source serverless framework that makes app development fast and zero-maintenance. This release enables Skeet developers to develop using GraphQL and SQL (relational database).
 
 ## Added new Next.js (React) + GraphQL API server option
 
