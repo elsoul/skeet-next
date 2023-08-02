@@ -1,6 +1,6 @@
 ---
 id: skeet-nextjs-graphql-template-released
-title: Skeet, a serverless framework for ultra-fast app development, now supports GraphQL and SQL (relational databases)
+title: Skeet, an open-source serverless framework, now supports GraphQL and SQL (relational databases)
 category: Press release
 thumbnail: /news/2023/08/01/skeet-graphql.png
 ---

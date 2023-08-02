@@ -1,11 +1,11 @@
 ---
 id: skeet-nextjs-graphql-template-released
-title: 超速アプリ開発のサーバーレスフレームワーク Skeet が GraphQL 及びSQL(リレーショナルデータベース)に対応しました
+title: オープンソースのサーバーレスフレームワーク Skeet が GraphQL 及びSQL(リレーショナルデータベース)に対応しました
 category: プレスリリース
 thumbnail: /news/2023/08/01/skeet-graphql.png
 ---
 
-ELSOUL LABO B.V. (エルソウルラボ, 本社: オランダ・アムステルダム)は 2023 年 8 月 1 日、超速アプリ開発のサーバーレスフレームワーク Skeet v1 のメジャーリリースを発表しました。本リリースによって、Skeet において GraphQL 及び SQL(リレーショナルデータベース)を利用しての開発が可能になりました。
+ELSOUL LABO B.V. (エルソウルラボ, 本社: オランダ・アムステルダム)は 2023 年 8 月 1 日、オープンソースのサーバーレスフレームワーク Skeet v1 のメジャーリリースを発表しました。本リリースによって、Skeet において GraphQL 及び SQL(リレーショナルデータベース)を利用しての開発が可能になりました。
 
 ## 新しい Next.js (React) + GraphQL API サーバー オプションの追加
 
