@@ -1,6 +1,6 @@
 ---
 id: skeet-nextjs-template-released
-title: Next.js (React) starter added to Skeet, a TypeScirpt serverless framework. A new AI Chat App demo has also been released.
+title: Next.js (React) starter added to Skeet, a TypeScript serverless framework. A new AI Chat App demo has also been released.
 category: Press release
 thumbnail: /news/2023/07/10/NewReleaseSkeetxNextjs.png
 ---

@@ -1,6 +1,6 @@
 ---
 id: skeet-nextjs-template-released
-title: TypeScirpt サーバーレスフレームワークのSkeetにNext.js (React) スターターを追加。新しいAIチャットアプリデモも公開。
+title: TypeScript サーバーレスフレームワークのSkeetにNext.js (React) スターターを追加。新しいAIチャットアプリデモも公開。
 category: プレスリリース
 thumbnail: /news/2023/07/10/NewReleaseSkeetxNextjs.png
 ---
