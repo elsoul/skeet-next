@@ -31,4 +31,4 @@ jobs:
       - name: Build App
         run: cd ./functions/skeet && yarn build
       - name: Deploy to Firebase
-        run: firebase deploy --only functions:openai
+        run: firebase deploy --only functions:skeet
