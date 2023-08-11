@@ -1,6 +1,6 @@
 {
-  "name": "skeet-app",
-  "projectId": "skeet-app",
+  "name": "skeet-next",
+  "projectId": "skeet-next",
   "region": "europe-west6",
   "appDomain": "",
   "functionsDomain": ""
