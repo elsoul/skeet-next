@@ -16,7 +16,7 @@ import {
   KeyboardEvent,
 } from 'react'
 import { fetchSkeetFunctions } from '@/lib/skeet'
-import { CreateUserChatRoomParams } from '@/types/http/openai/createUserChatRoomParams'
+import { CreateUserChatRoomParams } from '@/types/http/skeet/createUserChatRoomParams'
 import { useRecoilValue } from 'recoil'
 import { userState } from '@/store/user'
 import {
@@ -221,7 +221,7 @@ export default function ChatMenu({
         setCreateLoading(true)
         if (!isDisabled) {
           const res = await fetchSkeetFunctions<CreateUserChatRoomParams>(
-            'openai',
+            'skeet',
             'createUserChatRoom',
             {
               model: data.model,

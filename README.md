@@ -49,7 +49,7 @@ $ export ACCESS_TOKEN=<your-token>
 
 **※ You need OpenAI API key to get success for default test.**
 
-_./functions/openai/.env_
+_./functions/skeet/.env_
 
 ```bash
 CHAT_GPT_KEY=your-key

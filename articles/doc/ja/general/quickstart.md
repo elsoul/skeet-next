@@ -192,7 +192,7 @@ $ skeet add secret CHAT_GPT_KEY
 ? Enter value for CHAT_GPT_KEY: <yourOpenAIKey>
 ```
 
-また、簡易的に試すには、_functions/openai/.env_ に記述することもできますが、
+また、簡易的に試すには、_functions/skeet/.env_ に記述することもできますが、
 この方法は、本番環境には反映されません。
 
 #### - OpenAI の API Key を作成・取得
