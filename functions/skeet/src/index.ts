@@ -1,19 +1,16 @@
 import admin from 'firebase-admin'
 import dotenv from 'dotenv'
-import { Request } from 'firebase-functions/v2/https'
-
-export interface TypedRequestBody<T> extends Request {
-  body: T
-}
 
 dotenv.config()
 admin.initializeApp()
+export const db = admin.firestore()
 
 export {
-  root,
+  seed,
   authOnCreateUser,
   createUserChatRoom,
   getUserChatRoomMessages,
   addUserChatRoomMessage,
   addStreamUserChatRoomMessage,
+  addVertexMessage,
 } from '@/routings'
