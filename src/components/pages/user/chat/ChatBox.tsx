@@ -343,6 +343,50 @@ export default function ChatBox({
                 'w-full overflow-y-auto pb-24'
               )}
             >
+              <div
+                className={clsx('bg-gray-50 dark:bg-gray-800', 'w-full p-4')}
+              >
+                <div className="mx-auto flex w-full max-w-3xl flex-row items-start justify-center gap-4 p-4 sm:p-6 md:gap-6">
+                  {chatRoom?.model === 'gpt-3.5-turbo' && (
+                    <Image
+                      src={
+                        'https://storage.googleapis.com/epics-bucket/BuidlersCollective/Jake.png'
+                      }
+                      alt="Jake icon"
+                      className="my-3 aspect-square h-6 w-6 rounded-full sm:h-10 sm:w-10"
+                      unoptimized
+                      width={40}
+                      height={40}
+                    />
+                  )}
+
+                  {chatRoom?.model === 'gpt-4' && (
+                    <Image
+                      src={
+                        'https://storage.googleapis.com/epics-bucket/BuidlersCollective/Legend.png'
+                      }
+                      alt="Legend icon"
+                      className="my-3 aspect-square h-6 w-6 rounded-full sm:h-10 sm:w-10"
+                      unoptimized
+                      width={40}
+                      height={40}
+                    />
+                  )}
+                  <div className="flex w-full flex-col">
+                    <div className="pb-2">
+                      <p className="text-base font-bold text-gray-900 dark:text-white">
+                        {chatRoom?.title ? chatRoom?.title : t('noTitle')}
+                      </p>
+                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                        {chatRoom?.model}: {chatRoom?.maxTokens} {t('tokens')}
+                      </p>
+                    </div>
+                    <div className="prose w-full max-w-none dark:prose-invert lg:prose-lg">
+                      {chatRoom?.context}
+                    </div>
+                  </div>
+                </div>
+              </div>
               {chatMessages.map((chatMessage) => (
                 <div
                   key={chatMessage.id}
