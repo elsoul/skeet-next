@@ -11,12 +11,13 @@ import { Fragment, useCallback, useMemo, useState } from 'react'
 import { doc, updateDoc } from 'firebase/firestore'
 import { useRecoilState } from 'recoil'
 import { userState } from '@/store/user'
-import { db, storage } from '@/lib/firebase'
+import { createFirestoreDataConverter, db, storage } from '@/lib/firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import useToastMessage from '@/hooks/useToastMessage'
 import { Dialog, Transition } from '@headlessui/react'
 import { useDropzone } from 'react-dropzone'
 import LogoHorizontal from '@/components/common/atoms/LogoHorizontal'
+import { User } from '@/types/models'
 
 export default function EditUserIconUrl() {
   const { t } = useTranslation()
@@ -51,7 +52,9 @@ export default function EditUserIconUrl() {
 
         const downloadUrl = await getDownloadURL(newProfileIconRef)
 
-        const docRef = doc(db, 'User', user.uid)
+        const docRef = doc(db, 'User', user.uid).withConverter(
+          createFirestoreDataConverter<User>()
+        )
         await updateDoc(docRef, { iconUrl: downloadUrl })
         setUser({
           ...user,

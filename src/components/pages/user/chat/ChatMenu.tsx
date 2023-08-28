@@ -15,8 +15,6 @@ import {
   useState,
   KeyboardEvent,
 } from 'react'
-import { fetchSkeetFunctions } from '@/lib/skeet'
-import { CreateUserChatRoomParams } from '@/types/http/skeet/createUserChatRoomParams'
 import { useRecoilValue } from 'recoil'
 import { userState } from '@/store/user'
 import {
@@ -32,20 +30,23 @@ import {
   DocumentData,
   QueryDocumentSnapshot,
   Timestamp,
+  addDoc,
   collection,
   getDocs,
   limit,
   orderBy,
   query,
+  serverTimestamp,
   startAfter,
 } from 'firebase/firestore'
-import { db } from '@/lib/firebase'
+import { createFirestoreDataConverter, db } from '@/lib/firebase'
 import { format } from 'date-fns'
 import useToastMessage from '@/hooks/useToastMessage'
 import { Dialog, Transition } from '@headlessui/react'
 import { z } from 'zod'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { UserChatRoom } from '@/types/models'
 
 export type ChatRoom = {
   id: string
@@ -54,6 +55,7 @@ export type ChatRoom = {
   model: GPTModel
   maxTokens: number
   temperature: number
+  context: string
   title: string
 }
 
@@ -89,7 +91,6 @@ export default function ChatMenu({
   setChatList,
   lastChat,
   setLastChat,
-  isDataLoading,
   setDataLoading,
   getChatRooms,
 }: Props) {
@@ -127,7 +128,8 @@ export default function ChatMenu({
           orderBy('createdAt', 'desc'),
           limit(15),
           startAfter(lastChat)
-        )
+        ).withConverter(createFirestoreDataConverter<UserChatRoom>())
+
         const querySnapshot = await getDocs(q)
 
         const list: ChatRoom[] = []
@@ -219,25 +221,27 @@ export default function ChatMenu({
     async (data: Inputs) => {
       try {
         setCreateLoading(true)
-        if (!isDisabled) {
-          const res = await fetchSkeetFunctions<CreateUserChatRoomParams>(
-            'skeet',
-            'createUserChatRoom',
-            {
-              model: data.model,
-              systemContent: data.systemContent,
-              maxTokens: data.maxTokens,
-              temperature: data.temperature,
-              stream: true,
-            }
-          )
-          const resData = await res?.json()
+        if (!isDisabled && db) {
+          const chatRoomsRef = collection(
+            db,
+            `User/${user.uid}/UserChatRoom`
+          ).withConverter(createFirestoreDataConverter<UserChatRoom>())
+          const docRef = await addDoc(chatRoomsRef, {
+            title: '',
+            model: data.model,
+            context: data.systemContent,
+            maxTokens: data.maxTokens,
+            temperature: data.temperature,
+            stream: true,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+          })
           addToast({
             type: 'success',
             title: t('chat:chatRoomCreatedSuccessTitle'),
             description: t('chat:chatRoomCreatedSuccessBody'),
           })
-          setCurrentChatRoomId(resData.userChatRoomId)
+          setCurrentChatRoomId(docRef.id)
         }
       } catch (err) {
         console.error(err)
@@ -272,6 +276,7 @@ export default function ChatMenu({
       setCurrentChatRoomId,
       addToast,
       getChatRooms,
+      user.uid,
     ]
   )
 
