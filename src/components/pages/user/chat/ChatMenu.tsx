@@ -39,13 +39,14 @@ import {
   query,
   startAfter,
 } from 'firebase/firestore'
-import { db } from '@/lib/firebase'
+import { createFirestoreDataConverter, db } from '@/lib/firebase'
 import { format } from 'date-fns'
 import useToastMessage from '@/hooks/useToastMessage'
 import { Dialog, Transition } from '@headlessui/react'
 import { z } from 'zod'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { UserChatRoom } from '@/types/models'
 
 export type ChatRoom = {
   id: string
@@ -127,7 +128,8 @@ export default function ChatMenu({
           orderBy('createdAt', 'desc'),
           limit(15),
           startAfter(lastChat)
-        )
+        ).withConverter(createFirestoreDataConverter<UserChatRoom>())
+
         const querySnapshot = await getDocs(q)
 
         const list: ChatRoom[] = []

@@ -11,7 +11,7 @@ import {
 } from 'react'
 import { useRecoilValue } from 'recoil'
 import { userState } from '@/store/user'
-import { db } from '@/lib/firebase'
+import { createFirestoreDataConverter, db } from '@/lib/firebase'
 import {
   collection,
   doc,
@@ -40,6 +40,7 @@ import remarkSlug from 'remark-slug'
 import remarkGfm from 'remark-gfm'
 import remarkDirective from 'remark-directive'
 import remarkExternalLinks from 'remark-external-links'
+import { UserChatRoom } from '@/types/models'
 
 type ChatMessage = {
   id: string
@@ -104,7 +105,7 @@ export default function ChatBox({
       const docRef = doc(
         db,
         `User/${user.uid}/UserChatRoom/${currentChatRoomId}`
-      )
+      ).withConverter(createFirestoreDataConverter<UserChatRoom>())
       const docSnap = await getDoc(docRef)
       if (docSnap.exists()) {
         const data = docSnap.data()
