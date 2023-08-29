@@ -251,8 +251,8 @@ export default function VertexChatMenu({
           })
           addToast({
             type: 'success',
-            title: t('chat:chatRoomCreatedSuccessTitle'),
-            description: t('chat:chatRoomCreatedSuccessBody'),
+            title: t('vertex-ai:chatRoomCreatedSuccessTitle'),
+            description: t('vertex-ai:chatRoomCreatedSuccessBody'),
           })
           setCurrentChatRoomId(docRef.id)
         }
