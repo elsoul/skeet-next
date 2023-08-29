@@ -1,4 +1,5 @@
 import {
+  AcademicCapIcon,
   BookOpenIcon,
   ChatBubbleLeftRightIcon,
   Cog8ToothIcon,
@@ -69,6 +70,11 @@ export const docHeaderNav = [
 ]
 
 export const userMenuNav = [
+  {
+    name: 'user:menuNav.vertexAi',
+    href: '/user/vertex-ai/',
+    icon: AcademicCapIcon,
+  },
   {
     name: 'user:menuNav.chat',
     href: '/user/chat/',
