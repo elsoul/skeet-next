@@ -27,14 +27,17 @@ export const addVertexMessage = onRequest(
         chatRoomPath,
         req.body.vertexChatRoomId,
       )
-      console.log(vertexChatRoomData)
       const vertexExampleData = vertexChatRoomData.examples
 
       // Send to VertexAI
       const response = await sendToVertexAI(
-        vertexChatRoomData,
+        {
+          id: req.body.vertexChatRoomId,
+          ...vertexChatRoomData,
+        },
         vertexExampleData,
         req.body.content,
+        chatRoomPath,
       )
 
       // Add User Message to VertexChatRoomMessage
