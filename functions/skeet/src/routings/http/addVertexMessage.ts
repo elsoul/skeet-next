@@ -5,8 +5,6 @@ import {
   VertexChatRoomCN,
   VertexChatRoomMessage,
   VertexChatRoomMessageRole,
-  VertexExample,
-  VertexExampleCN,
   VertexChatRoomMessageCN,
 } from '@/models'
 import { getUserAuth } from '@/lib'
@@ -29,14 +27,8 @@ export const addVertexMessage = onRequest(
         chatRoomPath,
         req.body.vertexChatRoomId,
       )
-
-      // Get VertexExample
-      const vertexExamplePath = `${chatRoomPath}/${req.body.vertexChatRoomId}/${VertexExampleCN}`
-      const vertexExampleData = await get<VertexExample>(
-        db,
-        vertexExamplePath,
-        req.body.vertexExampleId,
-      )
+      console.log(vertexChatRoomData)
+      const vertexExampleData = vertexChatRoomData.examples
 
       // Send to VertexAI
       const response = await sendToVertexAI(
@@ -46,9 +38,8 @@ export const addVertexMessage = onRequest(
       )
 
       // Add User Message to VertexChatRoomMessage
-      const messagePath = `${vertexExamplePath}/${req.body.vertexExampleId}/${VertexChatRoomMessageCN}`
+      const messagePath = `${chatRoomPath}/${req.body.vertexChatRoomId}/${VertexChatRoomMessageCN}`
       const messageBody = {
-        vertexChatRoomId: vertexChatRoomData.userId,
         role: VertexChatRoomMessageRole.USER,
         content: req.body.content,
       } as VertexChatRoomMessage
@@ -56,7 +47,6 @@ export const addVertexMessage = onRequest(
 
       // Add AI Message to VertexChatRoomMessage
       const messageResBody = {
-        vertexChatRoomId: vertexChatRoomData.userId,
         role: VertexChatRoomMessageRole.AI,
         content: response,
       }
@@ -65,6 +55,7 @@ export const addVertexMessage = onRequest(
       // Stream Response
       await streamResponse(response, res)
     } catch (error) {
+      console.error(error)
       res.status(500).json({ status: 'error', message: String(error) })
     }
   },

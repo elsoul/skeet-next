@@ -1,6 +1,7 @@
 {
   "menuNav": {
     "chat": "オープンAIチャット",
+    "vertexAi": "Vertex AI チャット",
     "settings": "設定"
   },
   "headerNav": {
