@@ -10,10 +10,11 @@ import Link from '@/components/routing/Link'
 import { User, signOut } from 'firebase/auth'
 import { useRecoilState } from 'recoil'
 import { defaultUser, userState } from '@/store/user'
-import { auth, db } from '@/lib/firebase'
+import { auth, createFirestoreDataConverter, db } from '@/lib/firebase'
 import { doc, getDoc } from 'firebase/firestore'
 import LogoHorizontal from '@/components/common/atoms/LogoHorizontal'
 import Image from 'next/image'
+import { User as UserModel } from '@/types/models/userModels'
 
 type Props = {
   children: ReactNode
@@ -51,7 +52,9 @@ export default function UserLayout({ children }: Props) {
   const onAuthStateChanged = useCallback(
     async (fbUser: User | null) => {
       if (auth && db && fbUser && fbUser.emailVerified) {
-        const docRef = doc(db, 'User', fbUser.uid)
+        const docRef = doc(db, 'User', fbUser.uid).withConverter(
+          createFirestoreDataConverter<UserModel>()
+        )
         const docSnap = await getDoc(docRef)
         if (docSnap.exists()) {
           setUser({
