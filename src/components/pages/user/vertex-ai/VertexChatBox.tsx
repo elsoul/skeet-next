@@ -66,7 +66,7 @@ type Props = {
   currentChatRoomId: string
 }
 
-export default function ChatBox({
+export default function VertexChatBox({
   currentChatRoomId,
   setNewChatModalOpen,
   getChatRooms,
