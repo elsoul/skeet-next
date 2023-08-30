@@ -140,7 +140,7 @@ export default function RegisterScreen() {
                     render={({ field }) => (
                       <input
                         {...field}
-                        className="w-full border-2 border-gray-900 p-3 text-lg font-bold text-gray-900 dark:border-gray-50 dark:text-white sm:leading-6"
+                        className="w-full border-2 border-gray-900 p-3 text-lg font-bold text-gray-900 dark:border-gray-50 dark:bg-gray-800 dark:text-white sm:leading-6"
                         inputMode="email"
                       />
                     )}
@@ -165,7 +165,7 @@ export default function RegisterScreen() {
                       <input
                         {...field}
                         type="password"
-                        className="w-full border-2 border-gray-900 p-3 text-lg font-bold text-gray-900 dark:border-gray-50 dark:text-white sm:leading-6"
+                        className="w-full border-2 border-gray-900 p-3 text-lg font-bold text-gray-900 dark:border-gray-50 dark:bg-gray-800 dark:text-white sm:leading-6"
                       />
                     )}
                   />
