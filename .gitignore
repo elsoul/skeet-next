@@ -155,3 +155,4 @@ firebase-debug.log
 **/public/fallback-*.js
 
 tmp/
+firebase-export-*
