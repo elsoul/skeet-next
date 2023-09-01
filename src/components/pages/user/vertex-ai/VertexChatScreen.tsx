@@ -20,7 +20,7 @@ import {
 import { useRecoilValue } from 'recoil'
 import { userState } from '@/store/user'
 import { createFirestoreDataConverter, db } from '@/lib/firebase'
-import { VertexChatRoom } from '@/types/models'
+import { VertexChatRoom, genVertexChatRoomPath } from '@/types/models'
 
 export default function VertexChatScreen() {
   const { t } = useTranslation()
@@ -43,7 +43,7 @@ export default function VertexChatScreen() {
         setDataLoading(true)
 
         const q = query(
-          collection(db, `User/${user.uid}/VertexChatRoom`),
+          collection(db, genVertexChatRoomPath(user.uid)),
           orderBy('createdAt', 'desc'),
           limit(15)
         ).withConverter(createFirestoreDataConverter<VertexChatRoom>())
@@ -54,7 +54,6 @@ export default function VertexChatScreen() {
           const data = doc.data()
           list.push({ id: doc.id, ...data } as ChatRoom)
         })
-        console.log(list)
         setChatList(list)
         setLastChat(querySnapshot.docs[querySnapshot.docs.length - 1])
       } catch (err) {
