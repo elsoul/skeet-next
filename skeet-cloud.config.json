@@ -5,8 +5,9 @@
     "region": "europe-west6",
     "template": "Next.js(React) - Firestore",
     "appDomain": "",
-    "functionsDomain": "",
-    "secretKeys": []
+    "lbDomain": "",
+    "secretKeys": [],
+    "hasLoadBalancer": false
   },
   "cloudArmor": [
     {
