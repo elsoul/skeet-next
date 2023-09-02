@@ -222,6 +222,7 @@ export default function ChatMenu({
       try {
         setCreateLoading(true)
         if (!isDisabled && db) {
+          console.log(genUserChatRoomPath(user.uid))
           const chatRoomsRef = collection(
             db,
             genUserChatRoomPath(user.uid)

@@ -156,3 +156,4 @@ firebase-debug.log
 
 tmp/
 firebase-export-*
+.secret*

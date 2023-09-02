@@ -1,11 +1,10 @@
 const firebaseConfig = {
-  projectId: 'skeet-next',
-  appId: '1:970336459442:web:292c14b59159c5506407ab',
-  storageBucket: 'skeet-next.appspot.com',
-  locationId: 'europe-west3',
-  apiKey: 'AIzaSyBYXs9JEym42gJCuO1OT7mJ_tyJUpJRB84',
+  apiKey: 'AIzaSyATSdJHATWU04LKfrgzen1sFCwwsl93D8U',
   authDomain: 'skeet-next.firebaseapp.com',
-  messagingSenderId: '970336459442',
-  measurementId: 'G-PR5LDPJSPY',
+  projectId: 'skeet-next',
+  storageBucket: 'skeet-next.appspot.com',
+  messagingSenderId: '1037692178989',
+  appId: '1:1037692178989:web:5bb909c7b0cef7600e9ea4',
+  measurementId: 'G-8BZJ1C7RW1',
 }
 export default firebaseConfig
