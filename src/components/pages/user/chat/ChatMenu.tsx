@@ -120,11 +120,11 @@ export default function ChatMenu({
       console.log('lastChat')
       try {
         setDataLoading(true)
-        const querySnapshot = await query(db, genUserChatRoomPath(user.uid), [
-          orderBy('createdAt', 'desc'),
-          limit(15),
-          startAfter(lastChat),
-        ])
+        const querySnapshot = await query<UserChatRoom>(
+          db,
+          genUserChatRoomPath(user.uid),
+          [orderBy('createdAt', 'desc'), limit(15), startAfter(lastChat)]
+        )
 
         const list: ChatRoom[] = []
         querySnapshot.forEach((doc) => {
