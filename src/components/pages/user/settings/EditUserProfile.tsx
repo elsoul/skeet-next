@@ -6,7 +6,7 @@ import LogoHorizontal from '@/components/common/atoms/LogoHorizontal'
 import { useRecoilState } from 'recoil'
 import { userState } from '@/store/user'
 import { usernameSchema } from '@/utils/form'
-import { createFirestoreDataConverter, db } from '@/lib/firebase'
+import { db } from '@/lib/firebase'
 import { doc, updateDoc } from 'firebase/firestore'
 import useToastMessage from '@/hooks/useToastMessage'
 import { Dialog, Transition } from '@headlessui/react'
@@ -14,6 +14,7 @@ import { z } from 'zod'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { User, genUserPath } from '@/types/models'
+import { update } from '@/lib/skeet/firestore'
 
 const schema = z.object({
   username: usernameSchema,
@@ -44,10 +45,9 @@ export default function EditUserProfile() {
       if (db) {
         try {
           setLoading(true)
-          const docRef = doc(db, genUserPath(), user.uid).withConverter(
-            createFirestoreDataConverter<User>()
-          )
-          await updateDoc(docRef, { username: data.username })
+          await update<User>(db, genUserPath(), user.uid, {
+            username: data.username,
+          })
           setUser({
             ...user,
             username: data.username,

@@ -7,17 +7,16 @@ import {
 } from '@heroicons/react/24/outline'
 import { useTranslation } from 'next-i18next'
 import { Fragment, useCallback, useMemo, useState } from 'react'
-
-import { doc, updateDoc } from 'firebase/firestore'
 import { useRecoilState } from 'recoil'
 import { userState } from '@/store/user'
-import { createFirestoreDataConverter, db, storage } from '@/lib/firebase'
+import { db, storage } from '@/lib/firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import useToastMessage from '@/hooks/useToastMessage'
 import { Dialog, Transition } from '@headlessui/react'
 import { useDropzone } from 'react-dropzone'
 import LogoHorizontal from '@/components/common/atoms/LogoHorizontal'
 import { User, genUserPath } from '@/types/models'
+import { update } from '@/lib/skeet/firestore'
 
 export default function EditUserIconUrl() {
   const { t } = useTranslation()
@@ -52,10 +51,9 @@ export default function EditUserIconUrl() {
 
         const downloadUrl = await getDownloadURL(newProfileIconRef)
 
-        const docRef = doc(db, genUserPath(), user.uid).withConverter(
-          createFirestoreDataConverter<User>()
-        )
-        await updateDoc(docRef, { iconUrl: downloadUrl })
+        await update<User>(db, genUserPath(), user.uid, {
+          iconUrl: downloadUrl,
+        })
         setUser({
           ...user,
           iconUrl: downloadUrl,
