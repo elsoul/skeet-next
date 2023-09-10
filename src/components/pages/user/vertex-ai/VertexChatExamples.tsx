@@ -15,11 +15,11 @@ import { Fragment, useCallback, useMemo, useState } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { ChatRoom } from './VertexChatMenu'
-import { createFirestoreDataConverter, db } from '@/lib/firebase'
-import { doc, updateDoc } from 'firebase/firestore'
+import { db } from '@/lib/firebase'
 import { useRecoilValue } from 'recoil'
 import { userState } from '@/store/user'
 import { VertexChatRoom, genVertexChatRoomPath } from '@/types/models'
+import { update } from '@/lib/skeet/firestore'
 
 type Inputs = z.infer<typeof vertexExampleFormSchema>
 
@@ -82,14 +82,14 @@ export default function VertexChatExamples({
       try {
         setSending(true)
         if (!isDisabled && db) {
-          const chatRoomRef = doc(
+          await update<VertexChatRoom>(
             db,
             genVertexChatRoomPath(user.uid),
-            currentChatRoomId
-          ).withConverter(createFirestoreDataConverter<VertexChatRoom>())
-          await updateDoc(chatRoomRef, {
-            examples: data.inputOutputPairs,
-          })
+            currentChatRoomId,
+            {
+              examples: data.inputOutputPairs,
+            }
+          )
           addToast({
             type: 'success',
             title: t('vertex-ai:submitSuccessTitle'),

@@ -13,7 +13,7 @@ import { useRecoilValue } from 'recoil'
 import { userState } from '@/store/user'
 
 import { chatContentSchema } from '@/utils/form'
-import { fetchSkeetFunctions } from '@/lib/skeet'
+import { fetchSkeetFunctions } from '@/lib/skeet/functions'
 import Image from 'next/image'
 import { ChatRoom } from './VertexChatMenu'
 import { z } from 'zod'
@@ -34,15 +34,8 @@ import remarkExternalLinks from 'remark-external-links'
 import { sleep } from '@/utils/time'
 import VertexChatExamples from './VertexChatExamples'
 import { AddVertexMessageParams } from '@/types/http/skeet/addVertexMessageParams'
-import { createFirestoreDataConverter, db } from '@/lib/firebase'
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  orderBy,
-  query,
-} from 'firebase/firestore'
+import { db } from '@/lib/firebase'
+import { collection, orderBy } from 'firebase/firestore'
 import {
   VertexChatRoom,
   VertexChatRoomMessage,
@@ -50,6 +43,7 @@ import {
   genVertexChatRoomPath,
 } from '@/types/models'
 import { Timestamp } from '@skeet-framework/firestore'
+import { get, query } from '@/lib/skeet/firestore'
 
 type ChatMessage = {
   id: string
@@ -110,17 +104,15 @@ export default function VertexChatBox({
 
   const getChatRoom = useCallback(async () => {
     if (db && user.uid && currentChatRoomId) {
-      const docRef = doc(
-        db,
-        genVertexChatRoomPath(user.uid),
-        currentChatRoomId
-      ).withConverter(createFirestoreDataConverter<VertexChatRoom>())
-      const docSnap = await getDoc(docRef)
-      if (docSnap.exists()) {
-        const data = docSnap.data()
-        setChatRoom({ id: docSnap.id, ...data } as ChatRoom)
-      } else {
-        console.log('No such document!')
+      try {
+        const data = await get<VertexChatRoom>(
+          db,
+          genVertexChatRoomPath(user.uid),
+          currentChatRoomId
+        )
+        setChatRoom(data as ChatRoom)
+      } catch (e) {
+        console.error(e)
       }
     }
   }, [currentChatRoomId, user.uid])
@@ -133,14 +125,11 @@ export default function VertexChatBox({
 
   const getUserChatRoomMessage = useCallback(async () => {
     if (db && user.uid && currentChatRoomId) {
-      const q = query(
-        collection(
-          db,
-          genVertexChatRoomMessagePath(user.uid, currentChatRoomId)
-        ),
-        orderBy('createdAt', 'asc')
-      ).withConverter(createFirestoreDataConverter<VertexChatRoomMessage>())
-      const querySnapshot = await getDocs(q)
+      const querySnapshot = await query<VertexChatRoomMessage>(
+        db,
+        genVertexChatRoomMessagePath(user.uid, currentChatRoomId),
+        [orderBy('createdAt', 'asc')]
+      )
       const messages: ChatMessage[] = []
       for await (const qs of querySnapshot.docs) {
         const data = qs.data()

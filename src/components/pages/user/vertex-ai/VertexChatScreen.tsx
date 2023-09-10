@@ -11,16 +11,14 @@ import useToastMessage from '@/hooks/useToastMessage'
 import {
   DocumentData,
   QueryDocumentSnapshot,
-  collection,
-  getDocs,
   limit,
   orderBy,
-  query,
 } from 'firebase/firestore'
 import { useRecoilValue } from 'recoil'
 import { userState } from '@/store/user'
-import { createFirestoreDataConverter, db } from '@/lib/firebase'
+import { db } from '@/lib/firebase'
 import { VertexChatRoom, genVertexChatRoomPath } from '@/types/models'
+import { query } from '@/lib/skeet/firestore'
 
 export default function VertexChatScreen() {
   const { t } = useTranslation()
@@ -42,13 +40,11 @@ export default function VertexChatScreen() {
       try {
         setDataLoading(true)
 
-        const q = query(
-          collection(db, genVertexChatRoomPath(user.uid)),
-          orderBy('createdAt', 'desc'),
-          limit(15)
-        ).withConverter(createFirestoreDataConverter<VertexChatRoom>())
-
-        const querySnapshot = await getDocs(q)
+        const querySnapshot = await query<VertexChatRoom>(
+          db,
+          genVertexChatRoomPath(user.uid),
+          [orderBy('createdAt', 'desc'), limit(15)]
+        )
         const list: ChatRoom[] = []
         querySnapshot.forEach((doc) => {
           const data = doc.data()

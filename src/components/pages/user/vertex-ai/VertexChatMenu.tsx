@@ -39,21 +39,17 @@ import { Timestamp } from '@skeet-framework/firestore'
 import {
   DocumentData,
   QueryDocumentSnapshot,
-  addDoc,
-  collection,
-  getDocs,
   limit,
   orderBy,
-  query,
-  serverTimestamp,
   startAfter,
 } from 'firebase/firestore'
-import { createFirestoreDataConverter, db } from '@/lib/firebase'
+import { db } from '@/lib/firebase'
 import {
   VertexChatRoom,
   VertexExampleInput,
   genVertexChatRoomPath,
 } from '@/types/models'
+import { query, add } from '@/lib/skeet/firestore'
 
 export type ChatRoom = {
   id: string
@@ -138,14 +134,12 @@ export default function VertexChatMenu({
       console.log('lastChat')
       try {
         setDataLoading(true)
-        const q = query(
-          collection(db, genVertexChatRoomPath(user.uid)),
-          orderBy('createdAt', 'desc'),
-          limit(15),
-          startAfter(lastChat)
-        ).withConverter(createFirestoreDataConverter<VertexChatRoom>())
 
-        const querySnapshot = await getDocs(q)
+        const querySnapshot = await query<VertexChatRoom>(
+          db,
+          genVertexChatRoomPath(user.uid),
+          [orderBy('createdAt', 'desc'), limit(15), startAfter(lastChat)]
+        )
 
         const list: ChatRoom[] = []
         querySnapshot.forEach((doc) => {
@@ -237,22 +231,20 @@ export default function VertexChatMenu({
       try {
         setCreateLoading(true)
         if (!isDisabled && db) {
-          const chatRoomsRef = collection(
+          const docRef = await add<VertexChatRoom>(
             db,
-            genVertexChatRoomPath(user.uid)
-          ).withConverter(createFirestoreDataConverter<VertexChatRoom>())
-          const docRef = await addDoc(chatRoomsRef, {
-            title: '',
-            model: data.model,
-            context: data.systemContent,
-            maxTokens: data.maxTokens,
-            temperature: data.temperature,
-            topP: data.topP,
-            topK: data.topK,
-            examples: [],
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp(),
-          })
+            genVertexChatRoomPath(user.uid),
+            {
+              title: '',
+              model: data.model,
+              context: data.systemContent,
+              maxTokens: data.maxTokens,
+              temperature: data.temperature,
+              topP: data.topP,
+              topK: data.topK,
+              examples: [],
+            }
+          )
           addToast({
             type: 'success',
             title: t('vertex-ai:chatRoomCreatedSuccessTitle'),

@@ -11,17 +11,10 @@ import {
 } from 'react'
 import { useRecoilValue } from 'recoil'
 import { userState } from '@/store/user'
-import { createFirestoreDataConverter, db } from '@/lib/firebase'
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  orderBy,
-  query,
-} from 'firebase/firestore'
+import { db } from '@/lib/firebase'
+import { orderBy } from 'firebase/firestore'
 import { chatContentSchema } from '@/utils/form'
-import { fetchSkeetFunctions } from '@/lib/skeet'
+import { fetchSkeetFunctions } from '@/lib/skeet/functions'
 import Image from 'next/image'
 import { ChatRoom } from './ChatMenu'
 import { AddStreamUserChatRoomMessageParams } from '@/types/http/skeet/addStreamUserChatRoomMessageParams'
@@ -42,10 +35,12 @@ import remarkDirective from 'remark-directive'
 import remarkExternalLinks from 'remark-external-links'
 import {
   UserChatRoom,
+  UserChatRoomMessage,
   genUserChatRoomMessagePath,
   genUserChatRoomPath,
 } from '@/types/models'
 import { Timestamp } from '@skeet-framework/firestore'
+import { get, query } from '@/lib/skeet/firestore'
 
 type ChatMessage = {
   id: string
@@ -107,20 +102,18 @@ export default function ChatBox({
 
   const getChatRoom = useCallback(async () => {
     if (db && user.uid && currentChatRoomId) {
-      const docRef = doc(
-        db,
-        genUserChatRoomPath(user.uid),
-        currentChatRoomId
-      ).withConverter(createFirestoreDataConverter<UserChatRoom>())
-      const docSnap = await getDoc(docRef)
-      if (docSnap.exists()) {
-        const data = docSnap.data()
+      try {
+        const data = await get<UserChatRoom>(
+          db,
+          genUserChatRoomPath(user.uid),
+          currentChatRoomId
+        )
         if (data.title !== '') {
           setFirstMessage(false)
         }
-        setChatRoom({ id: docSnap.id, ...data } as ChatRoom)
-      } else {
-        console.log('No such document!')
+        setChatRoom(data as ChatRoom)
+      } catch (e) {
+        console.error(e)
       }
     }
   }, [currentChatRoomId, user.uid])
@@ -133,11 +126,11 @@ export default function ChatBox({
 
   const getUserChatRoomMessage = useCallback(async () => {
     if (db && user.uid && currentChatRoomId) {
-      const q = query(
-        collection(db, genUserChatRoomMessagePath(user.uid, currentChatRoomId)),
-        orderBy('createdAt', 'asc')
+      const querySnapshot = await query<UserChatRoomMessage>(
+        db,
+        genUserChatRoomMessagePath(user.uid, currentChatRoomId),
+        [orderBy('createdAt', 'asc')]
       )
-      const querySnapshot = await getDocs(q)
       const messages: ChatMessage[] = []
       for await (const qs of querySnapshot.docs) {
         const data = qs.data()

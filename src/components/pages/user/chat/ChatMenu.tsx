@@ -30,16 +30,12 @@ import {
   DocumentData,
   QueryDocumentSnapshot,
   Timestamp,
-  addDoc,
   collection,
-  getDocs,
   limit,
   orderBy,
-  query,
-  serverTimestamp,
   startAfter,
 } from 'firebase/firestore'
-import { createFirestoreDataConverter, db } from '@/lib/firebase'
+import { db } from '@/lib/firebase'
 import { format } from 'date-fns'
 import useToastMessage from '@/hooks/useToastMessage'
 import { Dialog, Transition } from '@headlessui/react'
@@ -47,6 +43,7 @@ import { z } from 'zod'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { UserChatRoom, genUserChatRoomPath } from '@/types/models'
+import { add, query } from '@/lib/skeet/firestore'
 
 export type ChatRoom = {
   id: string
@@ -123,14 +120,11 @@ export default function ChatMenu({
       console.log('lastChat')
       try {
         setDataLoading(true)
-        const q = query(
-          collection(db, genUserChatRoomPath(user.uid)),
+        const querySnapshot = await query(db, genUserChatRoomPath(user.uid), [
           orderBy('createdAt', 'desc'),
           limit(15),
-          startAfter(lastChat)
-        ).withConverter(createFirestoreDataConverter<UserChatRoom>())
-
-        const querySnapshot = await getDocs(q)
+          startAfter(lastChat),
+        ])
 
         const list: ChatRoom[] = []
         querySnapshot.forEach((doc) => {
@@ -222,21 +216,18 @@ export default function ChatMenu({
       try {
         setCreateLoading(true)
         if (!isDisabled && db) {
-          console.log(genUserChatRoomPath(user.uid))
-          const chatRoomsRef = collection(
+          const docRef = await add<UserChatRoom>(
             db,
-            genUserChatRoomPath(user.uid)
-          ).withConverter(createFirestoreDataConverter<UserChatRoom>())
-          const docRef = await addDoc(chatRoomsRef, {
-            title: '',
-            model: data.model,
-            context: data.systemContent,
-            maxTokens: data.maxTokens,
-            temperature: data.temperature,
-            stream: true,
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp(),
-          })
+            genUserChatRoomPath(user.uid),
+            {
+              title: '',
+              model: data.model,
+              context: data.systemContent,
+              maxTokens: data.maxTokens,
+              temperature: data.temperature,
+              stream: true,
+            }
+          )
           addToast({
             type: 'success',
             title: t('chat:chatRoomCreatedSuccessTitle'),
