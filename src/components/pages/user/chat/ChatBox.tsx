@@ -119,7 +119,13 @@ export default function ChatBox({
   }, [currentChatRoomId, user.uid])
 
   useEffect(() => {
-    getChatRoom()
+    void (async () => {
+      try {
+        await getChatRoom()
+      } catch (e) {
+        console.error(e)
+      }
+    })()
   }, [getChatRoom])
 
   const [isSending, setSending] = useState(false)
@@ -161,7 +167,13 @@ export default function ChatBox({
   }, [currentChatRoomId, user.uid])
 
   useEffect(() => {
-    getUserChatRoomMessage()
+    void (async () => {
+      try {
+        await getUserChatRoomMessage()
+      } catch (e) {
+        console.error(e)
+      }
+    })()
   }, [getUserChatRoomMessage])
 
   useEffect(() => {
@@ -219,18 +231,22 @@ export default function ChatBox({
               if (dataString != 'Stream done') {
                 const data = JSON.parse(dataString)
                 setChatMessages((prev) => {
-                  const chunkSize = data.text.length
-                  if (prev[prev.length - 1].content.length === 0) {
-                    prev[prev.length - 1].content =
-                      prev[prev.length - 1].content + data.text
-                  }
-                  if (
-                    !prev[prev.length - 1].content
-                      .slice(chunkSize * -1)
-                      .includes(data.text)
-                  ) {
-                    prev[prev.length - 1].content =
-                      prev[prev.length - 1].content + data.text
+                  try {
+                    const chunkSize = data?.text?.length
+                    if (prev[prev.length - 1].content.length === 0) {
+                      prev[prev.length - 1].content =
+                        prev[prev.length - 1].content + data.text
+                    }
+                    if (
+                      !prev[prev.length - 1].content
+                        .slice(chunkSize * -1)
+                        .includes(data.text)
+                    ) {
+                      prev[prev.length - 1].content =
+                        prev[prev.length - 1].content + data.text
+                    }
+                  } catch (e) {
+                    console.log(e)
                   }
 
                   return [...prev]
@@ -289,9 +305,9 @@ export default function ChatBox({
   )
 
   const onKeyDown = useCallback(
-    (event: KeyboardEvent) => {
+    async (event: KeyboardEvent) => {
       if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
-        handleSubmit(onSubmit)()
+        await handleSubmit(onSubmit)()
       }
     },
     [handleSubmit, onSubmit]

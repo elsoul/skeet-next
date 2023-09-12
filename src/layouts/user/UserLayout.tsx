@@ -38,11 +38,15 @@ export default function UserLayout({ children }: Props) {
     }
   }, [])
   useEffect(() => {
-    ;(async () => {
-      setSidebarOpen(false)
-      await new Promise((resolve) => setTimeout(resolve, 100))
-      if (!router.asPath.includes('#')) {
-        resetWindowScrollPosition()
+    void (async () => {
+      try {
+        setSidebarOpen(false)
+        await new Promise((resolve) => setTimeout(resolve, 100))
+        if (!router.asPath.includes('#')) {
+          resetWindowScrollPosition()
+        }
+      } catch (e) {
+        console.error(e)
       }
     })()
   }, [router.asPath, resetWindowScrollPosition])
@@ -68,12 +72,12 @@ export default function UserLayout({ children }: Props) {
         } catch (e) {
           console.error(e)
           setUser(defaultUser)
-          signOut(auth)
-          router.push('/auth/login')
+          await signOut(auth)
+          await router.push('/auth/login')
         }
       } else {
         setUser(defaultUser)
-        router.push('/auth/login')
+        await router.push('/auth/login')
       }
     },
     [setUser, router]
@@ -281,10 +285,10 @@ export default function UserLayout({ children }: Props) {
                     <Menu.Item>
                       {({ active }) => (
                         <p
-                          onClick={() => {
+                          onClick={async () => {
                             if (auth) {
                               setUser(defaultUser)
-                              signOut(auth)
+                              await signOut(auth)
                             }
                           }}
                           className={clsx(

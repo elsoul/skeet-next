@@ -42,8 +42,8 @@ export default function LanguageChanger() {
                     <div
                       className="relative grid gap-6 bg-white px-5 py-6 hover:cursor-pointer hover:bg-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700"
                       role="button"
-                      onClick={() => {
-                        changeLanguage('en')
+                      onClick={async () => {
+                        await changeLanguage('en')
                         close()
                       }}
                     >
@@ -58,8 +58,8 @@ export default function LanguageChanger() {
                     <div
                       className="relative grid gap-6 bg-white px-5 py-6 hover:cursor-pointer hover:bg-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700"
                       role="button"
-                      onClick={() => {
-                        changeLanguage('ja')
+                      onClick={async () => {
+                        await changeLanguage('ja')
                         close()
                       }}
                     >

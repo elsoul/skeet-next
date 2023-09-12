@@ -38,4 +38,4 @@ async function generateSiteMap() {
   fs.writeFileSync('web-build/sitemap.xml', sitemap)
 }
 
-generateSiteMap()
+void generateSiteMap()
