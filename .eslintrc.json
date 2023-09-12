@@ -40,7 +40,7 @@
   },
   "overrides": [
     {
-      "files": ["./functions/**/*.ts", "./graphql/**/*.ts"],
+      "files": ["./functions/**/*.ts"],
       "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
