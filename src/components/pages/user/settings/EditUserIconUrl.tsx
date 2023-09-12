@@ -199,8 +199,8 @@ export default function EditUserIconUrl() {
                     </div>
                     <div>
                       <button
-                        onClick={() => {
-                          uploadImage()
+                        onClick={async () => {
+                          await uploadImage()
                         }}
                         disabled={isDisabled}
                         className={clsx(

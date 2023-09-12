@@ -43,12 +43,18 @@ export default function ResetPasswordAction({ oobCode }: Props) {
         title: t('auth:verifyErrorTitle'),
         description: t('auth:verifyErrorBody'),
       })
-      router.push('/auth/login')
+      await router.push('/auth/login')
     }
   }, [router, t, oobCode, addToast])
 
   useEffect(() => {
-    verifyEmail()
+    void (async () => {
+      try {
+        await verifyEmail()
+      } catch (e) {
+        console.error(e)
+      }
+    })()
   }, [verifyEmail])
 
   const {
@@ -73,7 +79,7 @@ export default function ResetPasswordAction({ oobCode }: Props) {
           title: t('auth:resetPasswordSuccessTitle'),
           description: t('auth:resetPasswordSuccessBody'),
         })
-        router.push('/auth/login')
+        await router.push('/auth/login')
       } catch (err) {
         console.error(err)
         addToast({

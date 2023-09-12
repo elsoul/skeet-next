@@ -186,18 +186,18 @@ export default function VertexChatMenu({
   const chatMenuRef = useRef<HTMLDivElement>(null)
   const chatMenuRefMobile = useRef<HTMLDivElement>(null)
 
-  const handleScroll = useCallback(() => {
+  const handleScroll = useCallback(async () => {
     const current = chatMenuRef.current
     if (current) {
       const isBottom =
         current.scrollHeight - current.scrollTop === current.clientHeight
       if (isBottom && !reachLast) {
-        queryMore()
+        await queryMore()
       }
     }
   }, [chatMenuRef, queryMore, reachLast])
 
-  const handleScrollMobile = useCallback(() => {
+  const handleScrollMobile = useCallback(async () => {
     const current = chatMenuRefMobile.current
 
     if (current) {
@@ -205,7 +205,7 @@ export default function VertexChatMenu({
         Math.floor(current.scrollHeight - current.scrollTop) ===
         current.clientHeight
       if (isBottom && !reachLast) {
-        queryMore()
+        await queryMore()
       }
     }
   }, [chatMenuRefMobile, queryMore, reachLast])
@@ -292,9 +292,9 @@ export default function VertexChatMenu({
   )
 
   const onKeyDown = useCallback(
-    (event: KeyboardEvent) => {
+    async (event: KeyboardEvent) => {
       if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
-        handleSubmit(onSubmit)()
+        await handleSubmit(onSubmit)()
       }
     },
     [handleSubmit, onSubmit]

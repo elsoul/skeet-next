@@ -118,7 +118,13 @@ export default function VertexChatBox({
   }, [currentChatRoomId, user.uid])
 
   useEffect(() => {
-    getChatRoom()
+    void (async () => {
+      try {
+        await getChatRoom()
+      } catch (e) {
+        console.error(e)
+      }
+    })()
   }, [getChatRoom])
 
   const [isSending, setSending] = useState(false)
@@ -160,7 +166,13 @@ export default function VertexChatBox({
   }, [currentChatRoomId, user.uid])
 
   useEffect(() => {
-    getUserChatRoomMessage()
+    void (async () => {
+      try {
+        await getUserChatRoomMessage()
+      } catch (e) {
+        console.error(e)
+      }
+    })()
   }, [getUserChatRoomMessage])
 
   useEffect(() => {
@@ -284,9 +296,9 @@ export default function VertexChatBox({
   )
 
   const onKeyDown = useCallback(
-    (event: KeyboardEvent) => {
+    async (event: KeyboardEvent) => {
       if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
-        handleSubmit(onSubmit)()
+        await handleSubmit(onSubmit)()
       }
     },
     [handleSubmit, onSubmit]

@@ -75,7 +75,13 @@ export default function VertexChatScreen() {
   }, [user.uid, setDataLoading, addToast, t])
 
   useEffect(() => {
-    getChatRooms()
+    void (async () => {
+      try {
+        await getChatRooms()
+      } catch (e) {
+        console.error(e)
+      }
+    })()
   }, [getChatRooms])
 
   return (
