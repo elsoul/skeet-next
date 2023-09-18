@@ -45,9 +45,7 @@
     "ais": [
       {
         "name": "VertexAI",
-        "availableModels": [
-          "chat-bison@001"
-        ]
+        "availableModels": ["chat-bison@001"]
       }
     ]
   }
