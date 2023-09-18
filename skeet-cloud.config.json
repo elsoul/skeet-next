@@ -39,5 +39,16 @@
         }
       ]
     }
-  ]
+  ],
+  "ai": {
+    "lang": "en",
+    "ais": [
+      {
+        "name": "VertexAI",
+        "availableModels": [
+          "chat-bison@001"
+        ]
+      }
+    ]
+  }
 }
