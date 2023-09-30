@@ -39,3 +39,17 @@
     height: calc(var(--vh, 1vh) * 100 - 112px - 192px - 16px);
   }
 }
+
+.video-wrapper {
+  position: relative;
+  overflow: hidden;
+  padding-top: 56.25%;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

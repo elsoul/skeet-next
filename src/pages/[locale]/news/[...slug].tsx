@@ -20,6 +20,8 @@ import DefaultLayout from '@/layouts/default/DefaultLayout'
 import { getI18nProps } from '@/lib/getStatic'
 import NewsContents from '@/components/articles/news/NewsContents'
 import NewsPageIndex from '@/components/articles/news/NewsPageIndex'
+import youtubeTransformer from '@/lib/youtubeTransformer'
+import embedder from '@remark-embedder/core'
 
 const articleDirName = 'news'
 
@@ -67,6 +69,9 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const articleHtml = await unified()
     .use(remarkParse)
+    .use(embedder, {
+      transformers: [youtubeTransformer],
+    })
     .use(remarkDirective)
     .use(remarkGfm)
     .use(remarkSlug)

@@ -19,6 +19,8 @@ import { getAllArticles, getArticleBySlug } from '@/utils/article'
 import DocLayout from '@/layouts/doc/DocLayout'
 import { getI18nProps } from '@/lib/getStatic'
 import DocContents from '@/components/articles/doc/DocContents'
+import youtubeTransformer from '@/lib/youtubeTransformer'
+import embedder from '@remark-embedder/core'
 
 const articleDirName = 'doc'
 
@@ -62,6 +64,9 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const articleHtml = await unified()
     .use(remarkParse)
+    .use(embedder, {
+      transformers: [youtubeTransformer],
+    })
     .use(remarkDirective)
     .use(remarkGfm)
     .use(remarkSlug)
