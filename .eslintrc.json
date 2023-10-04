@@ -12,7 +12,10 @@
     "sourceType": "module"
   },
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "react-hooks"],
+  "plugins": [
+    "@typescript-eslint",
+    "react-hooks"
+  ],
   "env": {
     "browser": true,
     "es2021": true
@@ -40,7 +43,9 @@
   },
   "overrides": [
     {
-      "files": ["./functions/**/*.ts"],
+      "files": [
+        "./functions/**/*.ts"
+      ],
       "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -52,7 +57,9 @@
         "ecmaVersion": "latest"
       },
       "parser": "@typescript-eslint/parser",
-      "plugins": ["@typescript-eslint"],
+      "plugins": [
+        "@typescript-eslint"
+      ],
       "env": {
         "es6": true
       },
