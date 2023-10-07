@@ -23,11 +23,11 @@ export default function DiscordRow() {
               {t('DiscordRow.title')}
             </h3>
           </div>
-          <div className="ml-12 mt-2 sm:flex sm:items-start sm:justify-between">
+          <div className="ml-12 mt-2 sm:flex sm:items-end sm:justify-between">
             <div className="max-w-xl text-sm text-gray-50">
               <p>{t('DiscordRow.body')}</p>
             </div>
-            <div className="mt-5 text-right sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center">
+            <div className="mt-5 text-right sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-end">
               <Button
                 color="white"
                 href={siteConfig.discordInvitationLink}
