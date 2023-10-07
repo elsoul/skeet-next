@@ -27,7 +27,7 @@ export default function DiscordRow() {
             <div className="max-w-xl text-sm text-gray-50">
               <p>{t('DiscordRow.body')}</p>
             </div>
-            <div className="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center">
+            <div className="mt-5 text-right sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center">
               <Button
                 color="white"
                 href={siteConfig.discordInvitationLink}
