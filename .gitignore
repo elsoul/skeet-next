@@ -13,6 +13,10 @@ functions/**/.env
 functions/**/*.log
 *.log
 
+# yarn
+.yarn/
+.yarnrc.yml
+
 # OSX
 #
 .DS_Store
@@ -97,7 +101,6 @@ firebase-debug.log
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
 /.pnp
 .pnp.js
 
