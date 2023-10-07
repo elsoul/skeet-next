@@ -12,16 +12,17 @@ export default function DiscordRow() {
     <>
       <Container className="py-48">
         <div className="mx-auto max-w-lg bg-discord shadow">
-          <div className="px-4 py-5 sm:p-6">
-            <FontAwesomeIcon
-              icon={faDiscord}
-              size="lg"
-              aria-label="Discord icon"
-              className="h-9 w-9 text-white"
-            />
-            <h3 className="mt-2 text-2xl font-semibold leading-6 text-white">
-              {t('DiscordRow.title')}
-            </h3>
+          <div className="flex">
+              <FontAwesomeIcon
+                icon={faDiscord}
+                size="lg"
+                aria-label="Discord icon"
+                className="h-9 w-9 text-white"
+              />
+              <h3 className="ml-2 mt-2 text-2xl font-semibold leading-6 text-white">
+                {t('DiscordRow.title')}
+              </h3>
+            </div>
             <div className="mt-2 sm:flex sm:items-start sm:justify-between">
               <div className="max-w-xl text-sm text-gray-50">
                 <p>{t('DiscordRow.body')}</p>
