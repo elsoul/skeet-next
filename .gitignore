@@ -16,6 +16,7 @@ functions/**/*.log
 # yarn
 .yarn/
 .yarnrc.yml
+.pnp*
 
 # OSX
 #
