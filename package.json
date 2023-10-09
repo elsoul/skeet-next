@@ -4,7 +4,6 @@
   "description": "Skeet Framework Boilerplate with Next.js",
   "author": "ELSOUL LABO B.V.",
   "license": "Apache-2.0",
-  "private": false,
   "scripts": {
     "format": "prettier --write --ignore-unknown .",
     "lint": "eslint --ext .ts,.tsx --fix .",
@@ -31,9 +30,9 @@
     "send:sitemap": "npx ts-node -r tsconfig-paths/register --transpile-only ./scripts/sendSitemap.ts"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "6.4.0",
-    "@fortawesome/free-brands-svg-icons": "6.4.0",
-    "@fortawesome/free-regular-svg-icons": "6.4.0",
+    "@fortawesome/fontawesome-svg-core": "6.4.2",
+    "@fortawesome/free-brands-svg-icons": "6.4.2",
+    "@fortawesome/free-regular-svg-icons": "6.4.2",
     "@fortawesome/react-fontawesome": "0.2.0",
     "@headlessui/react": "1.7.15",
     "@heroicons/react": "2.0.18",

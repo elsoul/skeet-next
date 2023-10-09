@@ -14,6 +14,7 @@ const siteConfig = {
   descriptionEN:
     'Next.js Boilerplate. SEO compatible, i18n translation, SSG, PWA. You can start building your WebApp today, and its deployment is guaranteed.',
   twitterAccount: '@SkeetDev',
+  xAccount: '@SkeetDev',
   instagramAccount: 'elsoul_labo',
   githubAccount: 'elsoul',
   discordInvitationLink: 'https://discord.gg/H2HeqRq54J',

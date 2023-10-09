@@ -10,6 +10,7 @@ import {
   faInstagram,
   faGithub,
   faTwitter,
+  faXTwitter,
 } from '@fortawesome/free-brands-svg-icons'
 
 export default function CommonFooter() {
@@ -39,14 +40,18 @@ export default function CommonFooter() {
             <div className="flex flex-col items-center border-t border-gray-400/10 py-10 sm:flex-row-reverse sm:justify-between">
               <div className="flex gap-x-6">
                 <a
-                  href={`https://twitter.com/${siteConfig.twitterAccount}`}
+                  href={`https://${siteConfig.xAccount ? 'x' : 'twitter'}.com/${
+                    siteConfig.xAccount
+                      ? siteConfig.xAccount
+                      : siteConfig.twitterAccount
+                  }`}
                   className="group text-gray-500 hover:text-gray-700"
                   aria-label="Twitter"
                   target="_blank"
                   rel="noreferrer"
                 >
                   <FontAwesomeIcon
-                    icon={faTwitter}
+                    icon={siteConfig.xAccount ? faXTwitter : faTwitter}
                     size="sm"
                     aria-label="Twitter icon"
                     className="h-6 w-6"
