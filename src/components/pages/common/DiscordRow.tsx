@@ -12,7 +12,7 @@ export default function DiscordRow() {
     <>
       <Container className="py-48">
         <div className="mx-auto max-w-lg bg-discord px-4 py-5 shadow">
-          <div className="flex flex-row items-center">
+          <div className="mx-auto flex w-[75%] flex-row items-center justify-center">
             <FontAwesomeIcon
               icon={faDiscord}
               size="lg"
