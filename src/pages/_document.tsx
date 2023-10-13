@@ -58,7 +58,14 @@ export default class MyDocument extends Document {
           />
           <meta name="twitter:card" content="summary_large_image" />
 
-          <meta name="twitter:creator" content={siteConfig.twitterAccount} />
+          <meta
+            name="twitter:creator"
+            content={
+              siteConfig.xAccount
+                ? siteConfig.xAccount
+                : siteConfig.twitterAccount
+            }
+          />
           <meta
             httpEquiv="Content-Security-Policy"
             content="upgrade-insecure-requests"
