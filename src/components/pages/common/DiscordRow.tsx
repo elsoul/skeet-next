@@ -12,7 +12,7 @@ export default function DiscordRow() {
     <>
       <Container className="py-48">
         <div className="mx-auto max-w-lg bg-discord px-4 py-5 shadow">
-          <div className="mx-auto flex w-[75%] flex-row items-center justify-center">
+          <div className="flex flex-row items-center justify-center">
             <FontAwesomeIcon
               icon={faDiscord}
               size="lg"
@@ -23,11 +23,11 @@ export default function DiscordRow() {
               {t('DiscordRow.title')}
             </h3>
           </div>
-          <div className="ml-12 mt-2 sm:flex sm:items-end sm:justify-between">
-            <div className="max-w-xl text-sm text-gray-50">
+          <div className="ml-12 mt-6 sm:mt-3 sm:flex sm:items-end sm:justify-between">
+            <div className="max-w-xl text-sm text-gray-50 mr-4 sm:mr-0">
               <p>{t('DiscordRow.body')}</p>
             </div>
-            <div className="mt-5 text-right sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-end">
+            <div className="mt-4 mr-2 text-right sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-end">
               <Button
                 color="white"
                 href={siteConfig.discordInvitationLink}
