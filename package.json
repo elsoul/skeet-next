@@ -19,7 +19,7 @@
     "functions:test:ci": "yarn --cwd functions/skeet test:ci",
     "functions:deploy": "firebase deploy --only functions",
     "update:packages": "ncu -u -x 'node-fetch,glob' && yarn",
-    "dev": "next dev -p 4200",
+    "dev": "next dev -p 4200 & open http://localhost:4200",
     "dev:emulator": "firebase emulators:start --only firestore --project fakeproject",
     "build": "NODE_ENV=production next build && NODE_ENV=production next export -o web-build",
     "build:production:webapp": "yarn build",
