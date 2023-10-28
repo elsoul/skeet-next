@@ -6,7 +6,7 @@ const nextConfig = {
   swcMinify: true,
   images: { unoptimized: true },
   output: 'export',
-  distDir: process.env.NODE_ENV === 'development' ? undefined : '../web-build',
+  distDir: process.env.NODE_ENV === 'development' ? undefined : './web-build',
 }
 
 const intercept = require('intercept-stdout')
