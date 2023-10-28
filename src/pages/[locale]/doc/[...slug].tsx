@@ -10,11 +10,10 @@ import remark2Rehype from 'remark-rehype'
 import rehypeHighlight from 'rehype-highlight'
 import rehypeStringify from 'rehype-stringify'
 import rehypeCodeTitles from 'rehype-code-titles'
-import remarkSlug from 'remark-slug'
 import remarkGfm from 'remark-gfm'
 import remarkDirective from 'remark-directive'
-import remarkExternalLinks from 'remark-external-links'
-
+import rehypeSlug from 'rehype-slug'
+import rehypeExternalLinks from 'rehype-external-links'
 import { getAllArticles, getArticleBySlug } from '@/utils/article'
 import DocLayout from '@/layouts/doc/DocLayout'
 import { getI18nProps } from '@/lib/getStatic'
@@ -58,7 +57,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     typeof params.slug == 'string' ? [params.slug] : params.slug,
     ['title', 'description', 'content'],
     articleDirPrefix,
-    (params.locale as string) ?? 'en'
+    (params.locale as string) ?? 'en',
   )
   console.log(article.content)
 
@@ -69,12 +68,12 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     })
     .use(remarkDirective)
     .use(remarkGfm)
-    .use(remarkSlug)
-    .use(remarkExternalLinks, {
+    .use(remark2Rehype)
+    .use(rehypeSlug)
+    .use(rehypeExternalLinks, {
       target: '_blank',
       rel: ['noopener noreferrer'],
     })
-    .use(remark2Rehype)
     .use(rehypeCodeTitles)
     .use(rehypeHighlight)
     .use(rehypeStringify)
