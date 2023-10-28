@@ -10,11 +10,10 @@ import remark2Rehype from 'remark-rehype'
 import rehypeHighlight from 'rehype-highlight'
 import rehypeStringify from 'rehype-stringify'
 import rehypeCodeTitles from 'rehype-code-titles'
-import remarkSlug from 'remark-slug'
 import remarkGfm from 'remark-gfm'
 import remarkDirective from 'remark-directive'
-import remarkExternalLinks from 'remark-external-links'
-
+import rehypeSlug from 'rehype-slug'
+import rehypeExternalLinks from 'rehype-external-links'
 import { getAllArticles, getArticleBySlug } from '@/utils/article'
 import DefaultLayout from '@/layouts/default/DefaultLayout'
 import { getI18nProps } from '@/lib/getStatic'
@@ -64,7 +63,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     typeof params.slug == 'string' ? [params.slug] : params.slug,
     ['title', 'category', 'thumbnail', 'content', 'date', 'id'],
     articleDirPrefix,
-    (params.locale as string) ?? 'en'
+    (params.locale as string) ?? 'en',
   )
 
   const articleHtml = await unified()
@@ -74,19 +73,19 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     })
     .use(remarkDirective)
     .use(remarkGfm)
-    .use(remarkSlug)
-    .use(remarkExternalLinks, {
+    .use(remark2Rehype)
+    .use(rehypeSlug)
+    .use(rehypeExternalLinks, {
       target: '_blank',
       rel: ['noopener noreferrer'],
     })
-    .use(remark2Rehype)
     .use(rehypeCodeTitles)
     .use(rehypeHighlight)
     .use(rehypeStringify)
     .process(article.content as string)
 
   const slugs = getAllArticles(articleDirPrefix).filter(
-    (article) => article[0] !== 'ja'
+    (article) => article[0] !== 'ja',
   )
   const articles = slugs
     .map((slug) =>
@@ -94,15 +93,16 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
         slug.filter((_, index) => index !== 0),
         ['title', 'category', 'thumbnail', 'date', 'content'],
         articleDirPrefix,
-        (ctx.params?.locale as string) ?? 'en'
-      )
+        (ctx.params?.locale as string) ?? 'en',
+      ),
     )
     .reverse()
     .slice(0, 3)
 
   const urls = slugs
     .map(
-      (slug) => `/${articleDirName}/${slug[1]}/${slug[2]}/${slug[3]}/${slug[4]}`
+      (slug) =>
+        `/${articleDirName}/${slug[1]}/${slug[2]}/${slug[3]}/${slug[4]}`,
     )
     .reverse()
     .slice(0, 3)
