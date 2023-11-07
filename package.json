@@ -32,8 +32,7 @@
     "deploy:rules": "npx firebase deploy --only firestore:rules,storage",
     "check:webapp": "npx serve web-build",
     "send:sitemap": "npx ts-node -r tsconfig-paths/register --transpile-only ./scripts/sendSitemap.ts",
-    "discord:labo": "npx ts-node -r tsconfig-paths/register --transpile-only ./.github/workflows/runDiscordChangeLog.ts labo",
-    "discord:epics": "npx ts-node -r tsconfig-paths/register --transpile-only ./.github/workflows/runDiscordChangeLog.ts epics"
+    "discord": "npx ts-node -r tsconfig-paths/register --transpile-only ./.github/workflows/runDiscordChangeLog.ts"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "6.4.2",
