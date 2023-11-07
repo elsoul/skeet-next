@@ -20,7 +20,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm i -g yarn
       - run: yarn install
-      - run: yarn test
       - name: Disord Notification Epics
         run: yarn discord:epics
         env:
