@@ -47,6 +47,7 @@ export const addStreamUserChatRoomMessage = onRequest(
         chatRoomPath,
         body.userChatRoomId,
       )
+      if (!userChatRoom) throw new Error('userChatRoom is not found')
 
       // Add User Message to UserChatRoomMessage
       const messagesPath = genUserChatRoomMessagePath(
