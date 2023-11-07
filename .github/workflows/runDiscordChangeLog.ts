@@ -2,7 +2,7 @@ import { discordChangeLog } from '@skeet-framework/discord-utils'
 import { dotenv } from '@skeet-framework/utils'
 dotenv.config()
 
-const REPO_NAME = 'elsoul/skeet-cli'
+const REPO_NAME = 'elsoul/skeet-next'
 type ProjectType = 'labo' | 'epics'
 
 const run = async (project: ProjectType) => {
