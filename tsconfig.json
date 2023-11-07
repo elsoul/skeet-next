@@ -27,6 +27,11 @@
       "moduleResolution": "NodeNext"
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".github/workflows/runDiscordChangeLog.ts"
+  ],
   "exclude": ["node_modules", "out", ".next", "build", "dist", "functions"]
 }
