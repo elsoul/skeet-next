@@ -13,7 +13,7 @@ import { useRecoilValue } from 'recoil'
 import { userState } from '@/store/user'
 import { db } from '@/lib/firebase'
 import { orderBy } from 'firebase/firestore'
-import { chatContentSchema } from '@/utils/form'
+import { chatContentSchema, gptChatRoomName } from '@/utils/form'
 import { fetchSkeetFunctions } from '@/lib/skeet/functions'
 import Image from 'next/image'
 import { ChatRoom } from './ChatMenu'
@@ -372,7 +372,7 @@ export default function ChatBox({
                     />
                   )}
 
-                  {chatRoom?.model === 'gpt-4' && (
+                  {chatRoom?.model.includes('gpt-4') && (
                     <Image
                       src={
                         'https://storage.googleapis.com/epics-bucket/BuidlersCollective/Legend.png'
@@ -390,7 +390,8 @@ export default function ChatBox({
                         {chatRoom?.title ? chatRoom?.title : t('noTitle')}
                       </p>
                       <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                        {chatRoom?.model}: {chatRoom?.maxTokens} {t('tokens')}
+                        {gptChatRoomName(chatRoom?.model)}:{' '}
+                        {chatRoom?.maxTokens} {t('tokens')}
                       </p>
                     </div>
                     <div className="prose w-full max-w-none dark:prose-invert lg:prose-lg">
@@ -437,7 +438,7 @@ export default function ChatBox({
                       )}
                     {(chatMessage.role === 'assistant' ||
                       chatMessage.role === 'system') &&
-                      chatRoom?.model === 'gpt-4' && (
+                      chatRoom?.model.includes('gpt-4') && (
                         <Image
                           src={
                             'https://storage.googleapis.com/epics-bucket/BuidlersCollective/Legend.png'
@@ -450,14 +451,15 @@ export default function ChatBox({
                         />
                       )}
                     <div className="flex w-full flex-col">
-                      {chatMessage.role === 'system' && (
+                      {(chatMessage.role === 'assistant' ||
+                        chatMessage.role === 'system') && (
                         <div className="pb-2">
                           <p className="text-base font-bold text-gray-900 dark:text-white">
                             {chatRoom?.title ? chatRoom?.title : t('noTitle')}
                           </p>
                           <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                            {chatRoom?.model}: {chatRoom?.maxTokens}{' '}
-                            {t('tokens')}
+                            {gptChatRoomName(chatRoom?.model)}:{' '}
+                            {chatRoom?.maxTokens} {t('tokens')}
                           </p>
                         </div>
                       )}
