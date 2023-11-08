@@ -23,7 +23,7 @@
     "backend:run": "yarn functions:dev",
     "update:packages": "ncu -u -x 'node-fetch,glob,remark,unified,remark-gfm,remark-rehype,remark-stringify,rehype-stringify,remark-parse,remark-directive' && yarn",
     "update:backend:packages": "cd functions/skeet && ncu -u && yarn",
-    "dev": "next dev -p 4200 & open http://localhost:4200",
+    "dev": "next dev -p 4200",
     "dev:emulator": "firebase emulators:start --only firestore --project fakeproject",
     "build": "NODE_ENV=production next build",
     "build:production:webapp": "yarn build",
