@@ -24,6 +24,7 @@ import {
   temperatureSchema,
   maxTokensSchema,
   systemContentSchema,
+  gptChatRoomName,
 } from '@/utils/form'
 
 import {
@@ -123,7 +124,7 @@ export default function ChatMenu({
         const querySnapshot = await query<UserChatRoom>(
           db,
           genUserChatRoomPath(user.uid),
-          [orderBy('createdAt', 'desc'), limit(15), startAfter(lastChat)]
+          [orderBy('createdAt', 'desc'), limit(15), startAfter(lastChat)],
         )
 
         const list: ChatRoom[] = []
@@ -226,7 +227,7 @@ export default function ChatMenu({
               maxTokens: data.maxTokens,
               temperature: data.temperature,
               stream: true,
-            }
+            },
           )
           addToast({
             type: 'success',
@@ -269,7 +270,7 @@ export default function ChatMenu({
       addToast,
       getChatRooms,
       user.uid,
-    ]
+    ],
   )
 
   const onKeyDown = useCallback(
@@ -278,7 +279,7 @@ export default function ChatMenu({
         await handleSubmit(onSubmit)()
       }
     },
-    [handleSubmit, onSubmit]
+    [handleSubmit, onSubmit],
   )
 
   return (
@@ -294,7 +295,7 @@ export default function ChatMenu({
             >
               <QueueListIcon
                 className={clsx(
-                  'h-6 w-6 flex-shrink-0 text-gray-900 dark:text-white'
+                  'h-6 w-6 flex-shrink-0 text-gray-900 dark:text-white',
                 )}
               />
             </button>
@@ -309,7 +310,7 @@ export default function ChatMenu({
             >
               <PlusCircleIcon
                 className={clsx(
-                  'h-6 w-6 flex-shrink-0 text-gray-900 dark:text-white'
+                  'h-6 w-6 flex-shrink-0 text-gray-900 dark:text-white',
                 )}
               />
             </button>
@@ -326,7 +327,7 @@ export default function ChatMenu({
                 setNewChatModalOpen(true)
               }}
               className={clsx(
-                'flex w-full flex-row items-center justify-center bg-gray-900 px-3 py-2 dark:bg-gray-600'
+                'flex w-full flex-row items-center justify-center bg-gray-900 px-3 py-2 dark:bg-gray-600',
               )}
             >
               <PlusCircleIcon className="mr-3 h-6 w-6 flex-shrink-0 text-white" />
@@ -344,12 +345,12 @@ export default function ChatMenu({
                   className={clsx(
                     currentChatRoomId === chat.id &&
                       'border-2 border-gray-900 dark:border-gray-50',
-                    'flex flex-row items-start justify-start gap-2 bg-gray-50 p-2 hover:cursor-pointer dark:bg-gray-800'
+                    'flex flex-row items-start justify-start gap-2 bg-gray-50 p-2 hover:cursor-pointer dark:bg-gray-800',
                   )}
                 >
                   <ChatBubbleLeftIcon
                     className={clsx(
-                      'h-5 w-5 flex-shrink-0 text-gray-900 dark:text-white'
+                      'h-5 w-5 flex-shrink-0 text-gray-900 dark:text-white',
                     )}
                   />
                   <div className="flex flex-col gap-2">
@@ -442,7 +443,7 @@ export default function ChatMenu({
                                     >
                                       {allowedGPTModel.map((model) => (
                                         <option key={model} value={model}>
-                                          {model}
+                                          {gptChatRoomName(model)}
                                         </option>
                                       ))}
                                     </select>
@@ -477,7 +478,7 @@ export default function ChatMenu({
                                           field.onChange(
                                             e.target.value
                                               ? parseFloat(e.target.value)
-                                              : 0
+                                              : 0,
                                           )
                                         }
                                       />
@@ -516,7 +517,7 @@ export default function ChatMenu({
                                           field.onChange(
                                             e.target.value
                                               ? parseFloat(e.target.value)
-                                              : 0
+                                              : 0,
                                           )
                                         }
                                       />
@@ -562,7 +563,7 @@ export default function ChatMenu({
                                   isDisabled
                                     ? 'cursor-not-allowed bg-gray-300 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
                                     : 'bg-gray-900 text-white hover:bg-gray-700 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200',
-                                  'w-full px-3 py-2 text-center text-lg font-bold'
+                                  'w-full px-3 py-2 text-center text-lg font-bold',
                                 )}
                               >
                                 {t('chat:createChatRoom')}
@@ -636,12 +637,12 @@ export default function ChatMenu({
                             className={clsx(
                               currentChatRoomId === chat.id &&
                                 'border-2 border-gray-900 dark:border-gray-50',
-                              'flex flex-row items-start justify-start gap-2 bg-gray-50 p-2 hover:cursor-pointer dark:bg-gray-800'
+                              'flex flex-row items-start justify-start gap-2 bg-gray-50 p-2 hover:cursor-pointer dark:bg-gray-800',
                             )}
                           >
                             <ChatBubbleLeftIcon
                               className={clsx(
-                                'h-5 w-5 flex-shrink-0 text-gray-900 dark:text-white'
+                                'h-5 w-5 flex-shrink-0 text-gray-900 dark:text-white',
                               )}
                             />
                             <div className="flex flex-col gap-2">
@@ -660,7 +661,7 @@ export default function ChatMenu({
                               <p className="text-sm font-light text-gray-700 dark:text-gray-200">
                                 {format(
                                   chat.createdAt.toDate(),
-                                  'yyyy-MM-dd HH:mm'
+                                  'yyyy-MM-dd HH:mm',
                                 )}
                               </p>
                             </div>
