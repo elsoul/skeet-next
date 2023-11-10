@@ -5,7 +5,7 @@ void (async () => {
     bundle: true,
     minify: true,
     keepNames: true,
-    sourcemap: 'inline',
+    sourcemap: true,
     sourcesContent: true,
     outfile: './dist/index.js',
     platform: 'node',
