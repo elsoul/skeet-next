@@ -223,13 +223,28 @@ export default function ChatBox({
           const reader = await res?.body?.getReader()
           const decoder = new TextDecoder('utf-8')
 
-          while (true && reader) {
+          while (reader) {
             const { value, done } = await reader.read()
             if (done) break
             try {
-              const dataString = decoder.decode(value)
+              const dataString = decoder.decode(value, { stream: true })
+
               if (dataString != 'Stream done') {
-                const data = JSON.parse(dataString)
+                const regex = /({"text":".*?"})/g
+                const matches = dataString.match(regex)
+                let text = ''
+
+                if (matches) {
+                  matches.forEach((match) => {
+                    try {
+                      const json = JSON.parse(match)
+                      text = text.concat(json.text)
+                    } catch (e) {
+                      console.error('JSON parse error: ', e)
+                    }
+                  })
+                }
+                const data = { text }
                 setChatMessages((prev) => {
                   try {
                     const chunkSize = data?.text?.length
