@@ -451,8 +451,7 @@ export default function ChatBox({
                         />
                       )}
                     <div className="flex w-full flex-col">
-                      {(chatMessage.role === 'assistant' ||
-                        chatMessage.role === 'system') && (
+                      {chatMessage.role === 'system' && (
                         <div className="pb-2">
                           <p className="text-base font-bold text-gray-900 dark:text-white">
                             {chatRoom?.title ? chatRoom?.title : t('noTitle')}
