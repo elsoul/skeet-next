@@ -3,7 +3,7 @@
 {
 	"name": "Skeet Next.js(React) - Firestore",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-18-bullseye",
+	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
 	"features": {
 		"ghcr.io/devcontainers/features/java:1": {},
 		"ghcr.io/devcontainers/features/github-cli:1": {},
