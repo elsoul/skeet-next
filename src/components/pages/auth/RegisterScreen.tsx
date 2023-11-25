@@ -9,12 +9,12 @@ import {
 } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
 import useToastMessage from '@/hooks/useToastMessage'
-import { useRouter } from 'next/router'
 import { emailSchema, passwordSchema, privacySchema } from '@/utils/form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, Controller } from 'react-hook-form'
 import Link from '@/components/routing/Link'
+import useI18nRouter from '@/hooks/useI18nRouter'
 
 const schema = z.object({
   email: emailSchema,
@@ -29,7 +29,7 @@ export default function RegisterScreen() {
   const isJapanese = useMemo(() => i18n.language === 'ja', [i18n])
   const [isLoading, setLoading] = useState(false)
   const addToast = useToastMessage()
-  const router = useRouter()
+  const { routerPush } = useI18nRouter()
 
   const {
     handleSubmit,
@@ -53,7 +53,7 @@ export default function RegisterScreen() {
           const userCredential = await createUserWithEmailAndPassword(
             auth,
             data.email,
-            data.password
+            data.password,
           )
           await sendEmailVerification(userCredential.user)
           await signOut(auth)
@@ -64,7 +64,7 @@ export default function RegisterScreen() {
             description: t('auth:sentConfirmEmailBody'),
           })
 
-          await router.push('/auth/check-email')
+          await routerPush('/auth/check-email')
         } catch (err) {
           console.error(err)
 
@@ -89,7 +89,7 @@ export default function RegisterScreen() {
         }
       }
     },
-    [t, isJapanese, addToast, router]
+    [t, isJapanese, addToast, routerPush],
   )
 
   const isDisabled = useMemo(
@@ -98,7 +98,7 @@ export default function RegisterScreen() {
       errors.email != null ||
       errors.password != null ||
       errors.privacy != null,
-    [isLoading, errors.email, errors.password, errors.privacy]
+    [isLoading, errors.email, errors.password, errors.privacy],
   )
 
   return (
@@ -211,7 +211,7 @@ export default function RegisterScreen() {
                     isDisabled
                       ? 'cursor-not-allowed bg-gray-300 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
                       : 'bg-gray-900 text-white hover:bg-gray-700 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200',
-                    'w-full px-3 py-2 text-center text-lg font-bold'
+                    'w-full px-3 py-2 text-center text-lg font-bold',
                   )}
                 >
                   {t('register')}

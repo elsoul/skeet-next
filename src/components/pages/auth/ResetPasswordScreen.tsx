@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, Controller } from 'react-hook-form'
 import Link from '@/components/routing/Link'
 import useToastMessage from '@/hooks/useToastMessage'
-import { useRouter } from 'next/router'
+import useI18nRouter from '@/hooks/useI18nRouter'
 
 const schema = z.object({
   email: emailSchema,
@@ -22,7 +22,7 @@ export default function ResetPasswordScreen() {
   const { t } = useTranslation()
   const [isLoading, setLoading] = useState(false)
   const addToast = useToastMessage()
-  const router = useRouter()
+  const { routerPush } = useI18nRouter()
 
   const {
     handleSubmit,
@@ -46,7 +46,7 @@ export default function ResetPasswordScreen() {
             title: t('auth:sentResetPasswordRequest'),
             description: t('auth:confirmEmail'),
           })
-          await router.push('/auth/check-email')
+          await routerPush('/auth/check-email')
         } catch (err) {
           console.error(err)
           if (err instanceof Error && err.message === 'Not verified') {
@@ -76,12 +76,12 @@ export default function ResetPasswordScreen() {
         }
       }
     },
-    [t, addToast, router]
+    [t, addToast, routerPush],
   )
 
   const isDisabled = useMemo(
     () => isLoading || errors.email != null,
-    [isLoading, errors.email]
+    [isLoading, errors.email],
   )
 
   return (
@@ -138,7 +138,7 @@ export default function ResetPasswordScreen() {
                     isDisabled
                       ? 'cursor-not-allowed bg-gray-300 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
                       : 'bg-gray-900 text-white hover:bg-gray-700 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200',
-                    'w-full px-3 py-2 text-center text-lg font-bold'
+                    'w-full px-3 py-2 text-center text-lg font-bold',
                   )}
                 >
                   {t('auth:reset')}
