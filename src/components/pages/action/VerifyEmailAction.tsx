@@ -4,10 +4,10 @@ import { useTranslation } from 'next-i18next'
 import { auth } from '@/lib/firebase'
 import { applyActionCode } from 'firebase/auth'
 import AppLoading from '@/components/loading/AppLoading'
-import { useRouter } from 'next/router'
 import { CheckCircleIcon } from '@heroicons/react/24/outline'
 import useToastMessage from '@/hooks/useToastMessage'
 import Button from '@/components/common/atoms/Button'
+import useI18nRouter from '@/hooks/useI18nRouter'
 
 type Props = {
   oobCode: string
@@ -16,7 +16,7 @@ type Props = {
 export default function VerifyEmailAction({ oobCode }: Props) {
   const [isLoading, setLoading] = useState(true)
   const { t } = useTranslation()
-  const router = useRouter()
+  const { routerPush } = useI18nRouter()
   const addToast = useToastMessage()
 
   const verifyUser = useCallback(async () => {
@@ -36,10 +36,10 @@ export default function VerifyEmailAction({ oobCode }: Props) {
           title: t('auth:verifyErrorTitle'),
           description: t('auth:verifyErrorBody'),
         })
-        await router.push('/auth/login')
+        await routerPush('/auth/login')
       }
     }
-  }, [router, t, oobCode, addToast, setLoading])
+  }, [routerPush, t, oobCode, addToast, setLoading])
 
   useEffect(() => {
     void (async () => {
