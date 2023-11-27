@@ -29,7 +29,7 @@ export default function CommonFooter() {
                     <Link
                       key={`${nav.name} CommonFooter.commonFooterNav`}
                       href={nav.href ?? ''}
-                      className="text-base font-medium text-gray-700 hover:text-gray-900 dark:text-gray-50 dark:hover:text-gray-200 sm:py-0"
+                      className="text-base font-medium text-gray-700 hover:text-gray-500 dark:text-gray-50 dark:hover:text-gray-200 sm:py-0"
                     >
                       {t(nav.name)}
                     </Link>
@@ -100,7 +100,7 @@ export default function CommonFooter() {
                   />
                 </a>
               </div>
-              <p className="mt-6 text-sm text-gray-500 sm:mt-0">
+              <p className="mt-6 text-sm font-medium tracking-tight text-gray-500 sm:mt-0">
                 &copy; {new Date().getFullYear()} {siteConfig.copyright} All
                 rights reserved.
               </p>

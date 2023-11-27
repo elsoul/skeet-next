@@ -20,6 +20,7 @@ import { getI18nProps } from '@/lib/getStatic'
 import DocContents from '@/components/articles/doc/DocContents'
 import youtubeTransformer from '@/lib/youtubeTransformer'
 import embedder from '@remark-embedder/core'
+import { addClassToTitles } from '@/lib/rehypePlugin'
 
 const articleDirName = 'doc'
 
@@ -76,6 +77,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     })
     .use(rehypeCodeTitles)
     .use(rehypeHighlight)
+    .use(addClassToTitles)
     .use(rehypeStringify)
     .process(article.content as string)
 

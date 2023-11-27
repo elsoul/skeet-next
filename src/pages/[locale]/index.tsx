@@ -45,7 +45,7 @@ const articleDirPrefix = `articles/${articleDirName}/`
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const slugs = getAllArticles(articleDirPrefix).filter(
-    (article) => article[0] !== 'ja'
+    (article) => article[0] !== 'ja',
   )
   const articles = slugs
     .map((slug) =>
@@ -53,15 +53,16 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
         slug.filter((_, index) => index !== 0),
         ['title', 'category', 'thumbnail', 'date', 'content'],
         articleDirPrefix,
-        (ctx.params?.locale as string) ?? 'en'
-      )
+        (ctx.params?.locale as string) ?? 'en',
+      ),
     )
     .reverse()
     .slice(0, 4)
 
   const urls = slugs
     .map(
-      (slug) => `/${articleDirName}/${slug[1]}/${slug[2]}/${slug[3]}/${slug[4]}`
+      (slug) =>
+        `/${articleDirName}/${slug[1]}/${slug[2]}/${slug[3]}/${slug[4]}`,
     )
     .reverse()
     .slice(0, 4)

@@ -18,6 +18,7 @@ import { getAllArticles, getArticleBySlug } from '@/utils/article'
 import DefaultLayout from '@/layouts/default/DefaultLayout'
 import { getI18nProps } from '@/lib/getStatic'
 import LegalContents from '@/components/articles/legal/LegalContents'
+import { addClassToTitles } from '@/lib/rehypePlugin'
 
 const articleDirName = 'legal'
 
@@ -70,6 +71,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       rel: ['noopener noreferrer'],
     })
     .use(rehypeHighlight)
+    .use(addClassToTitles)
     .use(rehypeStringify)
     .process(article.content as string)
 
