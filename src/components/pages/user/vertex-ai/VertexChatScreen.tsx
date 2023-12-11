@@ -17,7 +17,7 @@ import {
 import { useRecoilValue } from 'recoil'
 import { userState } from '@/store/user'
 import { db } from '@/lib/firebase'
-import { VertexChatRoom, genVertexChatRoomPath } from '@common/types/models'
+import { VertexChatRoom, genVertexChatRoomPath } from '@common/models'
 import { query } from '@/lib/skeet/firestore'
 
 export default function VertexChatScreen() {

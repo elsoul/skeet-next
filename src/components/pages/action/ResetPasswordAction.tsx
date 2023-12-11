@@ -10,7 +10,7 @@ import { z } from 'zod'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useToastMessage from '@/hooks/useToastMessage'
-import { useRouter } from 'next/router'
+import useI18nRouter from '@/hooks/useI18nRouter'
 
 const schema = z.object({
   password: passwordSchema,
@@ -28,7 +28,7 @@ export default function ResetPasswordAction({ oobCode }: Props) {
   const { t } = useTranslation()
   const [email, setEmail] = useState('')
   const addToast = useToastMessage()
-  const router = useRouter()
+  const { routerPush } = useI18nRouter()
 
   const verifyEmail = useCallback(async () => {
     try {
@@ -43,9 +43,9 @@ export default function ResetPasswordAction({ oobCode }: Props) {
         title: t('auth:verifyErrorTitle'),
         description: t('auth:verifyErrorBody'),
       })
-      await router.push('/auth/login')
+      await routerPush('/auth/login')
     }
-  }, [router, t, oobCode, addToast])
+  }, [routerPush, t, oobCode, addToast])
 
   useEffect(() => {
     void (async () => {
@@ -79,7 +79,7 @@ export default function ResetPasswordAction({ oobCode }: Props) {
           title: t('auth:resetPasswordSuccessTitle'),
           description: t('auth:resetPasswordSuccessBody'),
         })
-        await router.push('/auth/login')
+        await routerPush('/auth/login')
       } catch (err) {
         console.error(err)
         addToast({
@@ -91,12 +91,12 @@ export default function ResetPasswordAction({ oobCode }: Props) {
         setRegisterLoading(false)
       }
     },
-    [oobCode, t, router, addToast]
+    [oobCode, t, routerPush, addToast],
   )
 
   const isDisabled = useMemo(
     () => isLoading || isRegisterLoading || errors.password != null,
-    [isLoading, isRegisterLoading, errors.password]
+    [isLoading, isRegisterLoading, errors.password],
   )
 
   if (isLoading) {
@@ -155,7 +155,7 @@ export default function ResetPasswordAction({ oobCode }: Props) {
                     isDisabled
                       ? 'cursor-not-allowed bg-gray-300 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
                       : 'bg-gray-900 text-white hover:bg-gray-700 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200',
-                    'w-full px-3 py-2 text-center text-lg font-bold'
+                    'w-full px-3 py-2 text-center text-lg font-bold',
                   )}
                 >
                   {t('auth:registerAccount')}

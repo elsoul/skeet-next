@@ -1,15 +1,15 @@
 import type { ReactNode } from 'react'
-import { useEffect, useCallback, useState } from 'react'
+import { useEffect, useCallback } from 'react'
 import CommonFooter from '@/layouts/common/CommonFooter'
 import { User, signOut } from 'firebase/auth'
 
-import { useRouter } from 'next/router'
 import AuthHeader from './AuthHeader'
 import { useRecoilState } from 'recoil'
 import { defaultUser, userState } from '@/store/user'
 import { auth, db } from '@/lib/firebase'
-import { User as UserModel, genUserPath } from '@common/types/models/userModels'
+import { User as UserModel, genUserPath } from '@common/models/userModels'
 import { get } from '@/lib/skeet/firestore'
+import useI18nRouter from '@/hooks/useI18nRouter'
 
 type Props = {
   children: ReactNode
@@ -18,7 +18,7 @@ type Props = {
 const mainContentId = 'authMainContent'
 
 export default function AuthLayout({ children }: Props) {
-  const router = useRouter()
+  const { router, routerPush } = useI18nRouter()
 
   const resetWindowScrollPosition = useCallback(() => {
     const element = document.getElementById(mainContentId)
@@ -57,7 +57,7 @@ export default function AuthLayout({ children }: Props) {
             iconUrl,
             emailVerified: fbUser.emailVerified,
           })
-          await router.push('/user/chat')
+          await routerPush('/user/chat')
         } catch (e) {
           console.error(e)
           setUser(defaultUser)
@@ -67,7 +67,7 @@ export default function AuthLayout({ children }: Props) {
         setUser(defaultUser)
       }
     },
-    [setUser, router],
+    [setUser, routerPush],
   )
 
   useEffect(() => {

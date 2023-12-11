@@ -24,6 +24,7 @@ import {
   temperatureSchema,
   maxTokensSchema,
   systemContentSchema,
+  getGptChatModelName,
 } from '@/utils/form'
 
 import {
@@ -42,7 +43,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { z } from 'zod'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { UserChatRoom, genUserChatRoomPath } from '@common/types/models'
+import { UserChatRoom, genUserChatRoomPath } from '@common/models'
 import { add, query } from '@/lib/skeet/firestore'
 
 export type ChatRoom = {
@@ -442,7 +443,7 @@ export default function ChatMenu({
                                     >
                                       {allowedGPTModel.map((model) => (
                                         <option key={model} value={model}>
-                                          {model}
+                                          {getGptChatModelName(model)}
                                         </option>
                                       ))}
                                     </select>

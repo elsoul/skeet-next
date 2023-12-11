@@ -13,7 +13,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { z } from 'zod'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { User, genUserPath } from '@common/types/models'
+import { User, genUserPath } from '@common/models'
 import { update } from '@/lib/skeet/firestore'
 
 const schema = z.object({

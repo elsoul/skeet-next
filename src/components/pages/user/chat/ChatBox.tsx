@@ -13,11 +13,11 @@ import { useRecoilValue } from 'recoil'
 import { userState } from '@/store/user'
 import { db } from '@/lib/firebase'
 import { orderBy } from 'firebase/firestore'
-import { chatContentSchema } from '@/utils/form'
+import { chatContentSchema, getGptChatModelName } from '@/utils/form'
 import { fetchSkeetFunctions } from '@/lib/skeet/functions'
 import Image from 'next/image'
 import { ChatRoom } from './ChatMenu'
-import { AddStreamUserChatRoomMessageParams } from '@common/types/http/skeet/addStreamUserChatRoomMessageParams'
+import { AddStreamUserChatRoomMessageParams } from '@common/types/http/addStreamUserChatRoomMessageParams'
 import { z } from 'zod'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -36,7 +36,7 @@ import {
   UserChatRoomMessage,
   genUserChatRoomMessagePath,
   genUserChatRoomPath,
-} from '@common/types/models'
+} from '@common/models'
 import { Timestamp } from '@skeet-framework/firestore'
 import { get, query } from '@/lib/skeet/firestore'
 import rehypeSlug from 'rehype-slug'
@@ -223,13 +223,28 @@ export default function ChatBox({
           const reader = await res?.body?.getReader()
           const decoder = new TextDecoder('utf-8')
 
-          while (true && reader) {
+          while (reader) {
             const { value, done } = await reader.read()
             if (done) break
             try {
-              const dataString = decoder.decode(value)
+              const dataString = decoder.decode(value, { stream: true })
+
               if (dataString != 'Stream done') {
-                const data = JSON.parse(dataString)
+                const regex = /({"text":".*?"})/g
+                const matches = dataString.match(regex)
+                let text = ''
+
+                if (matches) {
+                  matches.forEach((match) => {
+                    try {
+                      const json = JSON.parse(match)
+                      text = text.concat(json.text)
+                    } catch (e) {
+                      console.error('JSON parse error: ', e)
+                    }
+                  })
+                }
+                const data = { text }
                 setChatMessages((prev) => {
                   try {
                     const chunkSize = data?.text?.length
@@ -372,7 +387,7 @@ export default function ChatBox({
                     />
                   )}
 
-                  {chatRoom?.model === 'gpt-4' && (
+                  {chatRoom?.model.includes('gpt-4') && (
                     <Image
                       src={
                         'https://storage.googleapis.com/epics-bucket/BuidlersCollective/Legend.png'
@@ -390,7 +405,8 @@ export default function ChatBox({
                         {chatRoom?.title ? chatRoom?.title : t('noTitle')}
                       </p>
                       <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                        {chatRoom?.model}: {chatRoom?.maxTokens} {t('tokens')}
+                        {getGptChatModelName(chatRoom?.model)}:{' '}
+                        {chatRoom?.maxTokens} {t('tokens')}
                       </p>
                     </div>
                     <div className="prose w-full max-w-none dark:prose-invert lg:prose-lg">
@@ -437,7 +453,7 @@ export default function ChatBox({
                       )}
                     {(chatMessage.role === 'assistant' ||
                       chatMessage.role === 'system') &&
-                      chatRoom?.model === 'gpt-4' && (
+                      chatRoom?.model.includes('gpt-4') && (
                         <Image
                           src={
                             'https://storage.googleapis.com/epics-bucket/BuidlersCollective/Legend.png'
@@ -456,8 +472,8 @@ export default function ChatBox({
                             {chatRoom?.title ? chatRoom?.title : t('noTitle')}
                           </p>
                           <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                            {chatRoom?.model}: {chatRoom?.maxTokens}{' '}
-                            {t('tokens')}
+                            {getGptChatModelName(chatRoom?.model)}:{' '}
+                            {chatRoom?.maxTokens} {t('tokens')}
                           </p>
                         </div>
                       )}

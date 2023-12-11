@@ -48,7 +48,7 @@ import {
   VertexChatRoom,
   VertexExampleInput,
   genVertexChatRoomPath,
-} from '@common/types/models'
+} from '@common/models'
 import { query, add } from '@/lib/skeet/firestore'
 
 export type ChatRoom = {

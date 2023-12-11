@@ -12,7 +12,7 @@ import {
 } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 import { useTranslation } from 'next-i18next'
-import { UserChatRoom, genUserChatRoomPath } from '@common/types/models'
+import { UserChatRoom, genUserChatRoomPath } from '@common/models'
 import { query } from '@/lib/skeet/firestore'
 
 export default function ChatScreen() {

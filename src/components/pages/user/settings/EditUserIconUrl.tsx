@@ -15,7 +15,7 @@ import useToastMessage from '@/hooks/useToastMessage'
 import { Dialog, Transition } from '@headlessui/react'
 import { useDropzone } from 'react-dropzone'
 import LogoHorizontal from '@/components/common/atoms/LogoHorizontal'
-import { User, genUserPath } from '@common/types/models'
+import { User, genUserPath } from '@common/models'
 import { update } from '@/lib/skeet/firestore'
 
 export default function EditUserIconUrl() {

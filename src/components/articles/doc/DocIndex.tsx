@@ -35,7 +35,7 @@ export default function DocIndex() {
       <div className="py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-50 sm:text-4xl">
+            <h2 className="text-4xl font-extrabold tracking-tighter text-gray-900 dark:text-gray-50 sm:text-5xl">
               {t('doc:title')}
             </h2>
             <p className="mt-2 text-lg leading-8 text-gray-600 dark:text-gray-300">
@@ -68,7 +68,7 @@ export default function DocIndex() {
                   </span>
                 </div>
                 <div className="mt-8">
-                  <h3 className="text-lg font-medium">
+                  <h3 className="text-lg font-bold tracking-tight">
                     <Link href={action.href} className="focus:outline-none">
                       <span className="absolute inset-0" aria-hidden="true" />
                       {t(action.title)}

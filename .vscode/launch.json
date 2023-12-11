@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach to Firebase Cloud Function Emulator",
+      "processId": "${command:PickProcess}",
+      "outFiles": [
+        "${workspaceFolder}/functions/**/dist/*.js"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    }
+  ]
+}

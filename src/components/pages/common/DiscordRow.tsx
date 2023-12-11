@@ -19,15 +19,15 @@ export default function DiscordRow() {
               aria-label="Discord icon"
               className="h-9 w-9 text-white"
             />
-            <h3 className="ml-3 text-2xl font-semibold leading-6 text-white">
+            <h3 className="ml-3 text-2xl font-bold leading-6 tracking-tight text-white">
               {t('DiscordRow.title')}
             </h3>
           </div>
           <div className="ml-12 mt-6 sm:mt-3 sm:flex sm:items-end sm:justify-between">
-            <div className="max-w-xl text-sm text-gray-50 mr-4 sm:mr-0">
+            <div className="mr-4 max-w-xl text-sm text-gray-50 sm:mr-0">
               <p>{t('DiscordRow.body')}</p>
             </div>
-            <div className="mt-4 mr-2 text-right sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-end">
+            <div className="mr-2 mt-4 text-right sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-end">
               <Button
                 color="white"
                 href={siteConfig.discordInvitationLink}
