@@ -12,7 +12,7 @@ import { defaultUser, userState } from '@/store/user'
 import { auth, db } from '@/lib/firebase'
 import LogoHorizontal from '@/components/common/atoms/LogoHorizontal'
 import Image from 'next/image'
-import { User as UserModel, genUserPath } from '@/types/models/userModels'
+import { User as UserModel, genUserPath } from '@common/models/userModels'
 import { get } from '@/lib/skeet/firestore'
 import useI18nRouter from '@/hooks/useI18nRouter'
 

@@ -31,7 +31,7 @@ import remarkGfm from 'remark-gfm'
 import remarkDirective from 'remark-directive'
 import { sleep } from '@/utils/time'
 import VertexChatExamples from './VertexChatExamples'
-import { AddVertexMessageParams } from '@/types/http/skeet/addVertexMessageParams'
+import { AddVertexMessageParams } from '@common/types/http/addVertexMessageParams'
 import { db } from '@/lib/firebase'
 import { orderBy } from 'firebase/firestore'
 import {
@@ -39,7 +39,7 @@ import {
   VertexChatRoomMessage,
   genVertexChatRoomMessagePath,
   genVertexChatRoomPath,
-} from '@/types/models'
+} from '@common/models'
 import { Timestamp } from '@skeet-framework/firestore'
 import { get, query } from '@/lib/skeet/firestore'
 import rehypeSlug from 'rehype-slug'

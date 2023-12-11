@@ -17,7 +17,7 @@ import { chatContentSchema, getGptChatModelName } from '@/utils/form'
 import { fetchSkeetFunctions } from '@/lib/skeet/functions'
 import Image from 'next/image'
 import { ChatRoom } from './ChatMenu'
-import { AddStreamUserChatRoomMessageParams } from '@/types/http/skeet/addStreamUserChatRoomMessageParams'
+import { AddStreamUserChatRoomMessageParams } from '@common/types/http/addStreamUserChatRoomMessageParams'
 import { z } from 'zod'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -36,7 +36,7 @@ import {
   UserChatRoomMessage,
   genUserChatRoomMessagePath,
   genUserChatRoomPath,
-} from '@/types/models'
+} from '@common/models'
 import { Timestamp } from '@skeet-framework/firestore'
 import { get, query } from '@/lib/skeet/firestore'
 import rehypeSlug from 'rehype-slug'

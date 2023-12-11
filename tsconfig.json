@@ -18,7 +18,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@lib/*": ["lib/*"],
-      "@root/*": ["./*"]
+      "@root/*": ["./*"],
+      "@common/*": ["./common/*"]
     }
   },
   "ts-node": {
@@ -31,7 +32,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".github/workflows/runDiscordChangeLog.ts"
+    ".github/workflows/runDiscordChangeLog.ts",
+    "common/**/*"
   ],
   "exclude": ["node_modules", "out", ".next", "build", "dist", "functions"]
 }

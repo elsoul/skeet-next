@@ -43,7 +43,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { z } from 'zod'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { UserChatRoom, genUserChatRoomPath } from '@/types/models'
+import { UserChatRoom, genUserChatRoomPath } from '@common/models'
 import { add, query } from '@/lib/skeet/firestore'
 
 export type ChatRoom = {

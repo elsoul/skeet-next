@@ -1,7 +1,7 @@
 import Container from '@/components/common/atoms/Container'
 import ScrollSyncToc from '@/components/articles/ScrollSyncToc'
 import Image from 'next/image'
-import type { NewsContent } from '@/types/article'
+import type { NewsContent } from '@common/types/article'
 
 type Props = {
   article: NewsContent
