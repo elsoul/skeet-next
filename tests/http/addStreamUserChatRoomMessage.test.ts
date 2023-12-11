@@ -1,5 +1,5 @@
-import { AddStreamUserChatRoomMessageParams } from '@/types/http/skeet/addStreamUserChatRoomMessageParams'
-import { CreateUserChatRoomParams } from '@/types/http/skeet/createUserChatRoomParams'
+import { AddStreamUserChatRoomMessageParams } from '@common/types/http/skeet/addStreamUserChatRoomMessageParams'
+import { CreateUserChatRoomParams } from '@common/types/http/skeet/createUserChatRoomParams'
 import { postFetch } from '../jest.setup'
 
 let userChatRoomId = ''
@@ -16,7 +16,7 @@ describe('addStreamUserChatRoomMessage', () => {
     const endpoint = '/createUserChatRoom'
     const response = await postFetch<CreateUserChatRoomParams>(
       endpoint,
-      requestBody
+      requestBody,
     )
     const data = await response.json()
     expect(response.status).toEqual(200)
@@ -25,7 +25,7 @@ describe('addStreamUserChatRoomMessage', () => {
         status: 'success',
         userChatRoomRef: expect.any(Object),
         userChatRoomMessageRef: expect.any(Object),
-      })
+      }),
     )
     userChatRoomId = data.userChatRoomRef.id
   })
@@ -39,7 +39,7 @@ describe('addStreamUserChatRoomMessage', () => {
     const endpoint = '/addStreamUserChatRoomMessage'
     const response = await postFetch<AddStreamUserChatRoomMessageParams>(
       endpoint,
-      requestBody
+      requestBody,
     )
     const data = await response.json()
     expect(response.status).toEqual(200)
@@ -47,7 +47,7 @@ describe('addStreamUserChatRoomMessage', () => {
       expect.objectContaining({
         status: 'streaming',
         userChatRoomMessageId: expect.any(String),
-      })
+      }),
     )
   })
 })

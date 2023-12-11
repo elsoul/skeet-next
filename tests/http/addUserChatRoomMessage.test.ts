@@ -1,5 +1,5 @@
-import { AddUserChatRoomMessageParams } from '@/types/http/skeet/addUserChatRoomMessageParams'
-import { CreateUserChatRoomParams } from '@/types/http/skeet/createUserChatRoomParams'
+import { AddUserChatRoomMessageParams } from '@common/types/http/skeet/addUserChatRoomMessageParams'
+import { CreateUserChatRoomParams } from '@common/types/http/skeet/createUserChatRoomParams'
 import { postFetch } from '../jest.setup'
 
 let userChatRoomId = ''
@@ -17,7 +17,7 @@ describe('POST with Bearer Token /addUserChatRoomMessage', () => {
     const endpoint = '/createUserChatRoom'
     const response = await postFetch<CreateUserChatRoomParams>(
       endpoint,
-      requestBody
+      requestBody,
     )
     const data = await response.json()
     expect(response.status).toEqual(200)
@@ -26,7 +26,7 @@ describe('POST with Bearer Token /addUserChatRoomMessage', () => {
         status: 'success',
         userChatRoomRef: expect.any(Object),
         userChatRoomMessageRef: expect.any(Object),
-      })
+      }),
     )
     userChatRoomId = data.userChatRoomRef.id
   })
@@ -40,14 +40,14 @@ describe('POST with Bearer Token /addUserChatRoomMessage', () => {
     const endpoint = '/addUserChatRoomMessage'
     const response = await postFetch<AddUserChatRoomMessageParams>(
       endpoint,
-      requestBody
+      requestBody,
     )
     const data = await response.json()
     expect(response.status).toEqual(200)
     expect(data).toEqual(
       expect.objectContaining({
         status: 'success',
-      })
+      }),
     )
   })
 })

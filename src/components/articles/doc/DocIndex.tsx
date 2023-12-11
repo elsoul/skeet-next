@@ -1,6 +1,6 @@
 import { useTranslation } from 'next-i18next'
 import Link from '@/components/routing/Link'
-import type { DocIndex } from '@/types/article'
+import type { DocIndex } from '@common/types/article'
 import {
   HeartIcon,
   RocketLaunchIcon,
@@ -53,7 +53,7 @@ export default function DocIndex() {
                   actionIdx === 1 ? '' : '',
                   actionIdx === actions.length - 2 ? '' : '',
                   actionIdx === actions.length - 1 ? '' : '',
-                  'group relative bg-gray-50 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700'
+                  'group relative bg-gray-50 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700',
                 )}
               >
                 <div>
@@ -61,7 +61,7 @@ export default function DocIndex() {
                     className={clsx(
                       action.iconBackground,
                       action.iconForeground,
-                      'inline-flex p-3 ring-4 ring-white'
+                      'inline-flex p-3 ring-4 ring-white',
                     )}
                   >
                     <action.icon className="h-6 w-6" aria-hidden="true" />

@@ -1,6 +1,6 @@
-import { AddUserChatRoomMessageParams } from '@/types/http/skeet/addUserChatRoomMessageParams'
+import { AddUserChatRoomMessageParams } from '@common/types/http/skeet/addUserChatRoomMessageParams'
 import { postFetch } from '../jest.setup'
-import { CreateUserChatRoomParams } from '@/types/http/skeet/createUserChatRoomParams'
+import { CreateUserChatRoomParams } from '@common/types/http/skeet/createUserChatRoomParams'
 
 let userChatRoomId = ''
 describe('getUserChatRoomMessages', () => {
@@ -16,7 +16,7 @@ describe('getUserChatRoomMessages', () => {
     const endpoint = '/createUserChatRoom'
     const response = await postFetch<CreateUserChatRoomParams>(
       endpoint,
-      requestBody
+      requestBody,
     )
     const data = await response.json()
     expect(response.status).toEqual(200)
@@ -25,7 +25,7 @@ describe('getUserChatRoomMessages', () => {
         status: 'success',
         userChatRoomRef: expect.any(Object),
         userChatRoomMessageRef: expect.any(Object),
-      })
+      }),
     )
     userChatRoomId = data.userChatRoomRef.id
   })
@@ -39,14 +39,14 @@ describe('getUserChatRoomMessages', () => {
     const endpoint = '/addUserChatRoomMessage'
     const response = await postFetch<AddUserChatRoomMessageParams>(
       endpoint,
-      requestBody
+      requestBody,
     )
     const data = await response.json()
     expect(response.status).toEqual(200)
     expect(data).toEqual(
       expect.objectContaining({
         status: 'success',
-      })
+      }),
     )
   })
 })

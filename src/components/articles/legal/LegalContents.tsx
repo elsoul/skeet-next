@@ -1,6 +1,6 @@
 import ScrollSyncToc from '@/components/articles/ScrollSyncToc'
 import Container from '@/components/common/atoms/Container'
-import type { LegalContent } from '@/types/article'
+import type { LegalContent } from '@common/types/article'
 
 type Props = {
   article: LegalContent

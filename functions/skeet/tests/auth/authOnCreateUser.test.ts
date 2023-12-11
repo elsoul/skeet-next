@@ -1,6 +1,6 @@
 import { authOnCreateUser } from '@/routings/auth/index'
 import { db } from '@/index'
-import { User, genUserPath } from '@/models'
+import { User, genUserPath } from '@common/models'
 import {
   describe,
   beforeEach,
@@ -46,8 +46,7 @@ describe('authOnCreateUser', () => {
       photoURL: 'http://example.com/photo.jpg',
     })
     // console.logをモック化して表示しない
-    console.log = jest.fn();
-
+    console.log = jest.fn()
 
     const wrapped = testFn.wrap(authOnCreateUser)
     await wrapped(user)
@@ -65,7 +64,7 @@ describe('authOnCreateUser', () => {
       uid: '12345',
       email: 'test@example.com',
       displayName: 'Test User',
-      photoURL: ''
+      photoURL: '',
     })
 
     const wrapped = testFn.wrap(authOnCreateUser)
@@ -73,7 +72,9 @@ describe('authOnCreateUser', () => {
 
     const result = await get<User>(db, genUserPath(), '12345')
 
-    expect(result.iconUrl.startsWith('https://www.gravatar.com/avatar/')).toBe(true)
+    expect(result.iconUrl.startsWith('https://www.gravatar.com/avatar/')).toBe(
+      true,
+    )
   })
 
   test('should use email account if no displayName is provided', async () => {

@@ -1,6 +1,6 @@
 import Container from '@/components/common/atoms/Container'
 import ScrollSyncToc from '@/components/articles/ScrollSyncToc'
-import type { DocContent } from '@/types/article'
+import type { DocContent } from '@common/types/article'
 import DocPagination from './DocPagination'
 
 type Props = {

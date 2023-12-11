@@ -1,4 +1,4 @@
-import { CreateUserChatRoomParams } from '@/types/http/skeet/createUserChatRoomParams'
+import { CreateUserChatRoomParams } from '@common/types/http/skeet/createUserChatRoomParams'
 import { postFetch } from '../jest.setup'
 
 describe('POST without Bearer Token /createUserChatRoom', () => {
@@ -10,7 +10,7 @@ describe('POST without Bearer Token /createUserChatRoom', () => {
     const response = await postFetch<CreateUserChatRoomParams>(
       endpoint,
       requestBody,
-      false
+      false,
     )
     const data = await response.json()
     expect(response.status).toEqual(500)
@@ -33,7 +33,7 @@ describe('POST with Bearer Token /createUserChatRoom', () => {
     const endpoint = '/createUserChatRoom'
     const response = await postFetch<CreateUserChatRoomParams>(
       endpoint,
-      requestBody
+      requestBody,
     )
     const data = await response.json()
     expect(response.status).toEqual(200)
@@ -42,7 +42,7 @@ describe('POST with Bearer Token /createUserChatRoom', () => {
         status: 'success',
         userChatRoomRef: expect.any(Object),
         userChatRoomMessageRef: expect.any(Object),
-      })
+      }),
     )
   })
 })
