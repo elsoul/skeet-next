@@ -57,11 +57,9 @@ export default function UserLayout({ children }: Props) {
     async (fbUser: User | null) => {
       if (auth && db && fbUser && fbUser.emailVerified) {
         try {
-          const { username, iconUrl } = await get<UserModel>(
-            db,
-            genUserPath(),
-            fbUser.uid,
-          )
+          const data = await get<UserModel>(db, genUserPath(), fbUser.uid)
+          if (!data) throw new Error('User not found')
+          const { username, iconUrl } = data
           setUser({
             uid: fbUser.uid,
             email: fbUser.email ?? '',
@@ -76,8 +74,11 @@ export default function UserLayout({ children }: Props) {
           await routerPush('/auth/login')
         }
       } else {
-        setUser(defaultUser)
-        await routerPush('/auth/login')
+        if (auth && !fbUser) {
+          setUser(defaultUser)
+          await signOut(auth)
+          await routerPush('/auth/login')
+        }
       }
     },
     [setUser, routerPush],
