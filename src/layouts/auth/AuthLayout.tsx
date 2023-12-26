@@ -45,11 +45,9 @@ export default function AuthLayout({ children }: Props) {
     async (fbUser: User | null) => {
       if (auth && db && fbUser && fbUser.emailVerified) {
         try {
-          const { username, iconUrl } = await get<UserModel>(
-            db,
-            genUserPath(),
-            fbUser.uid,
-          )
+          const data = await get<UserModel>(db, genUserPath(), fbUser.uid)
+          if (!data) throw new Error('Chat room not found')
+          const { username, iconUrl } = data
           setUser({
             uid: fbUser.uid,
             email: fbUser.email ?? '',
