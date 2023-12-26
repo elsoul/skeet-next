@@ -58,7 +58,7 @@ export default function UserLayout({ children }: Props) {
       if (auth && db && fbUser && fbUser.emailVerified) {
         try {
           const data = await get<UserModel>(db, genUserPath(), fbUser.uid)
-          if (!data) throw new Error('Chat room not found')
+          if (!data) throw new Error('User not found')
           const { username, iconUrl } = data
           setUser({
             uid: fbUser.uid,
@@ -74,8 +74,11 @@ export default function UserLayout({ children }: Props) {
           await routerPush('/auth/login')
         }
       } else {
-        setUser(defaultUser)
-        await routerPush('/auth/login')
+        if (auth && !fbUser) {
+          setUser(defaultUser)
+          await signOut(auth)
+          await routerPush('/auth/login')
+        }
       }
     },
     [setUser, routerPush],

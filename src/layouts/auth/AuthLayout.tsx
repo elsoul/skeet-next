@@ -7,8 +7,6 @@ import AuthHeader from './AuthHeader'
 import { useRecoilState } from 'recoil'
 import { defaultUser, userState } from '@/store/user'
 import { auth, db } from '@/lib/firebase'
-import { User as UserModel, genUserPath } from '@common/models/userModels'
-import { get } from '@/lib/skeet/firestore'
 import useI18nRouter from '@/hooks/useI18nRouter'
 
 type Props = {
@@ -45,24 +43,12 @@ export default function AuthLayout({ children }: Props) {
     async (fbUser: User | null) => {
       if (auth && db && fbUser && fbUser.emailVerified) {
         try {
-          const data = await get<UserModel>(db, genUserPath(), fbUser.uid)
-          if (!data) throw new Error('Chat room not found')
-          const { username, iconUrl } = data
-          setUser({
-            uid: fbUser.uid,
-            email: fbUser.email ?? '',
-            username,
-            iconUrl,
-            emailVerified: fbUser.emailVerified,
-          })
           await routerPush('/user/chat')
         } catch (e) {
           console.error(e)
           setUser(defaultUser)
           await signOut(auth)
         }
-      } else {
-        setUser(defaultUser)
       }
     },
     [setUser, routerPush],
