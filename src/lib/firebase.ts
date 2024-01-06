@@ -10,6 +10,8 @@ import {
   connectFirestoreEmulator,
   initializeFirestore,
 } from 'firebase/firestore'
+import { connectFunctionsEmulator, getFunctions } from 'firebase/functions'
+import skeetCloudConfig from '@root/skeet-cloud.config.json'
 
 export const firebaseApp = !getApps().length
   ? initializeApp(firebaseConfig)
@@ -54,7 +56,17 @@ export const db = firebaseApp ? getFirebaseFirestore() : undefined
 
 export const analytics =
   typeof window !== 'undefined' &&
-  process.env.NODE_ENV === 'production' &&
-  firebaseApp
+    process.env.NODE_ENV === 'production' &&
+    firebaseApp
     ? getAnalytics(firebaseApp)
     : undefined
+
+const getFirebaseFunction = () => {
+  const firebaseFunction = getFunctions(firebaseApp)
+  firebaseFunction.region = skeetCloudConfig.app.region
+  if (process.env.NODE_ENV !== 'production') {
+    connectFunctionsEmulator(firebaseFunction, platformDevIP, 5001)
+  }
+  return firebaseFunction
+}
+export const functions = firebaseApp ? getFirebaseFunction() : undefined
