@@ -4,9 +4,6 @@ import { initializeApp, getApp, getApps } from 'firebase/app'
 import { connectAuthEmulator, getAuth } from 'firebase/auth'
 import { getStorage, connectStorageEmulator } from 'firebase/storage'
 import {
-  DocumentData,
-  FirestoreDataConverter,
-  QueryDocumentSnapshot,
   connectFirestoreEmulator,
   initializeFirestore,
 } from 'firebase/firestore'
@@ -56,8 +53,8 @@ export const db = firebaseApp ? getFirebaseFirestore() : undefined
 
 export const analytics =
   typeof window !== 'undefined' &&
-    process.env.NODE_ENV === 'production' &&
-    firebaseApp
+  process.env.NODE_ENV === 'production' &&
+  firebaseApp
     ? getAnalytics(firebaseApp)
     : undefined
 

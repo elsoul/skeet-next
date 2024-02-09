@@ -3,19 +3,20 @@ import { toKebabCase } from '@/utils/character'
 import { auth, functions } from '@/lib/firebase'
 import { signOut } from 'firebase/auth'
 import { platformDevIP } from '@/lib/firebase'
-import { httpsCallable, httpsCallableFromURL } from 'firebase/functions'; // Add this import statement
+import { httpsCallable, httpsCallableFromURL } from 'firebase/functions'
 
 export const fetchSkeetFunctions = async <T>(
   functionName: string,
   methodName: string,
-  params: T
+  params: T,
 ) => {
   try {
     const url =
       process.env.NODE_ENV === 'production'
         ? skeetCloudConfig.app.hasLoadBalancer
-          ? `https://${skeetCloudConfig.app.lbDomain
-          }/${functionName}/${toKebabCase(methodName)}`
+          ? `https://${
+              skeetCloudConfig.app.lbDomain
+            }/${functionName}/${toKebabCase(methodName)}`
           : `https://${skeetCloudConfig.app.region}-${skeetCloudConfig.app.fbProjectId}.cloudfunctions.net/${methodName}`
         : `http://${platformDevIP}:5001/${skeetCloudConfig.app.fbProjectId}/${skeetCloudConfig.app.region}/${methodName}`
     const skeetToken = await auth?.currentUser?.getIdToken()
@@ -45,13 +46,23 @@ export const fetchSkeetFunctions = async <T>(
 export const callSkeetFunctions = async <T>(
   functionName: string,
   methodName: string,
-  params: T
+  params: T,
 ) => {
   try {
     const callableFunction =
-      (process.env.NODE_ENV === 'production' && skeetCloudConfig.app.hasLoadBalancer) ?
-        (functions ? httpsCallableFromURL(functions, `https://${skeetCloudConfig.app.lbDomain}/${functionName}/${toKebabCase(methodName)}`) : undefined)
-        : (functions ? httpsCallable(functions, methodName) : undefined)
+      process.env.NODE_ENV === 'production' &&
+      skeetCloudConfig.app.hasLoadBalancer
+        ? functions
+          ? httpsCallableFromURL(
+              functions,
+              `https://${
+                skeetCloudConfig.app.lbDomain
+              }/${functionName}/${toKebabCase(methodName)}`,
+            )
+          : undefined
+        : functions
+        ? httpsCallable(functions, methodName)
+        : undefined
 
     const res = await callableFunction?.(params)
     return res
