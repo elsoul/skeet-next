@@ -1,18 +1,12 @@
-name: WebApp
+name: skeet-sync-routings
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'src/**'
-      - 'lib/**'
-      - '.github/workflows/webapp.yml'
-      - 'package.json'
-      - 'firebase.json'
-      - '.firebaserc'
+  workflow_run:
+    workflows: ['SkeetFunc']
+    types:
+      - completed
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
@@ -35,8 +29,9 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
@@ -45,12 +40,9 @@ jobs:
         with:
           credentials_json: ${{ secrets.SKEET_GCP_SA_KEY }}
       - name: Install firebase tools
-        run: pnpm i -g firebase-tools
+        run: pnpm i -g @skeet-framework/cli
       - name: GitHub repository setting
         run: git config --global url."https://github.com".insteadOf ssh://git@github.com
-      - name: Install dependencies
-        run: pnpm install --workspace-root
-      - name: Build App
-        run: pnpm build
-      - name: Deploy to Firebase
-        run: firebase deploy --only hosting
+      - name: Sync routings
+        run: |
+          skeet sync routings || exit 1
