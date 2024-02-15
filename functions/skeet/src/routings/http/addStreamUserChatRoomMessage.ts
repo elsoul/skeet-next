@@ -47,6 +47,7 @@ export const addStreamUserChatRoomMessage = onRequest(
         chatRoomPath,
         body.userChatRoomId,
       )
+
       if (!userChatRoom) throw new Error('userChatRoom is not found')
 
       // Add User Message to UserChatRoomMessage
@@ -126,7 +127,7 @@ export const addStreamUserChatRoomMessage = onRequest(
       })
       res.end()
     } catch (error) {
-      console.error(error)
+      console.log(error)
       res.status(500).json({ status: 'error', message: String(error) })
     }
   },

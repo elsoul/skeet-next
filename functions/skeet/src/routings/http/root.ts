@@ -1,15 +1,14 @@
 import { onRequest } from 'firebase-functions/v2/https'
 import { publicHttpOption } from '@/routings/options'
 import { TypedRequestBody } from '@common/types/http'
-import { HttpExampleParams } from '@common/types/http/httpExampleParams'
+import { RootParams } from '@common/types/http/rootParams'
 
-export const httpExample = onRequest(
+export const root = onRequest(
   publicHttpOption,
-  async (req: TypedRequestBody<HttpExampleParams>, res) => {
+  async (req: TypedRequestBody<RootParams>, res) => {
     try {
-      res.json({
-        status: 'success',
-      })
+      // Define your logic here
+      res.json({ status: 'success' })
     } catch (error) {
       res.status(500).json({ status: 'error', message: String(error) })
     }
