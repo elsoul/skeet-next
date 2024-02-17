@@ -4,7 +4,8 @@ on:
     branches:
       - main
     paths:
-      - 'src/**'
+      - 'common/**'
+      - 'webapp/**'
       - 'lib/**'
       - '.github/workflows/webapp.yml'
       - 'package.json'
@@ -49,8 +50,10 @@ jobs:
       - name: GitHub repository setting
         run: git config --global url."https://github.com".insteadOf ssh://git@github.com
       - name: Install dependencies
-        run: pnpm install --workspace-root
+        run: pnpm install
       - name: Build App
         run: pnpm build
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
       - name: Deploy to Firebase
         run: firebase deploy --only hosting
