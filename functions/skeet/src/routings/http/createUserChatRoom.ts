@@ -12,7 +12,7 @@ export const createUserChatRoom = onRequest(
   async (req: TypedRequestBody<CreateUserChatRoomParams>, res) => {
     try {
       const body = {
-        model: req.body.model || 'gpt-4-1106-preview',
+        model: req.body.model || 'gpt-3.5-turbo',
         systemContent:
           req.body.systemContent ||
           'This is a great chatbot. This Assistant is very kind and helpful.',

@@ -28,6 +28,7 @@ export const addVertexMessage = onRequest(
         req.body.vertexChatRoomId,
       )
       if (!vertexChatRoomData) throw new Error('vertexChatRoom is not found')
+
       const vertexExampleData = vertexChatRoomData.examples
 
       // Send to VertexAI
