@@ -5,11 +5,11 @@
   "author": "ELSOUL LABO B.V.",
   "license": "Apache-2.0",
   "engines": {
-    "pnpm": "8.15.2",
+    "pnpm": ">=8",
     "npm": "please_use_pnpm_instead",
-    "node": "20"
+    "node": "20",
+    "version": "0.0.1"
   },
-  "packageManager": "pnpm@8.15.2",
   "scripts": {
     "format": "prettier --write --ignore-unknown .",
     "lint": "eslint --ext .ts,.tsx --fix .",
