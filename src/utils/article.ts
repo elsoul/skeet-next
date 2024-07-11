@@ -7,7 +7,7 @@ export const getArticleBySlug = (
   slugArray: string[],
   fields: string[] = [],
   articleDirPrefix: string,
-  locale: string
+  locale: string,
 ) => {
   const articlesDirectory = join(process.cwd(), `${articleDirPrefix}/${locale}`)
   const matchedSlug = slugArray.join('/')
